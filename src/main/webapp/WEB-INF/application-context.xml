@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<beans:bean id="participantRepository"
+		class="com.chessApp.websocketEvents.ParticipantRepository" />
+
+	<beans:bean id="chessAppServerEndpoint"
+		class="com.chessApp.websocket.ChessAppServerEndpoint" />
+
+
+</beans:beans>

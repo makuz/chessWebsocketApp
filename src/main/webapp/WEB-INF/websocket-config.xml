@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/websocket
+        http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+	<websocket:message-broker
+		application-destination-prefix="/app">
+		<websocket:stomp-endpoint path="/send-fen"
+			allowed-origins="*">
+			<websocket:sockjs />
+			<!--  <websocket:sockjs client-library-url="../scripts/sockjs.js" />-->
+		</websocket:stomp-endpoint>
+		<websocket:simple-broker prefix="/topic" />
+	</websocket:message-broker>
+	
+	<!-- example:
+	
+	simple broker 
+
+<websocket:message-broker applicationDestinationPrefix="/app">
+  <websocket:stomp-endpoint path="/foo">
+    <websocket:sockjs />
+    <websocket:handshake-handler ref="myHandler" />
+  </websocket:stomp-endpoint>
+  <websocket:simple-broker prefix="/topic" />
+</websocket:message-broker>
+
+ stomp broker relay 
+
+<websocket:message-broker>
+  <websocket:stomp-endpoint path="/foo">
+    <websocket:sockjs />
+    <websocket:handshake-handler ref="myHandler" />
+  </websocket:stomp-endpoint>
+  <websocket:stomp-broker-relay prefix="/topic,/queue" relayHost=".." relayPort=".."  etc />
+</websocket:message-broker>
+	 -->
+
+</beans>
