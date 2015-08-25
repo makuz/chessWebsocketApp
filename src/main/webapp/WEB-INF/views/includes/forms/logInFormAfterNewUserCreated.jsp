@@ -2,7 +2,7 @@
 <%
 	String contextURL = new Config().getContextUrl();
 %>
-<form method="POST" action="<%=contextURL%>/j_spring_security_check"
+<form method="POST" action="<%=contextURL%>/login"
 	class="form-horizontal">
 
 	<div class="form-group">

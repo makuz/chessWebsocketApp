@@ -30,7 +30,20 @@ li.list-group-item span.glyphicon {
 	
 }
 
+div#play-chess-not-loggedin-alert {
+	width: 80%;
+	margin: 20% auto 0 auto;
+}
 
+div#play-chess-not-loggedin-alert h3 {
+	width: 80%;
+	margin: 0 auto;
+}
+
+div#play-chess-not-loggedin-alert + a{
+	margin-right: 10%;
+	margin-top: 3%;
+}
 
 ul.list-group {
 	width: 20%;
