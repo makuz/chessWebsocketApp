@@ -19,11 +19,7 @@
 				<div id="chess-board-play-with-user">
 					<div id="board"></div>
 					<div class="game-actions-user">
-						<br /> <label>current fen</label><br /> <input type="text"
-							id="fenFromYourMove" /> <br /> <br />
-						<button id="sendYourMoveBtn" class="btn btn-info pull-right">send
-							your move</button>
-						<br /> <br /> <br />
+						<br /> <br />
 						<div class="stats">
 							<p class="text-danger">
 								Status: <span id="status"></span>
@@ -32,40 +28,40 @@
 							</small><br /> <small class="text-warning"> PGN: <span id="pgn"></span>
 							</small>
 						</div>
-						<br />
-						<p class="text-info">example FEN:</p>
-						<small>rnbqkbnr/pppppppp/8/8/8/2P5/PP1PPPPP/RNBQKBNR b
-							KQkq - 0 1</small> <label>construct game by FEN</label> <input
-							type="text" id="fenToSet" /><br />
-						<button id="setFenBtn" class="btn btn-info pull-right">construct
-							game</button>
-						<br /> <br />
 						<hr />
-						<button id="startPosBtn" class="btn btn-info pull-right">start
+						<br /> <input hidden="true" type="text"
+							id="fenFromYourMove" /> <br />
+						<button id="sendYourMoveBtn" class="btn btn-success pull-right">send
+							your move</button>
+						<br />
+						<hr />
+						<button id="startPosBtn" class="btn btn-danger pull-right">start
 							new game</button>
+						<br />
+						<section id="onlineUsersSection">
+							<br />
+							<hr />
+							<h3>online users: ${usersCount}</h3>
+							<c:if test="${onlineUsers != null}">
+								<ul class="list-group">
+									<c:forEach items="${onlineUsers}" var="onlineUser">
+										<li class="list-group-item"><span
+											class="glyphicon glyphicon-user"></span>&nbsp&nbsp<span
+											class="text-info">${onlineUser}</span>
+											<button class="btn btn-info connectToUserBtn"
+												data-username="${onlineUser}">play with</button></li>
+									</c:forEach>
+								</ul>
+							</c:if>
+							<hr />
+							<button class="btn btn-danger pull-right" id="disconnect">Rozłącz</button>
+							<br />
+						</section>
 					</div>
 				</div>
 			</section>
 
-			<section id="onlineUsersSection">
-				<br />
-				<hr />
-				<h3>online users: ${usersCount}</h3>
-				<c:if test="${onlineUsers != null}">
-					<ul class="list-group">
-						<c:forEach items="${onlineUsers}" var="onlineUser">
-							<li class="list-group-item"><span
-								class="glyphicon glyphicon-user"></span>&nbsp&nbsp<span
-								class="text-info">${onlineUser}</span>
-								&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-								<button 
-									class="btn btn-info connectToUserBtn" data-username="${onlineUser}">play with</button></li>
-						</c:forEach>
-					</ul>
-				</c:if>
-				<button class="btn btn-danger pull-right" id="disconnect">Rozłącz</button>
-				<br />
-			</section>
+
 
 			<section id="testWsResponse">
 				<hr />
@@ -99,12 +95,12 @@
 		$('#disconnect').click(function() {
 			closeWsConnection();
 		});
-		
+
 		$('.connectToUserBtn').click(function(event) {
-			
+
 			var reciever = $(this).data('username');
 			connectToUser(reciever);
-		
+
 		});
 
 		$('#sendFen').click(function() {
@@ -124,25 +120,25 @@
 		}
 
 		function sendYourMoveByFenNotation() {
-			
-				console.log("send fen : " + fenFromYourMove.value);
-				// wysyla na server endpoint
-				webSocket.send(fenFromYourMove.value);
+
+			console.log("send fen : " + fenFromYourMove.value);
+			// wysyla na server endpoint
+			webSocket.send(fenFromYourMove.value);
 
 		}
-		
+
 		function closeWsConnection() {
-			
+
 			console.log('closeWsConnection()');
 			webSocket.close();
 		}
 
 		function connectToUser(reciever) {
-			
+
 			console.log('connectToUser()');
-			
-			var endpointUrl = "ws://" + document.location.host + "/send-fen/${sender}/"
-					+ reciever;
+
+			var endpointUrl = "ws://" + document.location.host
+					+ "/send-fen/${sender}/" + reciever;
 			webSocket = new WebSocket(endpointUrl);
 
 			$('#connect').disabled = false;

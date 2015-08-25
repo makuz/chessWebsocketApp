@@ -50,7 +50,15 @@ div#chess-board-play-with-user div#board {
 }
 
 section#onlineUsersSection {
-	clear: both;
+	
+}
+
+section#onlineUsersSection ul li {
+	width: 250%;
+}
+
+section#onlineUsersSection ul li button {
+	margin-left: 23%;
 }
 
 div.game-actions-user {
