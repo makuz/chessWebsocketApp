@@ -99,7 +99,10 @@
 		$('.connectToUserBtn').click(function(event) {
 
 			var reciever = $(this).data('username');
+			
 			connectToUser(reciever);
+			
+			event.target.style="color: red;";
 
 		});
 
@@ -130,7 +133,9 @@
 		function closeWsConnection() {
 
 			console.log('closeWsConnection()');
+			$('.connectToUserBtn').css("color", "white");
 			webSocket.close();
+			
 		}
 
 		function connectToUser(reciever) {
