@@ -80,17 +80,17 @@
 	</div>
 </div>
 <!-- set variable for js -->
-<c:set var="username1" value="${currentUserName}" />
+<c:set var="sender" value="${currentUserName}" />
 <script>
-	var boardEcho = ChessBoard('boardEcho', fenFromYourMove.value);
+	var boardEcho = ChessBoard('boardEcho', 'start');
 </script>
 <!-- WebSocket -->
 <script>
-	var endpointUrl = "ws://localhost:8080/send-fen/${username1}/${username1}";
+	var endpointUrl = "ws://" + document.location.host + "/send-fen/${sender}/";
 	var webSocket = new WebSocket(endpointUrl);
 	$(function() {
 
-		// disconnect();
+		closeWsConnection();
 
 		$('#sendYourMoveBtn').click(function() {
 			sendYourMoveByFenNotation();
@@ -101,7 +101,7 @@
 		});
 
 		$('#disconnect').click(function() {
-			// disconnect();
+			closeWsConnection();
 		});
 
 		$('#sendFen').click(function() {
@@ -121,28 +121,21 @@
 		}
 
 		function sendYourMoveByFenNotation() {
-
-			if (fenFromYourMove.value != "close") {
-				console.log("sended");
-
+			
+				console.log("send fen : " + fenFromYourMove.value);
 				// wysyla na server endpoint
 				webSocket.send(fenFromYourMove.value);
 
-			} else {
-				webSocket.close();
-			}
-
+		}
+		
+		function closeWsConnection() {
+			webSocket.close();
 		}
 
-		function connectToUser(user2) {
-			// open the connection if one does not exist
-			//if (webSocket !== undefined
-			//		&& webSocket.readyState !== WebSocket.CLOSED) {
-			//	return;
-			//}
+		function connectToUser(reciever) {
 
-			var endpointUrl = "ws://localhost:8080/send-fen/${username1}/"
-					+ user2;
+			var endpointUrl = "ws://" + document.location.host + "/send-fen/${sender}/"
+					+ reciever;
 			webSocket = new WebSocket(endpointUrl);
 
 			$('#connect').disabled = false;
@@ -153,7 +146,7 @@
 			}
 
 			webSocket.onmessage = function(msg) {
-
+				console.log("onmessage: ");
 				if (msg != null) {
 					console.log("message: " + msg.data);
 					// to wywoluje echo: onmessage

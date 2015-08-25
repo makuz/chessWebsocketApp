@@ -19,42 +19,60 @@ import org.apache.log4j.Logger;
 
 
 @ApplicationScoped
-@ServerEndpoint("/send-fen/{username1}/{username2}")
+@ServerEndpoint("/send-fen/{sender}/{reciever}")
 public class ChessAppServerEndpoint {
 
 	Logger log = Logger.getLogger(ChessAppServerEndpoint.class);
 
 	private static Set<Session> usersSessions = Collections
 			.synchronizedSet(new HashSet<Session>());
+	
 
 	@OnMessage
 	public void onMessage(String msg, Session wsSession,
-			@PathParam("username1") String username1,
-			@PathParam("username2") String username2) throws IOException {
+			@PathParam("sender") String sender,
+			@PathParam("reciever") String reciever) throws IOException {
 
 		log.info("message recived on serverEndpoint: " + msg + " from "
-				+ username1 + " to " + username2);
+				+ sender + " to " + reciever);
 		wsSession.getBasicRemote().sendText(msg);
 
 	}
 
 	@OnOpen
 	public void onOpen(Session wsSession,
-			@PathParam("username1") String username1,
-			@PathParam("username2") String username2) {
+			@PathParam("sender") String sender,
+			@PathParam("reciever") String reciever) {
 		log.info("connection started, websocket session id: "
-				+ wsSession.getId() + " from " + username1 + " to " + username2);
-		wsSession.getUserProperties().put(username1, username1);
-		wsSession.getUserProperties().put(username2, username2);
+				+ wsSession.getId() + " from " + sender + " to " + reciever);
+		wsSession.getUserProperties().put("sender", sender);
+		wsSession.getUserProperties().put("reciever", reciever);
+		System.out.println("session path parameters");
+		System.out.println(wsSession.getPathParameters());
 		usersSessions.add(wsSession);
+		
+		log.info("dodano sesje: " + wsSession.getId());
+		log.info("sender: " + wsSession.getUserProperties().get("sender"));
+		log.info("reciever: " + wsSession.getUserProperties().get("reciever"));
+		log.info("sesje: ");
+		for (Session session : usersSessions) {
+			System.out.println(session);
+		}
 	}
 
 	@OnClose
 	public void onClose(CloseReason closeReason, Session wsSession,
-			@PathParam("username1") String username1,
-			@PathParam("username2") String username2) {
+			@PathParam("sender") String sender,
+			@PathParam("reciever") String reciever) {
 		log.info("connection closed. Reason: " + closeReason.getReasonPhrase());
 		usersSessions.remove(wsSession);
+		log.info("usunieto sesje: " + wsSession.getId());
+		log.info("sender: " + wsSession.getUserProperties().get("sender"));
+		log.info("reciever: " + wsSession.getUserProperties().get("reciever"));
+		log.info("sesje: ");
+		for (Session session : usersSessions) {
+			System.out.println(session.getId());
+		}
 	}
 
 	@OnError
