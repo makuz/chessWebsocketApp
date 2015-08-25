@@ -56,19 +56,19 @@
 						<c:forEach items="${onlineUsers}" var="onlineUser">
 							<li class="list-group-item"><span
 								class="glyphicon glyphicon-user"></span>&nbsp&nbsp<span
-								class="text-info">${onlineUser}</span></li>
+								class="text-info">${onlineUser}</span>
+								&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+								<button 
+									class="btn btn-info connectToUserBtn" data-username="${onlineUser}">play with</button></li>
 						</c:forEach>
 					</ul>
 				</c:if>
-
+				<button class="btn btn-danger pull-right" id="disconnect">Rozłącz</button>
+				<br />
 			</section>
 
 			<section id="testWsResponse">
-				<br />
 				<hr />
-				<button id="connect">Połącz</button>
-				<button id="disconnect">Rozłącz</button>
-				<br />
 				<h3>Testowa odpowiedź echo:</h3>
 				<br />
 
@@ -96,12 +96,15 @@
 			sendYourMoveByFenNotation();
 		});
 
-		$('#connect').click(function() {
-			connectToUser("user");
-		});
-
 		$('#disconnect').click(function() {
 			closeWsConnection();
+		});
+		
+		$('.connectToUserBtn').click(function(event) {
+			
+			var reciever = $(this).data('username');
+			connectToUser(reciever);
+		
 		});
 
 		$('#sendFen').click(function() {
@@ -129,11 +132,15 @@
 		}
 		
 		function closeWsConnection() {
+			
+			console.log('closeWsConnection()');
 			webSocket.close();
 		}
 
 		function connectToUser(reciever) {
-
+			
+			console.log('connectToUser()');
+			
 			var endpointUrl = "ws://" + document.location.host + "/send-fen/${sender}/"
 					+ reciever;
 			webSocket = new WebSocket(endpointUrl);

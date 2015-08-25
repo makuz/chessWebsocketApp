@@ -69,7 +69,7 @@ public class ChessAppServerEndpoint {
 		log.info("usunieto sesje: " + wsSession.getId());
 		log.info("sender: " + wsSession.getUserProperties().get("sender"));
 		log.info("reciever: " + wsSession.getUserProperties().get("reciever"));
-		log.info("sesje: ");
+		log.info("pozostałe sesje: ");
 		for (Session session : usersSessions) {
 			System.out.println(session.getId());
 		}
