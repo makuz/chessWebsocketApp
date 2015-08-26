@@ -64,17 +64,11 @@
 						</div>
 					</div>
 				</section>
-				<section id="testWsResponse">
-					<hr />
-					<h3>Testowa odpowiedź echo:</h3>
-					<br />
-
-					<div id="boardEcho" style="width: 400px"></div>
-				</section>
 
 			</security:authorize>
 			<c:if test="${!isLoggedIn}">
-				<div class="alert alert-warning" id="play-chess-not-loggedin-alert" role="alert">
+				<div class="alert alert-warning" id="play-chess-not-loggedin-alert"
+					role="alert">
 					<h3>You have to be logged in to play chess with other users</h3>
 				</div>
 				<a class="btn btn-success pull-right" href="/signin">sign in</a>
@@ -86,10 +80,8 @@
 <security:authorize access="hasRole('ROLE_USER')">
 	<!-- set variable for js -->
 	<c:set var="sender" value="${currentUserName}" />
-	<script>
-		var boardEcho = ChessBoard('boardEcho', 'start');
-	</script>
-	<!-- WebSocket -->
+
+	<!-- WebSocket CLIENT ENDPOINT SCRIPT -->
 	<script>
 		var endpointUrl = "ws://" + document.location.host
 				+ "/send-fen/${sender}/";
@@ -168,7 +160,12 @@
 					if (msg != null) {
 						console.log("message: " + msg.data);
 						// to wywoluje echo: onmessage
-						var boardEcho = ChessBoard('boardEcho', msg.data);
+						var fenStr = msg.data;
+						if (fenStr != null && fenStr != "") {
+							board.position(fenStr);
+							game = new Chess(fenStr);
+							updateStatus();
+						}
 					}
 
 				}

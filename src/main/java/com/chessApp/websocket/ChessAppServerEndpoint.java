@@ -17,7 +17,6 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.apache.log4j.Logger;
 
-
 @ApplicationScoped
 @ServerEndpoint("/send-fen/{sender}/{reciever}")
 public class ChessAppServerEndpoint {
@@ -26,7 +25,16 @@ public class ChessAppServerEndpoint {
 
 	private static Set<Session> usersSessions = Collections
 			.synchronizedSet(new HashSet<Session>());
-	
+
+	private void sendMessageToAll(String msg) {
+		for (Session userSession : usersSessions) {
+			try {
+				userSession.getBasicRemote().sendText(msg);
+			} catch (IOException e) {
+				log.info(e + "");
+			}
+		}
+	}
 
 	@OnMessage
 	public void onMessage(String msg, Session wsSession,
@@ -35,22 +43,26 @@ public class ChessAppServerEndpoint {
 
 		log.info("message recived on serverEndpoint: " + msg + " from "
 				+ sender + " to " + reciever);
-		wsSession.getBasicRemote().sendText(msg);
+
+		// wsSession.getBasicRemote().sendText(msg);
+		sendMessageToAll(msg);
 
 	}
 
 	@OnOpen
-	public void onOpen(Session wsSession,
-			@PathParam("sender") String sender,
+	public void onOpen(Session wsSession, @PathParam("sender") String sender,
 			@PathParam("reciever") String reciever) {
 		log.info("connection started, websocket session id: "
 				+ wsSession.getId() + " from " + sender + " to " + reciever);
+
+		sendMessageToAll(sender + " has connected");
+
 		wsSession.getUserProperties().put("sender", sender);
 		wsSession.getUserProperties().put("reciever", reciever);
 		System.out.println("session path parameters");
 		System.out.println(wsSession.getPathParameters());
 		usersSessions.add(wsSession);
-		
+
 		log.info("dodano sesje: " + wsSession.getId());
 		log.info("sender: " + wsSession.getUserProperties().get("sender"));
 		log.info("reciever: " + wsSession.getUserProperties().get("reciever"));
@@ -65,6 +77,7 @@ public class ChessAppServerEndpoint {
 			@PathParam("sender") String sender,
 			@PathParam("reciever") String reciever) {
 		log.info("connection closed. Reason: " + closeReason.getReasonPhrase());
+		sendMessageToAll(sender + " has disconnected");
 		usersSessions.remove(wsSession);
 		log.info("usunieto sesje: " + wsSession.getId());
 		log.info("sender: " + wsSession.getUserProperties().get("sender"));
