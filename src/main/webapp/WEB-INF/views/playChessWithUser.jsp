@@ -51,9 +51,17 @@
 										<c:forEach items="${onlineUsers}" var="onlineUser">
 											<li class="list-group-item"><span
 												class="glyphicon glyphicon-user"></span>&nbsp&nbsp<span
-												class="text-info">${onlineUser}</span>
-												<button class="btn btn-info connectToUserBtn"
-													data-username="${onlineUser}">play with</button></li>
+												class="text-info">${onlineUser}</span> <c:choose>
+													<c:when test="${currentUserName == onlineUser }">
+														<button class="btn btn-default connectToUserBtn"
+															data-username="${onlineUser}" disabled="true">play
+															with</button>
+													</c:when>
+													<c:otherwise>
+														<button class="btn btn-info connectToUserBtn"
+															data-username="${onlineUser}">play with</button>
+													</c:otherwise>
+												</c:choose></li>
 										</c:forEach>
 									</ul>
 								</c:if>

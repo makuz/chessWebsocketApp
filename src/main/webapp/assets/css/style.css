@@ -30,6 +30,10 @@ li.list-group-item span.glyphicon {
 	
 }
 
+button.connectToUserBtn[disabled=true] {
+	color: black !important;
+}
+
 div#play-chess-not-loggedin-alert {
 	width: 80%;
 	margin: 20% auto 0 auto;
