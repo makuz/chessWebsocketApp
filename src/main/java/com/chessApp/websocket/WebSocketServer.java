@@ -42,12 +42,10 @@ public class WebSocketServer {
 
 		webSocketSessionHandler.sendToAllConnectedSessions(sender
 				+ " has connected");
-
-		wsSession.getUserProperties().put("sender", sender);
-		wsSession.getUserProperties().put("reciever", reciever);
-		log.info("session path parameters");
-		log.info(wsSession.getPathParameters());
-
+		
+		WebSocketGameUser gameUser = new WebSocketGameUser(sender);
+		webSocketSessionHandler.addUser(gameUser);
+		wsSession.getUserProperties().put("sessionOwner", gameUser.getUsername());
 		webSocketSessionHandler.addSession(wsSession);
 		webSocketSessionHandler.printOutAllSessionsOnOpen(wsSession);
 
@@ -58,7 +56,9 @@ public class WebSocketServer {
 			@PathParam("sender") String sender,
 			@PathParam("reciever") String reciever) {
 		log.info("connection closed. Reason: " + closeReason.getReasonPhrase());
-
+		
+		WebSocketGameUser gameUser = new WebSocketGameUser(sender);
+		webSocketSessionHandler.removeUser(gameUser);
 		webSocketSessionHandler.sendToAllConnectedSessions(sender
 				+ " has connected");
 		webSocketSessionHandler.removeSession(wsSession);

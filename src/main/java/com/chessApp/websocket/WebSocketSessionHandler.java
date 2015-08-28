@@ -11,7 +11,6 @@ import javax.websocket.Session;
 
 import org.apache.log4j.Logger;
 
-import com.chessApp.model.UserAccount;
 
 @ApplicationScoped
 public class WebSocketSessionHandler {
@@ -22,7 +21,7 @@ public class WebSocketSessionHandler {
 
 	private static Set<Session> sessions = Collections
 			.synchronizedSet(new HashSet<Session>());
-	private final Set<UserAccount> users = new HashSet<>();
+	private final Set<WebSocketGameUser> gameUsers = new HashSet<>();
 
 	public void addSession(Session session) {
 		sessions.add(session);
@@ -32,25 +31,42 @@ public class WebSocketSessionHandler {
 		sessions.remove(session);
 	}
 
-	public void addUser(UserAccount user) {
+	public void addUser(WebSocketGameUser gameUser) {
 		userID++;
-		user.setUserId(userID);
-		users.add(user);
+		gameUser.setId(userID);
+		gameUsers.add(gameUser);
+		logger.info("user: " + gameUser + " added to live game repository");
 	}
 
-	public void removeUser(long id) {
-
+	public void removeUser(WebSocketGameUser gameUser) {
+		gameUsers.remove(gameUser);
+		logger.info("user: " + gameUser + " removed from live game repository");
+	}
+	
+	public void removeUserById(long id) {
+		for (WebSocketGameUser webSocketGameUser : gameUsers) {
+			if(webSocketGameUser.getId() == id) {
+				gameUsers.remove(webSocketGameUser);
+				
+			}
+		}
 	}
 
 	public void toggleUser(long id) {
 
 	}
 
-	public UserAccount getUserById(long id) {
+	public WebSocketGameUser getUserById(long id) {
+		
+		for (WebSocketGameUser webSocketGameUser : gameUsers) {
+			if(webSocketGameUser.getId() == id) {
+				return webSocketGameUser;
+			}
+		}
 		return null;
 	}
 
-	public String createAddMessage(UserAccount user) {
+	public String createAddMessage(WebSocketGameUser user) {
 		return null;
 	}
 
@@ -70,10 +86,9 @@ public class WebSocketSessionHandler {
 	public void printOutAllSessionsOnOpen(Session addedSession) {
 
 		logger.info("dodano sesje: " + addedSession.getId());
-		logger.info("sender: " + addedSession.getUserProperties().get("sender"));
-		logger.info("reciever: "
-				+ addedSession.getUserProperties().get("reciever"));
-		logger.info("sesje: ");
+		logger.info("sessionOwner: " + addedSession.getUserProperties().get("sessionOwner"));
+		
+		logger.info("obecne sesje: ");
 		for (Session session : sessions) {
 			System.out.println(session);
 		}
@@ -94,10 +109,9 @@ public class WebSocketSessionHandler {
 
 	public void printOutAllSessionsOnClose(Session removedSession) {
 		logger.info("usunieto sesje: " + removedSession.getId());
-		logger.info("sender: "
-				+ removedSession.getUserProperties().get("sender"));
-		logger.info("reciever: "
-				+ removedSession.getUserProperties().get("reciever"));
+		logger.info("sessionOwner: "
+				+ removedSession.getUserProperties().get("sessionOwner"));
+		
 		logger.info("pozostałe sesje: ");
 		for (Session session : sessions) {
 			System.out.println(session.getId());
