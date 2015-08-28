@@ -2,8 +2,10 @@ package com.chessApp.websocket;
 
 import java.io.IOException;
 
-import javax.enterprise.context.ApplicationScoped;
+
+//import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.CloseReason;
+import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -13,8 +15,10 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
-@ApplicationScoped
+@Service
+//@ApplicationScoped
 @ServerEndpoint("/send-fen/{sender}/{reciever}")
 public class WebSocketServer {
 
@@ -35,11 +39,11 @@ public class WebSocketServer {
 	}
 
 	@OnOpen
-	public void onOpen(Session wsSession, @PathParam("sender") String sender,
+	public void onOpen(Session wsSession, EndpointConfig config, @PathParam("sender") String sender,
 			@PathParam("reciever") String reciever) {
 		log.info("connection started, websocket session id: "
 				+ wsSession.getId() + " from " + sender + " to " + reciever);
-
+		
 		webSocketSessionHandler.sendToAllConnectedSessions(sender
 				+ " has connected");
 		

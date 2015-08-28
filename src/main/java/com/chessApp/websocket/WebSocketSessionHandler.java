@@ -6,13 +6,15 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.enterprise.context.ApplicationScoped;
+
+//import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.Session;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
-
-@ApplicationScoped
+@Service
+//@ApplicationScoped
 public class WebSocketSessionHandler {
 
 	Logger logger = Logger.getLogger(WebSocketSessionHandler.class);

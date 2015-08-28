@@ -176,8 +176,21 @@
 			webSocket.onerror = function(msg) {
 				webSocket.send("error: client disconnected");
 				console.log("Server disconnected \n");
+				webSocket.close();
 			};
 
+		};
+
+		// close websocket when page reload
+
+		window.onbeforeunload = function() {
+			webSocket.onclose = function() {
+				webSocket.send("client disconnected");
+				console.log("Server disconnected \n");
+			}; // disable onclose handler first
+			webSocket.close();
+			window.location.reload(false);
+			
 		};
 	</script>
 
