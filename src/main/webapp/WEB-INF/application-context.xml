@@ -8,8 +8,10 @@
 	<beans:bean id="participantRepository"
 		class="com.chessApp.websocketEvents.ParticipantRepository" />
 
-	<beans:bean id="chessAppServerEndpoint"
-		class="com.chessApp.websocket.ChessAppServerEndpoint" />
+	<beans:bean id="webSocketServer" class="com.chessApp.websocket.WebSocketServer" />
+
+	<beans:bean id="webSocketSessionHandler"
+		class="com.chessApp.websocket.WebSocketSessionHandler" />
 
 
 </beans:beans>
