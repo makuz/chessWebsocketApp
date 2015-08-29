@@ -2,7 +2,6 @@ package com.chessApp.websocket;
 
 import java.io.IOException;
 
-
 //import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
@@ -17,8 +16,10 @@ import javax.websocket.server.ServerEndpoint;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+
 @Service
-//@ApplicationScoped
+// @ApplicationScoped
 @ServerEndpoint("/send-fen/{sender}/{reciever}")
 public class WebSocketServer {
 
@@ -26,30 +27,38 @@ public class WebSocketServer {
 
 	WebSocketSessionHandler webSocketSessionHandler = new WebSocketSessionHandler();
 
+	Gson gson = new Gson();
+
 	@OnMessage
 	public void onMessage(String msg, Session wsSession,
 			@PathParam("sender") String sender,
 			@PathParam("reciever") String reciever) throws IOException {
 
-		log.info("wiadomość odebrana przez server: " + msg + " from " + sender
-				+ " to " + reciever);
+		log.info("wiadomość odebrana przez server: ");
+
+		Message message = gson.fromJson(msg, Message.class);
+
+		log.info("od usera " + message.getSenderName());
+		log.info("fen " + message.getFen());
 
 		webSocketSessionHandler.sendToAllConnectedSessions(msg);
 
 	}
 
 	@OnOpen
-	public void onOpen(Session wsSession, EndpointConfig config, @PathParam("sender") String sender,
+	public void onOpen(Session wsSession, EndpointConfig config,
+			@PathParam("sender") String sender,
 			@PathParam("reciever") String reciever) {
 		log.info("connection started, websocket session id: "
 				+ wsSession.getId() + " from " + sender + " to " + reciever);
-		
+
 		webSocketSessionHandler.sendToAllConnectedSessions(sender
 				+ " has connected");
-		
+
 		WebSocketGameUser gameUser = new WebSocketGameUser(sender);
 		webSocketSessionHandler.addUser(gameUser);
-		wsSession.getUserProperties().put("sessionOwner", gameUser.getUsername());
+		wsSession.getUserProperties().put("sessionOwner",
+				gameUser.getUsername());
 		webSocketSessionHandler.addSession(wsSession);
 		webSocketSessionHandler.printOutAllSessionsOnOpen(wsSession);
 
@@ -60,7 +69,7 @@ public class WebSocketServer {
 			@PathParam("sender") String sender,
 			@PathParam("reciever") String reciever) {
 		log.info("connection closed. Reason: " + closeReason.getReasonPhrase());
-		
+
 		WebSocketGameUser gameUser = new WebSocketGameUser(sender);
 		webSocketSessionHandler.removeUser(gameUser);
 		webSocketSessionHandler.sendToAllConnectedSessions(sender

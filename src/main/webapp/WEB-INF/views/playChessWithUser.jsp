@@ -123,7 +123,11 @@
 
 		function sendYourMoveByFenNotation() {
 			console.log("send fen : " + fenFromYourMove.value);
-			webSocket.send(fenFromYourMove.value);
+			var fenString = fenFromYourMove.value;
+			webSocket.send(JSON.stringify({
+				fen : fenString,
+				senderName : '${sender}'
+			}));
 
 		};
 
@@ -146,17 +150,20 @@
 
 			// websocketClient events -----------------------------
 
-			webSocket.onopen = function(msg) {
+			webSocket.onopen = function(event) {
 				console.log("Server connected \n");
+				console.log(event);
 
 			};
 
-			webSocket.onmessage = function(msg) {
+			webSocket.onmessage = function(event) {
 				console.log("onmessage: ");
-				if (msg != null) {
-					console.log("message: " + msg.data);
-					// to wywoluje echo: onmessage
-					var fenStr = msg.data;
+				console.log(event);
+				if (event != null) {
+					var message = JSON.parse(event.data);
+					console.log("message");
+					console.log(message);
+					var fenStr = message.fen;
 					if (fenStr != null && fenStr != "") {
 						// chessboard board object
 						board.position(fenStr);
@@ -168,14 +175,16 @@
 
 			};
 
-			webSocket.onclose = function(msg) {
+			webSocket.onclose = function(event) {
 				webSocket.send("client disconnected");
 				console.log("Server disconnected \n");
+				console.log(event);
 			};
 
-			webSocket.onerror = function(msg) {
+			webSocket.onerror = function(event) {
 				webSocket.send("error: client disconnected");
 				console.log("Server disconnected \n");
+				console.log(event);
 				webSocket.close();
 			};
 
@@ -190,7 +199,7 @@
 			}; // disable onclose handler first
 			webSocket.close();
 			window.location.reload(false);
-			
+
 		};
 	</script>
 
