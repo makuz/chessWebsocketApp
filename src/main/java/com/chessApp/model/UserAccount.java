@@ -17,7 +17,6 @@ public class UserAccount implements Comparable<UserAccount> {
 	private String lastname;
 	private int role;
 	private String email;
-	private String languageParamToSearch;
 
 	// for user sign in
 	public UserAccount(String username, String password, int role, String email) {
@@ -85,14 +84,6 @@ public class UserAccount implements Comparable<UserAccount> {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getLanguageParamToSearch() {
-		return languageParamToSearch;
-	}
-
-	public void setLanguageParamToSearch(String languageParamToSearch) {
-		this.languageParamToSearch = languageParamToSearch;
 	}
 
 	public String getLastname() {

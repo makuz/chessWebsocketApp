@@ -61,7 +61,10 @@
 														<button class="btn btn-info connectToUserBtn"
 															data-username="${onlineUser}">play with</button>
 													</c:otherwise>
-												</c:choose></li>
+												</c:choose>
+												<button data-username="${onlineUser}"
+													class="btn btn-warning btn-sm user-info-btn">user
+													info</button></li>
 										</c:forEach>
 									</ul>
 								</c:if>
@@ -84,7 +87,11 @@
 		</div>
 	</div>
 </div>
+
+<jsp:include page="includes/modal_boxes/user_info_modal.jsp" />
+
 <!-- JAVASCRIPTS -->
+<!-- tylko zalogowany uzytkownik ma wlaczony poniższy javascript -->
 <security:authorize access="hasRole('ROLE_USER')">
 	<!-- set variable for js -->
 	<c:set var="sender" value="${currentUserName}" />
@@ -97,6 +104,34 @@
 
 		// main ------------------------------------------------
 		$(function() {
+
+			$('.user-info-btn').click(
+					function() {
+						$('#user-info-modal').modal('show');
+						var login = $(this).data('username');
+
+						$.ajax({
+							url : "user/get-user-info-by-username",
+							data : {
+								username : login
+							},
+							success : function(response) {
+								$('#usernameResponse').append(
+										" " + response.username);
+								$('#userIdResponse').append(
+										" " + response.userId);
+								$('#userEmailResponse').append(
+										" " + response.email);
+								$('#userNameResponse').append(
+										" " + response.name);
+								$('#userLastnameResponse').append(
+										" " + response.lastname);
+							}
+						}
+
+						);
+
+					});
 
 			$('#sendYourMoveBtn').click(function() {
 				sendYourMoveByFenNotation();
@@ -190,7 +225,7 @@
 
 		};
 
-		// close websocket when page reload
+		// close websocket when page reload --------------------------------------------
 
 		window.onbeforeunload = function() {
 			webSocket.onclose = function() {

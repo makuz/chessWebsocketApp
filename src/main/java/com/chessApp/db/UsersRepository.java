@@ -47,31 +47,31 @@ public class UsersRepository {
 	}
 
 	// UPDATE add trackterms
-	public void editTrackTermList(String username, List<String> trackTerms) {
-
-		logger.info("editTrackTermList()");
-
-		Update updateUserData = new Update();
-		updateUserData.set("trackTermsList", trackTerms);
-
-		Query query = new Query();
-		query.addCriteria(Criteria.where("username").is(username));
-
-		mongoTemplate.updateFirst(query, updateUserData, COLLECTION_NAME);
-
-	}
-	
-	public void removeTrackTerms(String username) {
-		logger.info("removeTrackTerms()");
-		
-		Update updateUserData = new Update();
-		updateUserData.set("trackTermsList", "");
-		Query query = new Query();
-		query.addCriteria(Criteria.where("username").is(username));
-
-		mongoTemplate.updateFirst(query, updateUserData, COLLECTION_NAME);
-
-	}
+//	public void editTrackTermList(String username, List<String> trackTerms) {
+//
+//		logger.info("editTrackTermList()");
+//
+//		Update updateUserData = new Update();
+//		updateUserData.set("trackTermsList", trackTerms);
+//
+//		Query query = new Query();
+//		query.addCriteria(Criteria.where("username").is(username));
+//
+//		mongoTemplate.updateFirst(query, updateUserData, COLLECTION_NAME);
+//
+//	}
+//	
+//	public void removeTrackTerms(String username) {
+//		logger.info("removeTrackTerms()");
+//		
+//		Update updateUserData = new Update();
+//		updateUserData.set("trackTermsList", "");
+//		Query query = new Query();
+//		query.addCriteria(Criteria.where("username").is(username));
+//
+//		mongoTemplate.updateFirst(query, updateUserData, COLLECTION_NAME);
+//
+//	}
 
 	// UPDATE add languageParamToSearch
 	public void editlanguageParamToSearch(String username,
@@ -137,6 +137,17 @@ public class UsersRepository {
 
 		return user;
 	}
+	
+	// READ ONE BY ID
+		public UserAccount getUserById(long userId) {
+
+			logger.info("getUserById()");
+			Query query = new Query();
+			query.addCriteria(Criteria.where("userId").is(userId));
+			UserAccount user = mongoTemplate.findOne(query, UserAccount.class);
+
+			return user;
+		}
 
 	// DELETE----------------------------
 	public void deleteUser(UserAccount user) {

@@ -25,6 +25,10 @@ li.list-group-item {
 	
 }
 
+div#user-info-modal ul.list-group {
+	width: 100% !important;
+}
+
 li.list-group-item span.glyphicon {
 	margin: 2% 0 2% 10%;
 	
@@ -71,10 +75,10 @@ section#onlineUsersSection {
 }
 
 section#onlineUsersSection ul li {
-	width: 250%;
+	width: 380%;
 }
 
-section#onlineUsersSection ul li button {
+section#onlineUsersSection ul li button.connectToUserBtn {
 	margin-left: 23%;
 }
 
