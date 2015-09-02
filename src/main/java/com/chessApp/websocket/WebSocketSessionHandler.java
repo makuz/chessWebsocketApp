@@ -6,24 +6,28 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-
 //import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.Session;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+
 @Service
-//@ApplicationScoped
+// @ApplicationScoped
 public class WebSocketSessionHandler {
 
 	Logger logger = Logger.getLogger(WebSocketSessionHandler.class);
 
+	Gson gson = new Gson();
+
 	private static long userID = 0;
 
-	private static Set<Session> sessions = Collections
+	private static final Set<Session> sessions = Collections
 			.synchronizedSet(new HashSet<Session>());
-	private final Set<WebSocketGameUser> gameUsers = new HashSet<>();
+	private static final Set<WebSocketGameUser> gameUsers = Collections
+			.synchronizedSet(new HashSet<WebSocketGameUser>());
 
 	public void addSession(Session session) {
 		sessions.add(session);
@@ -44,12 +48,12 @@ public class WebSocketSessionHandler {
 		gameUsers.remove(gameUser);
 		logger.info("user: " + gameUser + " removed from live game repository");
 	}
-	
+
 	public void removeUserById(long id) {
 		for (WebSocketGameUser webSocketGameUser : gameUsers) {
-			if(webSocketGameUser.getId() == id) {
+			if (webSocketGameUser.getId() == id) {
 				gameUsers.remove(webSocketGameUser);
-				
+
 			}
 		}
 	}
@@ -59,9 +63,9 @@ public class WebSocketSessionHandler {
 	}
 
 	public WebSocketGameUser getUserById(long id) {
-		
+
 		for (WebSocketGameUser webSocketGameUser : gameUsers) {
-			if(webSocketGameUser.getId() == id) {
+			if (webSocketGameUser.getId() == id) {
 				return webSocketGameUser;
 			}
 		}
@@ -77,19 +81,51 @@ public class WebSocketSessionHandler {
 			try {
 				userSession.getBasicRemote().sendText(msg);
 			} catch (IOException e) {
-				logger.info(e + "");
+				logger.info(e);
 			}
 		}
 	}
 
-	public void sendToSession(Session session, String message) {
+	public void sendToAllConnectedSessionsActualParticipantList() {
+
+		String jsonUsersList = gson.toJson(gameUsers);
+		for (Session userSession : sessions) {
+			try {
+				userSession.getBasicRemote().sendText(jsonUsersList);
+			} catch (IOException e) {
+				logger.info(e);
+			}
+		}
+	}
+
+	public void sendToSession(String sendToUsername, String message) {
+		logger.info("sendToSession()");
+
+		for (Session ses : sessions) {
+			String sessionUserName = (String) ses.getUserProperties().get(
+					"sessionOwner");
+			logger.info("sessions User name:");
+			logger.info(sessionUserName);
+
+			if (sendToUsername.equals(sessionUserName)) {
+				try {
+					ses.getBasicRemote().sendText(message);
+					break;
+				} catch (IOException e) {
+					logger.info(e);
+				}
+			}
+
+		}
+
 	}
 
 	public void printOutAllSessionsOnOpen(Session addedSession) {
 
 		logger.info("dodano sesje: " + addedSession.getId());
-		logger.info("sessionOwner: " + addedSession.getUserProperties().get("sessionOwner"));
-		
+		logger.info("sessionOwner: "
+				+ addedSession.getUserProperties().get("sessionOwner"));
+
 		logger.info("obecne sesje: ");
 		for (Session session : sessions) {
 			System.out.println(session);
@@ -113,7 +149,7 @@ public class WebSocketSessionHandler {
 		logger.info("usunieto sesje: " + removedSession.getId());
 		logger.info("sessionOwner: "
 				+ removedSession.getUserProperties().get("sessionOwner"));
-		
+
 		logger.info("pozostałe sesje: ");
 		for (Session session : sessions) {
 			System.out.println(session.getId());

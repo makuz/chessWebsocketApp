@@ -36,7 +36,7 @@
 							<br /> <input hidden="true" type="text" id="fenFromYourMove" />
 							<br />
 							<button id="sendYourMoveBtn" class="btn btn-success pull-right">send
-								your move</button>
+								your move to all</button>
 							<br />
 							<hr />
 							<button id="startPosBtn" class="btn btn-danger pull-right">start
@@ -53,13 +53,13 @@
 												class="glyphicon glyphicon-user"></span>&nbsp&nbsp<span
 												class="text-info">${onlineUser}</span> <c:choose>
 													<c:when test="${currentUserName == onlineUser }">
-														<button class="btn btn-default connectToUserBtn"
-															data-username="${onlineUser}" disabled="true">play
-															with</button>
+														<button class="btn btn-default sendToUserBtn"
+															data-username="${onlineUser}" disabled="true">send
+															move</button>
 													</c:when>
 													<c:otherwise>
-														<button class="btn btn-info connectToUserBtn"
-															data-username="${onlineUser}">play with</button>
+														<button class="btn btn-info sendToUserBtn"
+															data-username="${onlineUser}">send move</button>
 													</c:otherwise>
 												</c:choose>
 												<button data-username="${onlineUser}"
@@ -69,11 +69,24 @@
 									</ul>
 								</c:if>
 								<hr />
+								<button class="btn btn-warning pull-right"
+									id="connectToWebSocket">Połącz</button>
+								<br />
+								<br />
 								<button class="btn btn-danger pull-right" id="disconnect">Rozłącz</button>
 								<br />
+								<hr />
+								<div id="participants">
+									<h3>Participants :</h3>
+									<br />
+									<pre>
+									</pre>
+
+								</div>
 							</section>
 						</div>
 					</div>
+
 				</section>
 
 			</security:authorize>
@@ -137,13 +150,20 @@
 				sendYourMoveByFenNotation();
 			});
 
+			$('#connectToWebSocket').click(function(event) {
+				connectToWebSocket();
+				event.target = "color: blue;";
+			});
+
 			$('#disconnect').click(function() {
 				closeWsConnection();
 			});
 
-			$('.connectToUserBtn').click(function(event) {
+			$('.sendToUserBtn').click(function(event) {
+				console.log("sendToUserBtn.click()");
 				var reciever = $(this).data('username');
-				connectToUser(reciever);
+				console.log(reciever);
+				sendYourMoveByFenNotationToUser(reciever);
 				event.target.style = "color: red;";
 
 			});
@@ -160,8 +180,23 @@
 			console.log("send fen : " + fenFromYourMove.value);
 			var fenString = fenFromYourMove.value;
 			webSocket.send(JSON.stringify({
+				type : "chess-move",
 				fen : fenString,
 				senderName : '${sender}'
+			}));
+
+		};
+
+		function sendYourMoveByFenNotationToUser(reciever) {
+			console.log("send-fen : " + fenFromYourMove.value);
+			console.log(" to " + reciever);
+			console.log(" from " + '${sender}');
+			var fenString = fenFromYourMove.value;
+			webSocket.send(JSON.stringify({
+				type : "chess-move",
+				fen : fenString,
+				senderName : '${sender}',
+				sendTo : reciever
 			}));
 
 		};
@@ -173,13 +208,13 @@
 
 		};
 
-		function connectToUser(reciever) {
-			console.log('connectToUser()');
+		function connectToWebSocket() {
+			console.log('connectToWebSocket()');
 
 			// init websocket -------------------------------------
 
 			var endpointUrl = "ws://" + document.location.host
-					+ "/send-fen/${sender}/" + reciever;
+					+ "/send-fen/${sender}";
 			webSocket = new WebSocket(endpointUrl);
 			$('#connect').disabled = false;
 
@@ -187,7 +222,11 @@
 
 			webSocket.onopen = function(event) {
 				console.log("Server connected \n");
-				console.log(event);
+				console.log(event.data);
+				webSocket.send(JSON.stringify({
+					type : "welcome-msg",
+					senderName : '${sender}'
+				}));
 
 			};
 
@@ -198,17 +237,43 @@
 					var message = JSON.parse(event.data);
 					console.log("message");
 					console.log(message);
-					var fenStr = message.fen;
-					if (fenStr != null && fenStr != "") {
-						// chessboard board object
-						board.position(fenStr);
-						// chessjs game object
-						game = new Chess(fenStr);
-						updateStatus();
+
+					if (message.type == "chess-move") {
+						var fenStr = message.fen;
+						if (fenStr != null && fenStr != "") {
+							// chessboard board object
+							board.position(fenStr);
+							// chessjs game object
+							game = new Chess(fenStr);
+							updateStatus();
+						}
+					} else {
+
+						showParticipants(event.data, $('#participants pre'));
+
 					}
 				}
 
 			};
+
+			function showParticipants(data, htmlObject) {
+				var usersArr = JSON.parse(data);
+				var usernames = new Array();
+				for (var i = 0; i < usersArr.length; i++) {
+					usernames.push(usersArr[i].username);
+				}
+
+				var usersPre = htmlObject;
+				usersPre.html('');
+				var allText = "";
+				usersPre.append('<ul>');
+				for (var i = 0; i < usernames.length; i++) {
+					usersPre.append('<li>');
+					usersPre.append(usernames[i]);
+					usersPre.append('</li>');
+				}
+				usersPre.append('</ul>');
+			}
 
 			webSocket.onclose = function(event) {
 				webSocket.send("client disconnected");

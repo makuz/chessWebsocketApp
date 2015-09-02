@@ -34,7 +34,7 @@ li.list-group-item span.glyphicon {
 	
 }
 
-button.connectToUserBtn[disabled=true] {
+button.sendToUserBtn[disabled=true] {
 	color: black !important;
 }
 
@@ -75,10 +75,10 @@ section#onlineUsersSection {
 }
 
 section#onlineUsersSection ul li {
-	width: 380%;
+	width: 430%;
 }
 
-section#onlineUsersSection ul li button.connectToUserBtn {
+section#onlineUsersSection ul li button.sendToUserBtn {
 	margin-left: 23%;
 }
 
