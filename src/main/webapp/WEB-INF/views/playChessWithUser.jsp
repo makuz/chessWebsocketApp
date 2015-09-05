@@ -21,13 +21,13 @@
 					<script
 						src="<c:url value="${pageContext.request.contextPath}/resources/js/chess.js" />"></script>
 					<div id="chess-board-play-with-user">
-						<aside id="aside-board">
+						<article id="aside-board">
 							<div id="board"></div>
-							<button id="startPosBtn" class="btn btn-danger">start
+							<button id="startPosBtn" class="btn btn-info">start
 								new game</button>
-						</aside>
+						</article>
 						<!-- -------------------------- -->
-						<aside class="game-actions">
+						<article class="game-actions">
 							<div class="stats">
 								<p class="text-danger">
 									Status: <span id="status"></span>
@@ -39,7 +39,7 @@
 							<input hidden="true" type="text" id="fenFromYourMove" />
 							<section id="onlineUsersSection">
 								<hr />
-								<button class="btn btn-warning" id="connectToWebSocket">Połącz
+								<button class="btn btn-primary" id="connectToWebSocket">Połącz
 									mnie</button>
 								<button class="btn btn-danger pull-right" id="disconnect">Rozłącz
 									mnie</button>
@@ -55,7 +55,7 @@
 
 								</div>
 							</section>
-						</aside>
+						</article>
 					</div>
 
 				</section>
@@ -101,7 +101,7 @@
 
 						$(this).removeAttr("class");
 						$(this).attr("disabled", true);
-						$(this).attr("class", "btn");
+						$(this).attr("class", "btn btn-default");
 						console.log($(this));
 					});
 
@@ -111,11 +111,11 @@
 					$('#connectToWebSocket').removeAttr("class");
 					$('#connectToWebSocket').removeAttr("disabled");
 					$('#connectToWebSocket').attr("disabled", false);
-					$('#connectToWebSocket').attr("class", "btn btn-warning");
+					$('#connectToWebSocket').attr("class", "btn btn-primary");
 				}
 				$(this).removeAttr("class");
 				$(this).attr("disabled", true);
-				$(this).attr("class", "btn pull-right");
+				$(this).attr("class", "btn btn-default pull-right");
 			});
 
 			$('.sendToUserBtn').click(function(event) {
@@ -205,10 +205,11 @@
 						+ '<button class="btn btn-info sendToUserBtn" onclick="sendYourMoveByFenNotationToUser('
 						+ '\'' + usernames[i] + '\'' + ')"' + 'data-username="'
 						+ usernames[i] + '">send move</button>'
+						+ '&nbsp&nbsp'
 						+ '<button data-username="' + usernames[i] + '"'
 						+ 'onclick="showUSerInfoByAjax(' + '\'' + usernames[i]
 						+ '\'' + ')"'
-						+ 'class="btn btn-warning btn-sm user-info-btn">user'
+						+ 'class="btn btn-warning btn-sm user-info-btn">user '
 						+ 'info</button>' + '</li>';
 
 				usersPre.append(userData);

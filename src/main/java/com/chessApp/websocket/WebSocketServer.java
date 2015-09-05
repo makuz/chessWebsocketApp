@@ -54,8 +54,7 @@ public class WebSocketServer {
 
 			}
 
-		} else if (message.getType().equals("welcome-msg")
-				|| message.getType().equals("goodbye-msg")) {
+		} else if (message.getType().equals("welcome-msg")) {
 			log.info(message.getType() + " from user "
 					+ message.getSenderName());
 			webSocketSessionHandler
@@ -70,19 +69,16 @@ public class WebSocketServer {
 		log.info("connection started, websocket session id: "
 				+ wsSession.getId() + " " + sender + " open connection ");
 
-		// if (webSocketSessionHandler.userListNotContainsUser(sender)) {
-		WebSocketGameUser gameUser = new WebSocketGameUser(sender);
-		webSocketSessionHandler.addUser(gameUser);
-		webSocketSessionHandler.sendToAllConnectedSessions(gameUser
-				.getUsername());
-		wsSession.getUserProperties().put("sessionOwner",
-				gameUser.getUsername());
-
-		webSocketSessionHandler.addSession(gameUser.getUsername(), wsSession);
-		webSocketSessionHandler.printOutAllSessionsOnOpen(wsSession);
-		log.info("users list after open: ");
-		webSocketSessionHandler.printOutUsersList();
-		// }
+		if (webSocketSessionHandler.userListNotContainsUser(sender)) {
+			WebSocketGameUser gameUser = new WebSocketGameUser(sender);
+			webSocketSessionHandler.addUser(gameUser);
+			webSocketSessionHandler.sendToAllConnectedSessions(gameUser
+					.getUsername());
+			wsSession.getUserProperties().put("sessionOwner",
+					gameUser.getUsername());
+			webSocketSessionHandler.addSession(gameUser.getUsername(),
+					wsSession);
+		}
 
 	}
 
@@ -97,11 +93,6 @@ public class WebSocketServer {
 		}
 		webSocketSessionHandler
 				.sendToAllConnectedSessionsActualParticipantList();
-		// webSocketSessionHandler.printOutAllSessionsOnClose(wsSession);
-		log.info("users list after close: ");
-		synchronized (webSocketSessionHandler) {
-			webSocketSessionHandler.printOutUsersList();
-		}
 
 	}
 

@@ -9,7 +9,7 @@
 	border-radius: 5px;
 }
 
-aside, section {
+article, section {
 	display: block;
 }
 
@@ -73,7 +73,7 @@ div#chess-board-play-with-user div#board {
 	margin-right: 3%;
 }
 
-div#chess-board-play-with-user aside#aside-board {
+div#chess-board-play-with-user article#aside-board {
 	float: left;
 	margin-right: 1%;
 }
@@ -90,7 +90,7 @@ section#onlineUsersSection ul li button.sendToUserBtn {
 	margin-left: 23%;
 }
 
-div#chess-board-play-with-user aside.game-actions {
+div#chess-board-play-with-user article.game-actions {
 	padding: 0.9%;
 	width: 490px;
 	float: left;
@@ -98,7 +98,7 @@ div#chess-board-play-with-user aside.game-actions {
 	margin-top: 0.5%;
 }
 
-div#chess-board-play-with-user aside.game-actions div.stats {
+div#chess-board-play-with-user article.game-actions div.stats {
 	background-color: snow;
 	word-wrap: break word;
 	padding: 0.8%;
