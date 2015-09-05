@@ -13,19 +13,19 @@
 			<div class="modal-body text-center">
 				<ul class="list-group">
 					<li class="list-group-item">
-						<h3 id="usernameResponse">login:</h3>
+						<h3 id="usernameResponse"></h3>
 					</li>
 					<li class="list-group-item">
-						<p id="userIdResponse">id:</p>
+						<p id="userIdResponse"></p>
 					</li>
 					<li class="list-group-item">
-						<p id="userEmailResponse">email:</p>
+						<p id="userEmailResponse"></p>
 					</li>
 					<li class="list-group-item">
-						<p id="userNameResponse">name:</p>
+						<p id="userNameResponse"></p>
 					</li>
 					<li class="list-group-item">
-						<p id="userLastnameResponse">lastname:</p>
+						<p id="userLastnameResponse"></p>
 					</li>
 				</ul>
 			</div>

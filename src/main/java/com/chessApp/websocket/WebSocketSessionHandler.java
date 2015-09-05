@@ -1,12 +1,9 @@
 package com.chessApp.websocket;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
-//import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.Session;
 
 import org.apache.log4j.Logger;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 
 @Service
-// @ApplicationScoped
 public class WebSocketSessionHandler {
 
 	Logger logger = Logger.getLogger(WebSocketSessionHandler.class);
@@ -24,60 +20,42 @@ public class WebSocketSessionHandler {
 
 	private static long userID = 0;
 
-	private static final Set<Session> sessions = Collections
-			.synchronizedSet(new HashSet<Session>());
-	private static final Set<WebSocketGameUser> gameUsers = Collections
-			.synchronizedSet(new HashSet<WebSocketGameUser>());
+	private static final Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 
-	public void addSession(Session session) {
-		sessions.add(session);
+	private static final Map<String, WebSocketGameUser> gameUsersMap = new ConcurrentHashMap<>();
+
+	public synchronized Boolean userListNotContainsUser(String username) {
+
+		if (gameUsersMap.containsKey(username)) {
+			return false;
+		}
+
+		return true;
 	}
 
-	public void removeSession(Session session) {
-		sessions.remove(session);
+	public synchronized void addSession(String username, Session session) {
+		sessionsMap.put(username, session);
 	}
 
-	public void addUser(WebSocketGameUser gameUser) {
+	public synchronized void removeSession(String username) {
+		sessionsMap.remove(username);
+	}
+
+	public synchronized void addUser(WebSocketGameUser gameUser) {
 		userID++;
 		gameUser.setId(userID);
-		gameUsers.add(gameUser);
+		gameUsersMap.put(gameUser.getUsername(), gameUser);
 		logger.info("user: " + gameUser + " added to live game repository");
 	}
 
-	public void removeUser(WebSocketGameUser gameUser) {
-		gameUsers.remove(gameUser);
+	public synchronized void removeUser(WebSocketGameUser gameUser) {
+		gameUsersMap.remove(gameUser);
 		logger.info("user: " + gameUser + " removed from live game repository");
 	}
 
-	public void removeUserById(long id) {
-		for (WebSocketGameUser webSocketGameUser : gameUsers) {
-			if (webSocketGameUser.getId() == id) {
-				gameUsers.remove(webSocketGameUser);
-
-			}
-		}
-	}
-
-	public void toggleUser(long id) {
-
-	}
-
-	public WebSocketGameUser getUserById(long id) {
-
-		for (WebSocketGameUser webSocketGameUser : gameUsers) {
-			if (webSocketGameUser.getId() == id) {
-				return webSocketGameUser;
-			}
-		}
-		return null;
-	}
-
-	public String createAddMessage(WebSocketGameUser user) {
-		return null;
-	}
-
 	public void sendToAllConnectedSessions(String msg) {
-		for (Session userSession : sessions) {
+		for (String username : sessionsMap.keySet()) {
+			Session userSession = sessionsMap.get(username);
 			try {
 				userSession.getBasicRemote().sendText(msg);
 			} catch (IOException e) {
@@ -88,8 +66,9 @@ public class WebSocketSessionHandler {
 
 	public void sendToAllConnectedSessionsActualParticipantList() {
 
-		String jsonUsersList = gson.toJson(gameUsers);
-		for (Session userSession : sessions) {
+		String jsonUsersList = gson.toJson(gameUsersMap.values());
+		for (String username : sessionsMap.keySet()) {
+			Session userSession = sessionsMap.get(username);
 			try {
 				userSession.getBasicRemote().sendText(jsonUsersList);
 			} catch (IOException e) {
@@ -98,24 +77,16 @@ public class WebSocketSessionHandler {
 		}
 	}
 
-	public void sendToSession(String sendToUsername, String message) {
+	public void sendToSession(String sendToUsernameName, String message) {
 		logger.info("sendToSession()");
 
-		for (Session ses : sessions) {
-			String sessionUserName = (String) ses.getUserProperties().get(
-					"sessionOwner");
-			logger.info("sessions User name:");
-			logger.info(sessionUserName);
-
-			if (sendToUsername.equals(sessionUserName)) {
-				try {
-					ses.getBasicRemote().sendText(message);
-					break;
-				} catch (IOException e) {
-					logger.info(e);
-				}
+		Session userSession = sessionsMap.get(sendToUsernameName);
+		if (userSession != null) {
+			try {
+				userSession.getBasicRemote().sendText(message);
+			} catch (IOException e) {
+				logger.debug(e);
 			}
-
 		}
 
 	}
@@ -127,20 +98,19 @@ public class WebSocketSessionHandler {
 				+ addedSession.getUserProperties().get("sessionOwner"));
 
 		logger.info("obecne sesje: ");
-		for (Session session : sessions) {
+		for (String username : sessionsMap.keySet()) {
+			Session session = sessionsMap.get(username);
 			System.out.println(session);
 		}
 
 	}
 
-	public Boolean userIsAllreadyConnected(String username) {
-		for (Session userSession : sessions) {
-
-			Map<String, Object> userPropertiesInSession = userSession
-					.getUserProperties();
-			if (userPropertiesInSession.containsValue(username)) {
-				return true;
-			}
+	public Boolean isUserAllreadyConnected(String username) {
+		Session userSession = sessionsMap.get(username);
+		Map<String, Object> userPropertiesInSession = userSession
+				.getUserProperties();
+		if (userPropertiesInSession.containsValue(username)) {
+			return true;
 		}
 		return false;
 	}
@@ -151,7 +121,8 @@ public class WebSocketSessionHandler {
 				+ removedSession.getUserProperties().get("sessionOwner"));
 
 		logger.info("pozostałe sesje: ");
-		for (Session session : sessions) {
+		for (String username : sessionsMap.keySet()) {
+			Session session = sessionsMap.get(username);
 			System.out.println(session.getId());
 		}
 	}

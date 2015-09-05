@@ -2,7 +2,6 @@ package com.chessApp.websocket;
 
 import java.io.IOException;
 
-//import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 
 @Service
-// @ApplicationScoped
 @ServerEndpoint("/send-fen/{sender}")
 public class WebSocketServer {
 
@@ -74,14 +72,18 @@ public class WebSocketServer {
 		log.info("connection started, websocket session id: "
 				+ wsSession.getId() + " " + sender + " open connection ");
 
-		webSocketSessionHandler.sendToAllConnectedSessions(sender);
+//		if (webSocketSessionHandler.userListNotContainsUser(sender)) {
+			WebSocketGameUser gameUser = new WebSocketGameUser(sender);
+			webSocketSessionHandler.addUser(gameUser);
+			webSocketSessionHandler.sendToAllConnectedSessions(gameUser
+					.getUsername());
+			wsSession.getUserProperties().put("sessionOwner",
+					gameUser.getUsername());
 
-		WebSocketGameUser gameUser = new WebSocketGameUser(sender);
-		webSocketSessionHandler.addUser(gameUser);
-		wsSession.getUserProperties().put("sessionOwner",
-				gameUser.getUsername());
-		webSocketSessionHandler.addSession(wsSession);
-		webSocketSessionHandler.printOutAllSessionsOnOpen(wsSession);
+			webSocketSessionHandler.addSession(gameUser.getUsername(),
+					wsSession);
+			webSocketSessionHandler.printOutAllSessionsOnOpen(wsSession);
+//		}
 
 	}
 
@@ -94,7 +96,7 @@ public class WebSocketServer {
 		webSocketSessionHandler.removeUser(gameUser);
 		webSocketSessionHandler.sendToAllConnectedSessions(sender
 				+ " closed connection");
-		webSocketSessionHandler.removeSession(wsSession);
+		webSocketSessionHandler.removeSession(gameUser.getUsername());
 		webSocketSessionHandler.printOutAllSessionsOnClose(wsSession);
 
 	}

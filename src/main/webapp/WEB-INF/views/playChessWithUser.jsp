@@ -44,6 +44,8 @@
 							<br />
 							<section id="onlineUsersSection">
 								<br />
+
+
 								<hr />
 								<h3>online users: ${usersCount}</h3>
 								<c:if test="${onlineUsers != null}">
@@ -68,19 +70,19 @@
 										</c:forEach>
 									</ul>
 								</c:if>
+
+
 								<hr />
 								<button class="btn btn-warning pull-right"
 									id="connectToWebSocket">Połącz</button>
-								<br />
-								<br />
+								<br /> <br />
 								<button class="btn btn-danger pull-right" id="disconnect">Rozłącz</button>
 								<br />
 								<hr />
 								<div id="participants">
 									<h3>Participants :</h3>
 									<br />
-									<pre>
-									</pre>
+									<div id="participants-user-names"></div>
 
 								</div>
 							</section>
@@ -120,6 +122,7 @@
 
 			$('.user-info-btn').click(
 					function() {
+						console.log("$('.user-info-btn').click()");
 						$('#user-info-modal').modal('show');
 						var login = $(this).data('username');
 
@@ -129,16 +132,16 @@
 								username : login
 							},
 							success : function(response) {
-								$('#usernameResponse').append(
-										" " + response.username);
-								$('#userIdResponse').append(
-										" " + response.userId);
-								$('#userEmailResponse').append(
-										" " + response.email);
-								$('#userNameResponse').append(
-										" " + response.name);
-								$('#userLastnameResponse').append(
-										" " + response.lastname);
+								$('#usernameResponse').text(
+										"login: " + response.username);
+								$('#userIdResponse').text(
+										"id: " + response.userId);
+								$('#userEmailResponse').text(
+										"email: " + response.email);
+								$('#userNameResponse').text(
+										"name: " + response.name);
+								$('#userLastnameResponse').text(
+										"lastname: " + response.lastname);
 							}
 						}
 
@@ -175,6 +178,24 @@
 		});
 
 		// functions -------------------------------------------
+
+		function showUSerInfoByAjax(login) {
+			$('#user-info-modal').modal('show');
+			$.ajax({
+				url : "user/get-user-info-by-username",
+				data : {
+					username : login
+				},
+				success : function(response) {
+					$('#usernameResponse').text("login: " + response.username);
+					$('#userIdResponse').text("id: " + response.userId);
+					$('#userEmailResponse').text("email: " + response.email);
+					$('#userNameResponse').text("name: " + response.name);
+					$('#userLastnameResponse').text(
+							"lastname: " + response.lastname);
+				}
+			});
+		}
 
 		function sendYourMoveByFenNotation() {
 			console.log("send fen : " + fenFromYourMove.value);
@@ -249,7 +270,7 @@
 						}
 					} else {
 
-						showParticipants(event.data, $('#participants pre'));
+						showParticipants(event.data, $('#participants div'));
 
 					}
 				}
@@ -266,10 +287,34 @@
 				var usersPre = htmlObject;
 				usersPre.html('');
 				var allText = "";
-				usersPre.append('<ul>');
+				usersPre.append('<ul class="list-group">');
 				for (var i = 0; i < usernames.length; i++) {
-					usersPre.append('<li>');
-					usersPre.append(usernames[i]);
+					usersPre.append('<li class="list-group-item game-user">');
+
+					var userData = '<span class="glyphicon glyphicon-user"></span>&nbsp&nbsp'
+							+ '<span class="text-info username">'
+							+ usernames[i]
+							+ '</span>'
+							+ '<button class="btn btn-info sendToUserBtn" onclick="sendYourMoveByFenNotationToUser('
+							+ '\''
+							+ usernames[i]
+							+ '\''
+							+ ')"'
+							+ 'data-username="'
+							+ usernames[i]
+							+ '">send move</button>'
+							+ '<button data-username="'
+							+ usernames[i]
+							+ '"'
+							+ 'onclick="showUSerInfoByAjax('
+							+ '\''
+							+ usernames[i]
+							+ '\''
+							+ ')"'
+							+ 'class="btn btn-warning btn-sm user-info-btn">user'
+							+ 'info</button>';
+
+					usersPre.append(userData);
 					usersPre.append('</li>');
 				}
 				usersPre.append('</ul>');
