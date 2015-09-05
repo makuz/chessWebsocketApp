@@ -1,6 +1,9 @@
 package com.chessApp.websocket;
 
-public class Message {
+import org.springframework.stereotype.Component;
+
+@Component
+public class WebSocketMessage {
 
 	private String type;
 
@@ -9,6 +12,10 @@ public class Message {
 	private String senderName;
 
 	private String sendTo;
+
+	public WebSocketMessage() {
+
+	}
 
 	public String getType() {
 		return type;
@@ -47,7 +54,5 @@ public class Message {
 		return "Message [type=" + type + ", fen=" + fen + ", senderName="
 				+ senderName + ", sendTo=" + sendTo + "]";
 	}
-	
-	
 
 }

@@ -24,7 +24,8 @@ public class WebSocketServer {
 
 	private final static Logger log = Logger.getLogger(WebSocketServer.class);
 
-	WebSocketSessionHandler webSocketSessionHandler = new WebSocketSessionHandler();
+	WebSocketSessionHandler sessionHandler = new WebSocketSessionHandler();
+	WebsocketUsesrHandler usesrHandler = new WebsocketUsesrHandler();
 
 	Gson gson = new Gson();
 
@@ -36,7 +37,7 @@ public class WebSocketServer {
 		log.info("string msg");
 		log.info(msg);
 
-		Message message = gson.fromJson(msg, Message.class);
+		WebSocketMessage message = gson.fromJson(msg, WebSocketMessage.class);
 
 		log.info("obiekt message");
 		log.info(message);
@@ -50,15 +51,14 @@ public class WebSocketServer {
 
 				log.info("do usera " + message.getSendTo());
 
-				webSocketSessionHandler.sendToSession(message.getSendTo(), msg);
+				sessionHandler.sendToSession(message.getSendTo(), msg);
 
 			}
 
 		} else if (message.getType().equals("welcome-msg")) {
 			log.info(message.getType() + " from user "
 					+ message.getSenderName());
-			webSocketSessionHandler
-					.sendToAllConnectedSessionsActualParticipantList();
+			sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 		}
 
 	}
@@ -69,15 +69,16 @@ public class WebSocketServer {
 		log.info("connection started, websocket session id: "
 				+ wsSession.getId() + " " + sender + " open connection ");
 
-		if (webSocketSessionHandler.userListNotContainsUser(sender)) {
+		if (usesrHandler.userListNotContainsUsername(sender)) {
+
 			WebSocketGameUser gameUser = new WebSocketGameUser(sender);
-			webSocketSessionHandler.addUser(gameUser);
-			webSocketSessionHandler.sendToAllConnectedSessions(gameUser
-					.getUsername());
-			wsSession.getUserProperties().put("sessionOwner",
-					gameUser.getUsername());
-			webSocketSessionHandler.addSession(gameUser.getUsername(),
-					wsSession);
+			synchronized (this) {
+				wsSession.getUserProperties().put("sessionOwner",
+						gameUser.getUsername());
+				sessionHandler.addSession(gameUser.getUsername(), wsSession);
+				usesrHandler.addWebsocketUser(gameUser);
+			}
+			sessionHandler.sendToAllConnectedSessions(gameUser.getUsername());
 		}
 
 	}
@@ -87,12 +88,11 @@ public class WebSocketServer {
 			@PathParam("sender") String sender) {
 		log.info("connection closed. Reason: " + closeReason.getReasonPhrase());
 		log.info(sender);
-		synchronized (webSocketSessionHandler) {
-			webSocketSessionHandler.removeUser(sender);
-			webSocketSessionHandler.removeSession(sender);
+		synchronized (this) {
+			usesrHandler.removeWebsocketUser(sender);
+			sessionHandler.removeSession(sender);
 		}
-		webSocketSessionHandler
-				.sendToAllConnectedSessionsActualParticipantList();
+		sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 
 	}
 

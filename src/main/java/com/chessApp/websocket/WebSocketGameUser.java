@@ -1,14 +1,20 @@
 package com.chessApp.websocket;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class WebSocketGameUser {
-	
+
 	private long id;
 	private String username;
-	
+
+	public WebSocketGameUser() {
+	}
+
 	public WebSocketGameUser(String username) {
 		this.username = username;
 	}
-	
+
 	private long numberOfScores;
 
 	public long getId() {
@@ -39,7 +45,5 @@ public class WebSocketGameUser {
 	public String toString() {
 		return "WebSocketGameUser [id=" + id + ", username=" + username + "]";
 	}
-	
-	
 
 }

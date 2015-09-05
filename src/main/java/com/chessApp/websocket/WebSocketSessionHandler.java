@@ -17,21 +17,9 @@ public class WebSocketSessionHandler {
 	Logger logger = Logger.getLogger(WebSocketSessionHandler.class);
 
 	Gson gson = new Gson();
-
-	private static long userID = 0;
-
+	
 	private static final Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 
-	private static final Map<String, WebSocketGameUser> gameUsersMap = new ConcurrentHashMap<>();
-
-	public synchronized Boolean userListNotContainsUser(String username) {
-
-		if (gameUsersMap.containsKey(username)) {
-			return false;
-		}
-
-		return true;
-	}
 
 	public synchronized void addSession(String username, Session session) {
 		sessionsMap.put(username, session);
@@ -42,22 +30,7 @@ public class WebSocketSessionHandler {
 		logger.info("session: " + session.getId() + " removed");
 	}
 
-	public synchronized void addUser(WebSocketGameUser gameUser) {
-		userID++;
-		gameUser.setId(userID);
-		gameUsersMap.put(gameUser.getUsername(), gameUser);
-		logger.info("user: " + gameUser + " added to live game repository");
-	}
 
-	public synchronized WebSocketGameUser getUser(String username) {
-		WebSocketGameUser gameUser = gameUsersMap.get(username);
-		return gameUser;
-	}
-
-	public synchronized void removeUser(String username) {
-		WebSocketGameUser gameUser = gameUsersMap.remove(username);
-		logger.info("user: " + gameUser + " removed from live game repository");
-	}
 
 	public void sendToAllConnectedSessions(String msg) {
 		for (String username : sessionsMap.keySet()) {
@@ -70,17 +43,10 @@ public class WebSocketSessionHandler {
 		}
 	}
 
-	public void printOutUsersList() {
-		logger.info("printOutUsersList()");
-		for (String key : gameUsersMap.keySet()) {
-			System.out.println(gameUsersMap.get(key));
-		}
-
-	}
 
 	public synchronized void sendToAllConnectedSessionsActualParticipantList() {
-
-		String jsonUsersList = gson.toJson(gameUsersMap.values());
+		
+		String jsonUsersList = gson.toJson(WebsocketUsesrHandler.gameUsersMap.values());
 		for (String username : sessionsMap.keySet()) {
 			Session userSession = sessionsMap.get(username);
 			try {
@@ -119,7 +85,7 @@ public class WebSocketSessionHandler {
 
 	}
 
-	public Boolean isUserAllreadyConnected(String username) {
+	public Boolean userHaveSessionAndIsConnected(String username) {
 		Session userSession = sessionsMap.get(username);
 		Map<String, Object> userPropertiesInSession = userSession
 				.getUserProperties();
