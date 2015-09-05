@@ -23,11 +23,12 @@ import com.google.gson.Gson;
 public class WebSocketServer {
 
 	private final static Logger log = Logger.getLogger(WebSocketServer.class);
-
-	WebSocketSessionHandler sessionHandler = new WebSocketSessionHandler();
-	WebsocketUsesrHandler usesrHandler = new WebsocketUsesrHandler();
-
-	Gson gson = new Gson();
+	
+	private final WebSocketSessionHandler sessionHandler = new WebSocketSessionHandler();
+	
+	private final WebsocketUsesrHandler usesrHandler = new WebsocketUsesrHandler();
+	
+	private Gson gson = new Gson();
 
 	@OnMessage
 	public void onMessage(String msg, Session wsSession,

@@ -1,6 +1,5 @@
 package com.chessApp.db;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import com.chessApp.enams.UserRoles;
 import com.chessApp.model.UserAccount;
 
 
@@ -31,6 +30,7 @@ public class LocalAuthenticationProvider extends
 
 	@Autowired
 	private UsersRepository usersRepository;
+	
 	@Autowired
 	private PasswordEncoder encoder;
 	
@@ -76,9 +76,10 @@ public class LocalAuthenticationProvider extends
 				&& hashPassword.equals(user.getPassword())
 				&& hashPassword != null) {
 
-			final List<GrantedAuthority> auths = getAuthorities(user.getRole());
+			final List<GrantedAuthority> auths = UserRoles.getUserRoles(user.getRole());
 
-			return new User(user.getUsername(), user.getPassword(), true, // enabled
+			return new User(user.getUsername(), user.getPassword(), 
+					true, // enabled
 					true, // account not expired
 					true, // credentials not expired
 					true, // account not locked
@@ -90,15 +91,15 @@ public class LocalAuthenticationProvider extends
 
 	}
 
-	public List<GrantedAuthority> getAuthorities(Integer role) {
-		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-		if (role.intValue() == 1) {
-			authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-			authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-		} else if (role.intValue() == 2) {
-			authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-		}
-		return authList;
-	}
+//	public List<GrantedAuthority> getAuthorities(Integer role) {
+//		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+//		if (role.intValue() == 1) {
+//			authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+//			authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+//		} else if (role.intValue() == 2) {
+//			authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+//		}
+//		return authList;
+//	}
 
 }

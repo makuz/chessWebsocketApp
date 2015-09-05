@@ -14,12 +14,12 @@ import com.google.gson.Gson;
 @Service
 public class WebSocketSessionHandler {
 
-	Logger logger = Logger.getLogger(WebSocketSessionHandler.class);
-
-	Gson gson = new Gson();
+	private static final Logger logger = Logger
+			.getLogger(WebSocketSessionHandler.class);
 	
 	private static final Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
-
+	
+	private Gson gson = new Gson();
 
 	public synchronized void addSession(String username, Session session) {
 		sessionsMap.put(username, session);
@@ -29,8 +29,6 @@ public class WebSocketSessionHandler {
 		Session session = sessionsMap.remove(username);
 		logger.info("session: " + session.getId() + " removed");
 	}
-
-
 
 	public void sendToAllConnectedSessions(String msg) {
 		for (String username : sessionsMap.keySet()) {
@@ -43,10 +41,10 @@ public class WebSocketSessionHandler {
 		}
 	}
 
-
 	public synchronized void sendToAllConnectedSessionsActualParticipantList() {
-		
-		String jsonUsersList = gson.toJson(WebsocketUsesrHandler.gameUsersMap.values());
+
+		String jsonUsersList = gson.toJson(WebsocketUsesrHandler.gameUsersMap
+				.values());
 		for (String username : sessionsMap.keySet()) {
 			Session userSession = sessionsMap.get(username);
 			try {

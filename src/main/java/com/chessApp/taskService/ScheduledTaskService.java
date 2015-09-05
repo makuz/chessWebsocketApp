@@ -2,10 +2,8 @@ package com.chessApp.taskService;
 
 import java.util.Date;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import com.chessApp.db.UsersRepository;
 
 /*
  * narazie klasa nie używana
@@ -13,9 +11,6 @@ import com.chessApp.db.UsersRepository;
 @Component
 public class ScheduledTaskService {
 
-	@Autowired
-	private UsersRepository repository;
-	
 	private static final Logger logger = Logger
 			.getLogger(ScheduledTaskService.class);
 	

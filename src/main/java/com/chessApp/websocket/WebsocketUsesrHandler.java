@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class WebsocketUsesrHandler {
 
-	Logger logger = Logger.getLogger(WebsocketUsesrHandler.class);
-
+	private static final Logger logger = Logger
+			.getLogger(WebsocketUsesrHandler.class);
+	
 	private static long userID = 0;
-
+	
 	protected static final Map<String, WebSocketGameUser> gameUsersMap = new ConcurrentHashMap<>();
 
 	public synchronized Boolean userListNotContainsUsername(String username) {
@@ -24,7 +25,7 @@ public class WebsocketUsesrHandler {
 
 	public synchronized void addWebsocketUser(WebSocketGameUser gameUser) {
 		logger.debug("");
-		
+
 		userID++;
 		gameUser.setId(userID);
 		gameUsersMap.put(gameUser.getUsername(), gameUser);

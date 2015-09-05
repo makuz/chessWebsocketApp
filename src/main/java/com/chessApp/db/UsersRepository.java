@@ -74,20 +74,20 @@ public class UsersRepository {
 //	}
 
 	// UPDATE add languageParamToSearch
-	public void editlanguageParamToSearch(String username,
-			String languageParamToSearch) {
-
-		logger.info("editlanguageParamToSearch()");
-
-		Update updateUserData = new Update();
-		updateUserData.set("languageParamToSearch", languageParamToSearch);
-
-		Query query = new Query();
-		query.addCriteria(Criteria.where("username").is(username));
-
-		mongoTemplate.updateFirst(query, updateUserData, COLLECTION_NAME);
-
-	}
+//	public void editlanguageParamToSearch(String username,
+//			String languageParamToSearch) {
+//
+//		logger.info("editlanguageParamToSearch()");
+//
+//		Update updateUserData = new Update();
+//		updateUserData.set("languageParamToSearch", languageParamToSearch);
+//
+//		Query query = new Query();
+//		query.addCriteria(Criteria.where("username").is(username));
+//
+//		mongoTemplate.updateFirst(query, updateUserData, COLLECTION_NAME);
+//
+//	}
 
 	// autoIncrement function
 	public void incrementUserId(UserAccount usertoUpdate) {
@@ -182,7 +182,7 @@ public class UsersRepository {
 	}
 
 	// -------------------------------------------------------------
-	// hash function
+	// hash function for password
 	public String encryptUserPassword(String password) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("SHA");
 		md.update(password.getBytes());
