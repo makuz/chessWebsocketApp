@@ -82,7 +82,10 @@
 								<div id="participants">
 									<h3>Participants :</h3>
 									<br />
-									<div id="participants-user-names"></div>
+									<div id="participants-user-names">
+										<ul class="list-group"></ul>
+
+									</div>
 
 								</div>
 							</section>
@@ -119,35 +122,6 @@
 
 		// main ------------------------------------------------
 		$(function() {
-
-			$('.user-info-btn').click(
-					function() {
-						console.log("$('.user-info-btn').click()");
-						$('#user-info-modal').modal('show');
-						var login = $(this).data('username');
-
-						$.ajax({
-							url : "user/get-user-info-by-username",
-							data : {
-								username : login
-							},
-							success : function(response) {
-								$('#usernameResponse').text(
-										"login: " + response.username);
-								$('#userIdResponse').text(
-										"id: " + response.userId);
-								$('#userEmailResponse').text(
-										"email: " + response.email);
-								$('#userNameResponse').text(
-										"name: " + response.name);
-								$('#userLastnameResponse').text(
-										"lastname: " + response.lastname);
-							}
-						}
-
-						);
-
-					});
 
 			$('#sendYourMoveBtn').click(function() {
 				sendYourMoveByFenNotation();
@@ -254,6 +228,7 @@
 			webSocket.onmessage = function(event) {
 				console.log("onmessage: ");
 				console.log(event);
+				
 				if (event != null) {
 					var message = JSON.parse(event.data);
 					console.log("message");
@@ -270,7 +245,16 @@
 						}
 					} else {
 
-						showParticipants(event.data, $('#participants div'));
+						showParticipants(event.data, $('#participants div ul'));
+						
+						$('#participants div ul li span.username').each(function(){
+							console.log("-----------dfgdfg----------------------dfgdg-");
+							console.log($(this).text());
+							if($(this).text() == '${sender}') {
+								$(this).next().attr('disabled', true);
+								$(this).parent().css('background-color', '#B9BCBD');
+							}
+						});
 
 					}
 				}
@@ -287,11 +271,10 @@
 				var usersPre = htmlObject;
 				usersPre.html('');
 				var allText = "";
-				usersPre.append('<ul class="list-group">');
 				for (var i = 0; i < usernames.length; i++) {
-					usersPre.append('<li class="list-group-item game-user">');
 
-					var userData = '<span class="glyphicon glyphicon-user"></span>&nbsp&nbsp'
+					var userData = '<li class="list-group-item game-user">'
+							+ '<span class="glyphicon glyphicon-user"></span>&nbsp&nbsp'
 							+ '<span class="text-info username">'
 							+ usernames[i]
 							+ '</span>'
@@ -312,12 +295,10 @@
 							+ '\''
 							+ ')"'
 							+ 'class="btn btn-warning btn-sm user-info-btn">user'
-							+ 'info</button>';
+							+ 'info</button>' + '</li>';
 
 					usersPre.append(userData);
-					usersPre.append('</li>');
 				}
-				usersPre.append('</ul>');
 			}
 
 			webSocket.onclose = function(event) {
