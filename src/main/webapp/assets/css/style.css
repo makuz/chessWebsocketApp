@@ -9,6 +9,10 @@
 	border-radius: 5px;
 }
 
+aside, section {
+	display: block;
+}
+
 .user-create-msg {
 	width: 80%;
 	margin: 10% auto 0 auto;
@@ -66,12 +70,16 @@ input#fenToSet, input#fenFromYourMove, input#moveInput, input#moveOutput {
 div#chess-board-play-with-user div#board {
 	width: 550px;
 	padding: 1%;
-	float: left;
 	margin-right: 3%;
 }
 
+div#chess-board-play-with-user aside#aside-board {
+	float: left;
+	margin-right: 1%;
+}
+
 section#onlineUsersSection {
-	
+	margin: 0 auto;
 }
 
 section#onlineUsersSection ul li {
@@ -82,15 +90,15 @@ section#onlineUsersSection ul li button.sendToUserBtn {
 	margin-left: 23%;
 }
 
-div.game-actions-user {
+div#chess-board-play-with-user aside.game-actions {
 	padding: 0.9%;
 	width: 490px;
 	float: left;
 	border: 2px black solid;
-	margin-top: 1%;
+	margin-top: 0.5%;
 }
 
-div.game-actions-user div.stats {
+div#chess-board-play-with-user aside.game-actions div.stats {
 	background-color: snow;
 	word-wrap: break word;
 	padding: 0.8%;

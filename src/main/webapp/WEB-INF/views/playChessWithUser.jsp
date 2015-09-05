@@ -21,9 +21,13 @@
 					<script
 						src="<c:url value="${pageContext.request.contextPath}/resources/js/chess.js" />"></script>
 					<div id="chess-board-play-with-user">
-						<div id="board"></div>
-						<div class="game-actions-user">
-							<br /> <br />
+						<aside id="aside-board">
+							<div id="board"></div>
+							<button id="startPosBtn" class="btn btn-danger">start
+								new game</button>
+						</aside>
+						<!-- -------------------------- -->
+						<aside class="game-actions">
 							<div class="stats">
 								<p class="text-danger">
 									Status: <span id="status"></span>
@@ -32,51 +36,13 @@
 								</small><br /> <small class="text-warning"> PGN: <span id="pgn"></span>
 								</small>
 							</div>
-							<hr />
-							<br /> <input hidden="true" type="text" id="fenFromYourMove" />
-							<br />
-							<button id="sendYourMoveBtn" class="btn btn-success pull-right">send
-								your move to all</button>
-							<br />
-							<hr />
-							<button id="startPosBtn" class="btn btn-danger pull-right">start
-								new game</button>
-							<br />
+							<input hidden="true" type="text" id="fenFromYourMove" />
 							<section id="onlineUsersSection">
-								<br />
-
-
 								<hr />
-								<h3>online users: ${usersCount}</h3>
-								<c:if test="${onlineUsers != null}">
-									<ul class="list-group">
-										<c:forEach items="${onlineUsers}" var="onlineUser">
-											<li class="list-group-item"><span
-												class="glyphicon glyphicon-user"></span>&nbsp&nbsp<span
-												class="text-info">${onlineUser}</span> <c:choose>
-													<c:when test="${currentUserName == onlineUser }">
-														<button class="btn btn-default sendToUserBtn"
-															data-username="${onlineUser}" disabled="true">send
-															move</button>
-													</c:when>
-													<c:otherwise>
-														<button class="btn btn-info sendToUserBtn"
-															data-username="${onlineUser}">send move</button>
-													</c:otherwise>
-												</c:choose>
-												<button data-username="${onlineUser}"
-													class="btn btn-warning btn-sm user-info-btn">user
-													info</button></li>
-										</c:forEach>
-									</ul>
-								</c:if>
-
-
-								<hr />
-								<button class="btn btn-warning pull-right"
-									id="connectToWebSocket">Połącz</button>
-								<br /> <br />
-								<button class="btn btn-danger pull-right" id="disconnect">Rozłącz</button>
+								<button class="btn btn-warning" id="connectToWebSocket">Połącz
+									mnie</button>
+								<button class="btn btn-danger pull-right" id="disconnect">Rozłącz
+									mnie</button>
 								<br />
 								<hr />
 								<div id="participants">
@@ -89,7 +55,7 @@
 
 								</div>
 							</section>
-						</div>
+						</aside>
 					</div>
 
 				</section>
@@ -123,17 +89,33 @@
 		// main ------------------------------------------------
 		$(function() {
 
-			$('#sendYourMoveBtn').click(function() {
-				sendYourMoveByFenNotation();
-			});
+			$('#connectToWebSocket').click(
+					function(event) {
+						connectToWebSocket();
+						if ($('#disconnect').attr("disabled", true)) {
+							$('#disconnect').removeAttr("class");
+							$('#disconnect').attr("disabled", false);
+							$('#disconnect').attr("class",
+									"btn btn-danger pull-right");
+						}
 
-			$('#connectToWebSocket').click(function(event) {
-				connectToWebSocket();
-				event.target = "color: blue;";
-			});
+						$(this).removeAttr("class");
+						$(this).attr("disabled", true);
+						$(this).attr("class", "btn");
+						console.log($(this));
+					});
 
 			$('#disconnect').click(function() {
 				closeWsConnection();
+				if ($('#connectToWebSocket').attr("disabled", true)) {
+					$('#connectToWebSocket').removeAttr("class");
+					$('#connectToWebSocket').removeAttr("disabled");
+					$('#connectToWebSocket').attr("disabled", false);
+					$('#connectToWebSocket').attr("class", "btn btn-warning");
+				}
+				$(this).removeAttr("class");
+				$(this).attr("disabled", true);
+				$(this).attr("class", "btn pull-right");
 			});
 
 			$('.sendToUserBtn').click(function(event) {
@@ -141,12 +123,17 @@
 				var reciever = $(this).data('username');
 				console.log(reciever);
 				sendYourMoveByFenNotationToUser(reciever);
-				event.target.style = "color: red;";
+				event.target.style = "color: red;";	function sendYourMoveByFenNotation() {
+					console.log("send fen : " + fenFromYourMove.value);
+					var fenString = fenFromYourMove.value;
+					webSocket.send(JSON.stringify({
+						type : "chess-move",
+						fen : fenString,
+						senderName : '${sender}'
+					}));
 
-			});
+				};
 
-			$('#sendFen').click(function() {
-				sendFen();
 			});
 
 		});
@@ -171,17 +158,8 @@
 			});
 		}
 
-		function sendYourMoveByFenNotation() {
-			console.log("send fen : " + fenFromYourMove.value);
-			var fenString = fenFromYourMove.value;
-			webSocket.send(JSON.stringify({
-				type : "chess-move",
-				fen : fenString,
-				senderName : '${sender}'
-			}));
-
-		};
-
+		// -----------------------------------------------------
+		
 		function sendYourMoveByFenNotationToUser(reciever) {
 			console.log("send-fen : " + fenFromYourMove.value);
 			console.log(" to " + reciever);
@@ -195,23 +173,63 @@
 			}));
 
 		};
-
+	
+		// -----------------------------------------------
 		function closeWsConnection() {
 			console.log('closeWsConnection()');
 			$('.connectToUserBtn').css("color", "white");
 			webSocket.close();
-
 		};
+
+		// -----------------------------------------------------------
+
+		function showParticipants(data, htmlObject) {
+			console.log("showParticipants()");
+			
+			var usersArr = JSON.parse(data);
+			var usernames = new Array();
+			for (var i = 0; i < usersArr.length; i++) {
+				usernames.push(usersArr[i].username);
+			}
+
+			var usersPre = htmlObject;
+			usersPre.html('');
+			var allText = "";
+			for (var i = 0; i < usernames.length; i++) {
+
+				var userData = '<li class="list-group-item game-user">'
+						+ '<span class="glyphicon glyphicon-user"></span>&nbsp&nbsp'
+						+ '<span class="text-info username">'
+						+ usernames[i]
+						+ '</span>'
+						+ '<button class="btn btn-info sendToUserBtn" onclick="sendYourMoveByFenNotationToUser('
+						+ '\'' + usernames[i] + '\'' + ')"' + 'data-username="'
+						+ usernames[i] + '">send move</button>'
+						+ '<button data-username="' + usernames[i] + '"'
+						+ 'onclick="showUSerInfoByAjax(' + '\'' + usernames[i]
+						+ '\'' + ')"'
+						+ 'class="btn btn-warning btn-sm user-info-btn">user'
+						+ 'info</button>' + '</li>';
+
+				usersPre.append(userData);
+			}
+		}
+
+		// ----------------------------------------------
+
+		function hideParticipants() {
+			$('#participants div ul').html('');
+		}
+
+		// -----------------------------------------------
 
 		function connectToWebSocket() {
 			console.log('connectToWebSocket()');
 
 			// init websocket -------------------------------------
-
 			var endpointUrl = "ws://" + document.location.host
 					+ "/send-fen/${sender}";
 			webSocket = new WebSocket(endpointUrl);
-			$('#connect').disabled = false;
 
 			// websocketClient events -----------------------------
 
@@ -225,10 +243,12 @@
 
 			};
 
+			// -----------------------------------
+
 			webSocket.onmessage = function(event) {
 				console.log("onmessage: ");
 				console.log(event);
-				
+
 				if (event != null) {
 					var message = JSON.parse(event.data);
 					console.log("message");
@@ -246,66 +266,33 @@
 					} else {
 
 						showParticipants(event.data, $('#participants div ul'));
-						
-						$('#participants div ul li span.username').each(function(){
-							console.log("-----------dfgdfg----------------------dfgdg-");
-							console.log($(this).text());
-							if($(this).text() == '${sender}') {
-								$(this).next().attr('disabled', true);
-								$(this).parent().css('background-color', '#B9BCBD');
-							}
-						});
+
+						$('#participants div ul li span.username').each(
+								function() {
+									if ($(this).text() == '${sender}') {
+										$(this).next().attr('disabled', true);
+										$(this).parent().css(
+												'background-color', '#B9BCBD');
+									}
+								});
 
 					}
 				}
 
 			};
 
-			function showParticipants(data, htmlObject) {
-				var usersArr = JSON.parse(data);
-				var usernames = new Array();
-				for (var i = 0; i < usersArr.length; i++) {
-					usernames.push(usersArr[i].username);
-				}
-
-				var usersPre = htmlObject;
-				usersPre.html('');
-				var allText = "";
-				for (var i = 0; i < usernames.length; i++) {
-
-					var userData = '<li class="list-group-item game-user">'
-							+ '<span class="glyphicon glyphicon-user"></span>&nbsp&nbsp'
-							+ '<span class="text-info username">'
-							+ usernames[i]
-							+ '</span>'
-							+ '<button class="btn btn-info sendToUserBtn" onclick="sendYourMoveByFenNotationToUser('
-							+ '\''
-							+ usernames[i]
-							+ '\''
-							+ ')"'
-							+ 'data-username="'
-							+ usernames[i]
-							+ '">send move</button>'
-							+ '<button data-username="'
-							+ usernames[i]
-							+ '"'
-							+ 'onclick="showUSerInfoByAjax('
-							+ '\''
-							+ usernames[i]
-							+ '\''
-							+ ')"'
-							+ 'class="btn btn-warning btn-sm user-info-btn">user'
-							+ 'info</button>' + '</li>';
-
-					usersPre.append(userData);
-				}
-			}
+			// -----------------------------------
 
 			webSocket.onclose = function(event) {
-				webSocket.send("client disconnected");
-				console.log("Server disconnected \n");
+				webSocket.send(JSON.stringify({
+					type : "goodbye-msg",
+					senderName : '${sender}'
+				}));
+				hideParticipants();
 				console.log(event);
 			};
+
+			// -----------------------------------
 
 			webSocket.onerror = function(event) {
 				webSocket.send("error: client disconnected");

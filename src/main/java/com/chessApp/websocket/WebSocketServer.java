@@ -52,14 +52,12 @@ public class WebSocketServer {
 
 				webSocketSessionHandler.sendToSession(message.getSendTo(), msg);
 
-			} else {
-
-				log.info("broadcast: wiadomość dla wszystkich ");
-				webSocketSessionHandler.sendToAllConnectedSessions(msg);
 			}
 
-		} else if (message.getType().equals("welcome-msg")) {
-			log.info("welcome message from user " + message.getSenderName());
+		} else if (message.getType().equals("welcome-msg")
+				|| message.getType().equals("goodbye-msg")) {
+			log.info(message.getType() + " from user "
+					+ message.getSenderName());
 			webSocketSessionHandler
 					.sendToAllConnectedSessionsActualParticipantList();
 		}
@@ -72,18 +70,19 @@ public class WebSocketServer {
 		log.info("connection started, websocket session id: "
 				+ wsSession.getId() + " " + sender + " open connection ");
 
-//		if (webSocketSessionHandler.userListNotContainsUser(sender)) {
-			WebSocketGameUser gameUser = new WebSocketGameUser(sender);
-			webSocketSessionHandler.addUser(gameUser);
-			webSocketSessionHandler.sendToAllConnectedSessions(gameUser
-					.getUsername());
-			wsSession.getUserProperties().put("sessionOwner",
-					gameUser.getUsername());
+		// if (webSocketSessionHandler.userListNotContainsUser(sender)) {
+		WebSocketGameUser gameUser = new WebSocketGameUser(sender);
+		webSocketSessionHandler.addUser(gameUser);
+		webSocketSessionHandler.sendToAllConnectedSessions(gameUser
+				.getUsername());
+		wsSession.getUserProperties().put("sessionOwner",
+				gameUser.getUsername());
 
-			webSocketSessionHandler.addSession(gameUser.getUsername(),
-					wsSession);
-			webSocketSessionHandler.printOutAllSessionsOnOpen(wsSession);
-//		}
+		webSocketSessionHandler.addSession(gameUser.getUsername(), wsSession);
+		webSocketSessionHandler.printOutAllSessionsOnOpen(wsSession);
+		log.info("users list after open: ");
+		webSocketSessionHandler.printOutUsersList();
+		// }
 
 	}
 
@@ -91,13 +90,18 @@ public class WebSocketServer {
 	public void onClose(CloseReason closeReason, Session wsSession,
 			@PathParam("sender") String sender) {
 		log.info("connection closed. Reason: " + closeReason.getReasonPhrase());
-
-		WebSocketGameUser gameUser = new WebSocketGameUser(sender);
-		webSocketSessionHandler.removeUser(gameUser);
-		webSocketSessionHandler.sendToAllConnectedSessions(sender
-				+ " closed connection");
-		webSocketSessionHandler.removeSession(gameUser.getUsername());
-		webSocketSessionHandler.printOutAllSessionsOnClose(wsSession);
+		log.info(sender);
+		synchronized (webSocketSessionHandler) {
+			webSocketSessionHandler.removeUser(sender);
+			webSocketSessionHandler.removeSession(sender);
+		}
+		webSocketSessionHandler
+				.sendToAllConnectedSessionsActualParticipantList();
+		// webSocketSessionHandler.printOutAllSessionsOnClose(wsSession);
+		log.info("users list after close: ");
+		synchronized (webSocketSessionHandler) {
+			webSocketSessionHandler.printOutUsersList();
+		}
 
 	}
 

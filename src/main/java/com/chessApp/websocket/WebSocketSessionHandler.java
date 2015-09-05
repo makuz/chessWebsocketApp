@@ -38,7 +38,8 @@ public class WebSocketSessionHandler {
 	}
 
 	public synchronized void removeSession(String username) {
-		sessionsMap.remove(username);
+		Session session = sessionsMap.remove(username);
+		logger.info("session: " + session.getId() + " removed");
 	}
 
 	public synchronized void addUser(WebSocketGameUser gameUser) {
@@ -48,8 +49,13 @@ public class WebSocketSessionHandler {
 		logger.info("user: " + gameUser + " added to live game repository");
 	}
 
-	public synchronized void removeUser(WebSocketGameUser gameUser) {
-		gameUsersMap.remove(gameUser);
+	public synchronized WebSocketGameUser getUser(String username) {
+		WebSocketGameUser gameUser = gameUsersMap.get(username);
+		return gameUser;
+	}
+
+	public synchronized void removeUser(String username) {
+		WebSocketGameUser gameUser = gameUsersMap.remove(username);
 		logger.info("user: " + gameUser + " removed from live game repository");
 	}
 
@@ -64,7 +70,15 @@ public class WebSocketSessionHandler {
 		}
 	}
 
-	public void sendToAllConnectedSessionsActualParticipantList() {
+	public void printOutUsersList() {
+		logger.info("printOutUsersList()");
+		for (String key : gameUsersMap.keySet()) {
+			System.out.println(gameUsersMap.get(key));
+		}
+
+	}
+
+	public synchronized void sendToAllConnectedSessionsActualParticipantList() {
 
 		String jsonUsersList = gson.toJson(gameUsersMap.values());
 		for (String username : sessionsMap.keySet()) {
