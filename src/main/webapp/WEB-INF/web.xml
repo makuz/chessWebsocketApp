@@ -35,7 +35,6 @@
 		/WEB-INF/scheduled-tasks-config.xml
 		/WEB-INF/mongo-config.xml
 		/WEB-INF/application-context.xml
-		/WEB-INF/websocket-config.xml
 		</param-value>
 	</context-param>
 	<filter>

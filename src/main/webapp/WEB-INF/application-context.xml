@@ -5,8 +5,6 @@
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<beans:bean id="participantRepository"
-		class="com.chessApp.websocketEvents.ParticipantRepository" />
 
 	<beans:bean id="webSocketServer" class="com.chessApp.websocket.WebSocketServer" />
 
