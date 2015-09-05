@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.chessApp.enams.WebSocketMessageType;
 import com.google.gson.Gson;
 
 @Service
@@ -23,11 +24,11 @@ import com.google.gson.Gson;
 public class WebSocketServer {
 
 	private final static Logger log = Logger.getLogger(WebSocketServer.class);
-	
+
 	private final WebSocketSessionHandler sessionHandler = new WebSocketSessionHandler();
-	
+
 	private final WebsocketUsesrHandler usesrHandler = new WebsocketUsesrHandler();
-	
+
 	private Gson gson = new Gson();
 
 	@OnMessage
@@ -43,7 +44,7 @@ public class WebSocketServer {
 		log.info("obiekt message");
 		log.info(message);
 
-		if (message.getType().equals("chess-move")) {
+		if (message.getType().equals(WebSocketMessageType.CHESS_MOVE.message())) {
 			log.info("od usera " + message.getSenderName());
 			log.info("fen " + message.getFen());
 
@@ -56,7 +57,8 @@ public class WebSocketServer {
 
 			}
 
-		} else if (message.getType().equals("welcome-msg")) {
+		} else if (message.getType().equals(
+				WebSocketMessageType.USER_CONNECT.message())) {
 			log.info(message.getType() + " from user "
 					+ message.getSenderName());
 			sessionHandler.sendToAllConnectedSessionsActualParticipantList();

@@ -20,7 +20,6 @@ import org.springframework.util.StringUtils;
 import com.chessApp.enams.UserRoles;
 import com.chessApp.model.UserAccount;
 
-
 @Component
 public class LocalAuthenticationProvider extends
 		AbstractUserDetailsAuthenticationProvider {
@@ -30,10 +29,9 @@ public class LocalAuthenticationProvider extends
 
 	@Autowired
 	private UsersRepository usersRepository;
-	
+
 	@Autowired
 	private PasswordEncoder encoder;
-	
 
 	@Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
@@ -76,10 +74,10 @@ public class LocalAuthenticationProvider extends
 				&& hashPassword.equals(user.getPassword())
 				&& hashPassword != null) {
 
-			final List<GrantedAuthority> auths = UserRoles.getUserRoles(user.getRole());
+			final List<GrantedAuthority> auths = UserRoles.getUserRoles(user
+					.getRole());
 
-			return new User(user.getUsername(), user.getPassword(), 
-					true, // enabled
+			return new User(user.getUsername(), user.getPassword(), true, // enabled
 					true, // account not expired
 					true, // credentials not expired
 					true, // account not locked
@@ -90,16 +88,5 @@ public class LocalAuthenticationProvider extends
 		}
 
 	}
-
-//	public List<GrantedAuthority> getAuthorities(Integer role) {
-//		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-//		if (role.intValue() == 1) {
-//			authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-//			authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-//		} else if (role.intValue() == 2) {
-//			authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-//		}
-//		return authList;
-//	}
 
 }
