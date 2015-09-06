@@ -34,11 +34,6 @@
 <script
 	src="<c:url value="${pageContext.request.contextPath}/resources/js/chessboard-0.3.0.js" />"></script>
 
-<script
-	src="<c:url value="${pageContext.request.contextPath}/resources/js/stomp.js" />"></script>
-<script
-	src="<c:url value="${pageContext.request.contextPath}/resources/js/sockjs-0.3.4.js" />"></script>
-
 <title>Chess application</title>
 </head>
 
