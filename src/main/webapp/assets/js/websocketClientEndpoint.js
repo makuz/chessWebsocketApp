@@ -5,105 +5,11 @@
  * 
  */
 
-// functions -------------------------------------------
-function showUSerInfoByAjax(login) {
-	$('#user-info-modal').modal('show');
-	$.ajax({
-		url : "user/get-user-info-by-username",
-		data : {
-			username : login
-		},
-		success : function(response) {
-			$('#usernameResponse').text("login: " + response.username);
-			$('#userIdResponse').text("id: " + response.userId);
-			$('#userEmailResponse').text("email: " + response.email);
-			$('#userNameResponse').text("name: " + response.name);
-			$('#userLastnameResponse').text("lastname: " + response.lastname);
-		}
-	});
-}
-
-// -----------------------------------------------------
-
-function sendYourMoveByFenNotationToUser(reciever) {
-	console.log("send-fen : " + fenFromYourMove.value);
-	console.log(" to " + reciever);
-	console.log(" from " + WEBSOCKET_CLIENT_NAME);
-	var fenString = fenFromYourMove.value;
-	webSocket.send(JSON.stringify({
-		type : "chess-move",
-		fen : fenString,
-		senderName : WEBSOCKET_CLIENT_NAME,
-		sendTo : reciever
-	}));
-
-};
-
-// -----------------------------------------------
-function closeWsConnection() {
-	console.log('closeWsConnection()');
-	$('.connectToUserBtn').css("color", "white");
-	webSocket.close();
-};
-
-// -----------------------------------------------------------
-
-function showParticipants(data) {
-	console.log("showParticipants()");
-
-	var usersArr = JSON.parse(data);
-	var usernames = new Array();
-	for (var i = 0; i < usersArr.length; i++) {
-		usernames.push(usersArr[i].username);
-	}
-
-	var participantsList = $('#participants div ul');
-	participantsList.html('');
-	var allText = "";
-	for (var i = 0; i < usernames.length; i++) {
-
-		var userData = '<li class="list-group-item game-user">'
-				+ '<span class="username">'
-				+ '<span class="glyphicon glyphicon-user"></span>'
-				+ usernames[i]
-				+ '</span>'
-				+ '<span class="participants-action-btns">'
-				+ '<button class="btn btn-sm btn-info sendToUserBtn" onclick="sendYourMoveByFenNotationToUser('
-				+ '\''
-				+ usernames[i]
-				+ '\''
-				+ ')"'
-				+ 'data-username="'
-				+ usernames[i]
-				+ '">send move</button>'
-				+ '&nbsp;'
-				+ '<button data-username="'
-				+ usernames[i]
-				+ '"'
-				+ 'onclick="showUSerInfoByAjax('
-				+ '\''
-				+ usernames[i]
-				+ '\''
-				+ ')"'
-				+ 'class="btn btn-warning btn-sm user-info-btn">user '
-				+ 'info</button>' + '</span>' + '</li>';
-
-		participantsList.append(userData);
-	}
-}
-
-// ----------------------------------------------
-
-function hideParticipants() {
-	$('#participants div ul').html('');
-}
-
-// -----------------------------------------------
-
+// ------CONNECT TO WEBSOCKET FUNCTION, WEBSOCKET EVENTS----------------------
 function connectToWebSocket() {
 	console.log('connectToWebSocket()');
 
-	// init websocket -------------------------------------
+	// ----init websocket -------------------------------------
 	var endpointUrl = "ws://" + document.location.host + "/send-fen/"
 			+ WEBSOCKET_CLIENT_NAME;
 	webSocket = new WebSocket(endpointUrl);
@@ -191,4 +97,98 @@ window.onbeforeunload = function() {
 	webSocket.close();
 	window.location.reload(false);
 
+};
+
+// functions -------------------------------------------
+
+function showUSerInfoByAjax(login) {
+	$('#user-info-modal').modal('show');
+	$.ajax({
+		url : "user/get-user-info-by-username",
+		data : {
+			username : login
+		},
+		success : function(response) {
+			$('#usernameResponse').text("login: " + response.username);
+			$('#userIdResponse').text("id: " + response.userId);
+			$('#userEmailResponse').text("email: " + response.email);
+			$('#userNameResponse').text("name: " + response.name);
+			$('#userLastnameResponse').text("lastname: " + response.lastname);
+		}
+	});
+};
+
+// -----------------------------------------------------
+
+function sendYourMoveByFenNotationToUser(reciever) {
+	console.log("send-fen : " + fenFromYourMove.value);
+	console.log(" to " + reciever);
+	console.log(" from " + WEBSOCKET_CLIENT_NAME);
+	var fenString = fenFromYourMove.value;
+	webSocket.send(JSON.stringify({
+		type : "chess-move",
+		fen : fenString,
+		senderName : WEBSOCKET_CLIENT_NAME,
+		sendTo : reciever
+	}));
+
+};
+
+// -----------------------------------------------
+function closeWsConnection() {
+	console.log('closeWsConnection()');
+	$('.connectToUserBtn').css("color", "white");
+	webSocket.close();
+};
+
+// -----------------------------------------------------------
+
+function showParticipants(data) {
+	console.log("showParticipants()");
+
+	var usersArr = JSON.parse(data);
+	var usernames = new Array();
+	for (var i = 0; i < usersArr.length; i++) {
+		usernames.push(usersArr[i].username);
+	}
+
+	var participantsList = $('#participants div ul');
+	participantsList.html('');
+	var allText = "";
+	for (var i = 0; i < usernames.length; i++) {
+
+		var userData = '<li class="list-group-item game-user">'
+				+ '<span class="username">'
+				+ '<span class="glyphicon glyphicon-user"></span>'
+				+ usernames[i]
+				+ '</span>'
+				+ '<span class="participants-action-btns">'
+				+ '<button class="btn btn-sm btn-info sendToUserBtn" onclick="sendYourMoveByFenNotationToUser('
+				+ '\''
+				+ usernames[i]
+				+ '\''
+				+ ')"'
+				+ 'data-username="'
+				+ usernames[i]
+				+ '">send move</button>'
+				+ '&nbsp;'
+				+ '<button data-username="'
+				+ usernames[i]
+				+ '"'
+				+ 'onclick="showUSerInfoByAjax('
+				+ '\''
+				+ usernames[i]
+				+ '\''
+				+ ')"'
+				+ 'class="btn btn-warning btn-sm user-info-btn">user '
+				+ 'info</button>' + '</span>' + '</li>';
+
+		participantsList.append(userData);
+	}
+};
+
+// ----------------------------------------------
+
+function hideParticipants() {
+	$('#participants div ul').html('');
 };

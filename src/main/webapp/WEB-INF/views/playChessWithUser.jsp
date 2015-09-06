@@ -77,6 +77,7 @@
 <!-- JAVASCRIPTS -->
 <!-- tylko zalogowany uzytkownik ma wlaczony poniższy javascript -->
 <security:authorize access="hasRole('ROLE_USER')">
+
 	<!-- set variable websocket username for js -->
 	<c:set var="sender" value="${currentUserName}" />
 
