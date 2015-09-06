@@ -49,12 +49,22 @@ div#participants ul {
 
 div#participants h3 {
 	margin: 2% auto 0 2%;
-	color: #123350;
 }
 
 div#participants-user-names {
 	margin: 0 auto;
 	width: 100%;
+}
+
+div.user-profile-form {
+	background-color: #C9C9C9;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	border-radius: 5px;
+}
+
+div.user-profile-form label{
+	color: #3B5998 !important;
 }
 
 div#participants .game-user span.glyphicon-user {
@@ -128,7 +138,6 @@ div#chess-board-play-with-user article.game-actions div.stats {
 	background-color: #FBFBFB;
 	word-wrap: break word;
 	padding: 0.8%;
-	border-radius: 5px;
 	border: 1px solid black;
 }
 
@@ -142,7 +151,21 @@ span.appTitle {
 }
 
 div.sign-login-form {
-	padding: 10%;
+	margin: 5% auto 0 auto;
+	padding: 2%;
+	background-color: #C9C9C9;
+	border-radius: 5px;
+	width: 80%;
+}
+
+div.alert-log-in-to-play {
+	margin: 5% auto 0 auto;
+	padding-top: 0.7%;
+	padding-bottom: 10%;
+	background-color: #C9C9C9;
+	border-radius: 5px;
+	width: 80%;
+	height: auto;
 }
 
 div.contentWrapper {

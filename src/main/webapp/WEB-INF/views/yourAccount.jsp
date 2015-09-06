@@ -7,8 +7,9 @@
 
 
 			<h1 class="text-center">Your Account data</h1>
-
-			<jsp:include page="includes/forms/editYourAccountForm.jsp" />
+			<div class="user-profile-form">
+				<jsp:include page="includes/forms/editYourAccountForm.jsp" />
+			</div>
 		</div>
 	</div>
 </div>

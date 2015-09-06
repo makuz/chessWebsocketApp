@@ -62,13 +62,15 @@
 
 			</security:authorize>
 			<c:if test="${!isLoggedIn}">
-				<div class="alert alert-warning" id="play-chess-not-loggedin-alert"
-					role="alert">
-					<h3>You have to be logged in to play chess with other users</h3>
-				</div>
-				<div id="play-chess-not-loggedin-btns" class="pull-right">
-					<a class="btn btn-info" href="/login">log in</a> <a
-						class="btn btn-success" href="/signin">sign in</a>
+				<div class="alert-log-in-to-play">
+					<div class="alert alert-warning" id="play-chess-not-loggedin-alert"
+						role="alert">
+						<h3>You have to be logged in to play chess with other users</h3>
+					</div>
+					<div id="play-chess-not-loggedin-btns" class="pull-right">
+						<a class="btn btn-info" href="/login">log in</a> <a
+							class="btn btn-success" href="/signin">sign in</a>
+					</div>
 				</div>
 			</c:if>
 		</div>
