@@ -11,30 +11,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.chessApp.db.UsersRepository;
 import com.chessApp.model.UserAccount;
 
-
 @Controller
 public class UsersAjaxController {
-	
+
 	@Autowired
 	private UsersRepository usersRepository;
-	
-	Logger logger = Logger.getLogger(UsersAjaxController.class);
-	
-	@RequestMapping(value="user/get-user-info-by-id", method = RequestMethod.GET)
-	public @ResponseBody UserAccount getUserInfoById(@RequestParam("id") Integer id) {
+
+	private static final Logger logger = Logger
+			.getLogger(UsersAjaxController.class);
+
+	@RequestMapping(value = "user/get-user-info-by-username", method = RequestMethod.GET)
+	public @ResponseBody UserAccount getUserInfoByUsername(
+			@RequestParam("username") String username) {
 		logger.debug("getUserInfoById()");
-		
-		UserAccount user = usersRepository.getUserById(id);
-		
-		return user;
-	}
-	
-	@RequestMapping(value="user/get-user-info-by-username", method = RequestMethod.GET)
-	public @ResponseBody UserAccount getUserInfoByUsername(@RequestParam("username") String username) {
-		logger.debug("getUserInfoById()");
-		
+
 		UserAccount user = usersRepository.getUserByUsername(username);
-		
+
 		return user;
 	}
 

@@ -26,18 +26,36 @@ article, section {
 li.list-group-item {
 	padding: 0.4%;
 	margin-left: 1%;
-	
 }
 
 div#user-info-modal ul.list-group {
 	width: 100% !important;
 }
 
-
 button.sendToUserBtn[disabled=true] {
 	color: black !important;
 }
 
+div#participants {
+	height: 315px;
+	overflow: scroll;
+	background-color: #FBFBFB;;
+	padding: 2%;
+}
+
+div#participants ul {
+	width: 100%;
+}
+
+div#participants h3 {
+	margin: 2% auto 0 2%;
+	color: #123350;
+}
+
+div#participants-user-names {
+	margin: 0 auto;
+	width: 100%;
+}
 
 div#participants .game-user span.glyphicon-user {
 	margin: 2% 1% 2% 2%;
@@ -53,7 +71,7 @@ div#play-chess-not-loggedin-alert h3 {
 	margin: 0 auto;
 }
 
-div#play-chess-not-loggedin-alert + a{
+div#play-chess-not-loggedin-btns {
 	margin-right: 10%;
 	margin-top: 3%;
 }
@@ -61,10 +79,10 @@ div#play-chess-not-loggedin-alert + a{
 ul.list-group {
 	width: 20%;
 	padding: 0.1%;
-	
 }
 
-input#fenToSet, input#fenFromYourMove, input#moveInput, input#moveOutput {
+input#fenToSet, input#fenFromYourMove, input#moveInput, input#moveOutput
+	{
 	width: 100%;
 }
 
@@ -84,12 +102,14 @@ section#onlineUsersSection {
 }
 
 section#onlineUsersSection ul li {
-	width: 430%;
-	padding: 5%;
+	width: 100%;
+	padding: 1%;
+	border: 1px solid black;
+	margin: 0 auto;
 }
 
 div#participants span.participants-action-btns {
-	float:right;
+	float: right;
 }
 
 div#participants span.username {
@@ -105,10 +125,11 @@ div#chess-board-play-with-user article.game-actions {
 }
 
 div#chess-board-play-with-user article.game-actions div.stats {
-	background-color: snow;
+	background-color: #FBFBFB;
 	word-wrap: break word;
 	padding: 0.8%;
 	border-radius: 5px;
+	border: 1px solid black;
 }
 
 span.author {
@@ -152,7 +173,7 @@ div#chess-board-play-with-computer div#board {
 }
 
 div.game-stats-with-computer {
-	background-color: snow;
+	background-color: #FBFBFB;
 	word-wrap: break word;
 	padding: 0.9%;
 	width: 450px;
@@ -161,9 +182,8 @@ div.game-stats-with-computer {
 	border: 2px black solid;
 }
 
-
 div.game-stats {
-	background-color: snow;
+	background-color: #FBFBFB;
 	word-wrap: break word;
 	padding: 0.8%;
 	width: 500px;
@@ -179,9 +199,17 @@ h4.logged-user-name {
 div#usersTable {
 	width: 110%;
 	margin-left: -0.9%;
+	margin-top: 1%;
+	border: 2px solid #3B5998;
+	border-radius: 5px;
+	padding: 1%;
+	background-color: #C9C9C9;
 }
 
+div#usersTableForDataTableJS_filter {
+	display: none !important;
 }
+
 body {
 	background-color: #f5f5f5;
 	font-size: 15px;

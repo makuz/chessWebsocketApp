@@ -36,12 +36,7 @@ public class WebSocketServer {
 			@PathParam("sender") String sender) throws IOException {
 
 		log.info("wiadomość odebrana przez server: ");
-		log.info("string msg");
-		log.info(msg);
-
 		WebSocketMessage message = gson.fromJson(msg, WebSocketMessage.class);
-
-		log.info("obiekt message");
 		log.info(message);
 
 		if (message.getType().equals(WebSocketMessageType.CHESS_MOVE.message())) {

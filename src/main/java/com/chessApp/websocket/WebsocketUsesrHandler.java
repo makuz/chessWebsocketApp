@@ -11,9 +11,9 @@ public class WebsocketUsesrHandler {
 
 	private static final Logger logger = Logger
 			.getLogger(WebsocketUsesrHandler.class);
-	
-	private static long userID = 0;
-	
+
+	private volatile static long userID = 0;
+
 	protected static final Map<String, WebSocketGameUser> gameUsersMap = new ConcurrentHashMap<>();
 
 	public synchronized Boolean userListNotContainsUsername(String username) {

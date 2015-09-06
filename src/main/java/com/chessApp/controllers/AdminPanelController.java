@@ -18,28 +18,34 @@ import com.chessApp.model.UserAccount;
 public class AdminPanelController {
 
 	@Autowired
-	private UsersRepository repository;
-	
+	private UsersRepository usersRepository;
+
 	private static final Logger logger = Logger
 			.getLogger(AdminPanelController.class);
 
-	@RequestMapping("admin/panel")
-	public ModelAndView getAdminSite() {
-		logger.info("getAdminSite()");
-		ModelAndView adminPage = new ModelAndView("admin");
-		
-		addBasicObjectsToModelAndView(adminPage);
+	@RequestMapping("/admin/your-account")
+	public ModelAndView getLoggedInAdminDetails(String msg) {
 
-		return adminPage;
+		logger.info("getLoggedInUserDetails()");
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		String currentUserLogin = auth.getName();
 
+		UserAccount user = usersRepository.getUserByUsername(currentUserLogin);
+
+		ModelAndView yourAccount = new ModelAndView("adminAccount");
+		yourAccount.addObject("user", user);
+		yourAccount.addObject("msg", msg);
+		addBasicObjectsToModelAndView(yourAccount);
+
+		return yourAccount;
 	}
 
-	// users table
 	@RequestMapping("admin/users")
 	public ModelAndView getAllUsers() {
-		
+
 		logger.info("getAllUsers()");
-		List<UserAccount> users = repository.getUsersList();
+		List<UserAccount> users = usersRepository.getUsersList();
 
 		ModelAndView usersPage = new ModelAndView("users");
 		usersPage.addObject("users", users);
@@ -48,14 +54,12 @@ public class AdminPanelController {
 		return usersPage;
 	}
 
-	// edit user form -----GET
 	@RequestMapping("admin/users/editUser")
 	public ModelAndView showEditUserForm(
 			@RequestParam("username") String username, String msg) {
-		
-		logger.info("showEditUserForm()");
-		UserAccount user = repository.getUserByUsername(username);
 
+		logger.info("showEditUserForm()");
+		UserAccount user = usersRepository.getUserByUsername(username);
 
 		ModelAndView userDetailPage = new ModelAndView("editUser");
 		userDetailPage.addObject("user", user);
@@ -65,11 +69,10 @@ public class AdminPanelController {
 		return userDetailPage;
 	}
 
-	// edit user ------ POST
 	@RequestMapping(value = "admin/users/editUser", method = RequestMethod.POST)
 	public ModelAndView sendEditUserData(
 			@RequestParam Map<String, String> userDataMap) {
-		
+
 		logger.info("sendEditUserData()");
 
 		String userLogin = userDataMap.get("j_username");
@@ -95,7 +98,7 @@ public class AdminPanelController {
 			// hash password
 			String hashedPassword = null;
 			try {
-				hashedPassword = repository.encryptUserPassword(pass)
+				hashedPassword = usersRepository.encryptUserPassword(pass)
 						.toString();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -114,7 +117,7 @@ public class AdminPanelController {
 		}
 
 		user.setEmail(email);
-		repository.updateUser(user);
+		usersRepository.updateUser(user);
 
 		ModelAndView userDetailPage = new ModelAndView("editUser");
 		userDetailPage.addObject("user", user);
@@ -122,108 +125,20 @@ public class AdminPanelController {
 		return getAllUsers();
 	}
 
-	// user account details for the user
-	@RequestMapping("/user/your-account")
-	public ModelAndView getLoggedInUserDetails(String msg) {
-		
-		logger.info("getLoggedInUserDetails()");
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		String currentUserLogin = auth.getName();
-
-		UserAccount user = repository.getUserByUsername(currentUserLogin);
-
-		ModelAndView yourAccount = new ModelAndView("yourAccount");
-		yourAccount.addObject("user", user);
-		yourAccount.addObject("msg", msg);
-		addBasicObjectsToModelAndView(yourAccount);
-
-		return yourAccount;
-	}
-	
-	@RequestMapping("/admin/your-account")
-	public ModelAndView getLoggedInAdminDetails(String msg) {
-		
-		logger.info("getLoggedInUserDetails()");
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		String currentUserLogin = auth.getName();
-
-		UserAccount user = repository.getUserByUsername(currentUserLogin);
-
-		ModelAndView yourAccount = new ModelAndView("adminAccount");
-		yourAccount.addObject("user", user);
-		yourAccount.addObject("msg", msg);
-		addBasicObjectsToModelAndView(yourAccount);
-
-		return yourAccount;
-	}
-
-	// edit user for user-------- POST
-	@RequestMapping(value = "/user/your-account", method = RequestMethod.POST)
-	public ModelAndView sendEditUserDataForUserAccount(
-			@RequestParam Map<String, String> userDataMap) {
-
-		logger.info("sendEditUserDataForUserAccount()");
-		String userLogin = userDataMap.get("j_username");
-		String name = userDataMap.get("j_name");
-		String lastname = userDataMap.get("j_lastname");
-		String adminFlagSendedByForm = userDataMap.get("j_adminFlag");
-		String email = userDataMap.get("j_email");
-
-		logger.info("adminFlag");
-		logger.info(adminFlagSendedByForm);
-
-		UserAccount user = new UserAccount(userLogin, name, lastname);
-
-		String changePasswordFlag = userDataMap.get("j_changePasswordFlag");
-		if (changePasswordFlag != null
-				&& changePasswordFlag.equalsIgnoreCase("on")) {
-
-			String pass = userDataMap.get("j_password");
-			String passConfirm = userDataMap.get("j_confirm_password");
-
-			if (!pass.equals(passConfirm)) {
-
-				return getLoggedInUserDetails("password and confirm password have to be equal");
-			}
-			// hash password
-			String hashedPassword = null;
-			try {
-				hashedPassword = repository.encryptUserPassword(pass)
-						.toString();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			if (hashedPassword != null) {
-				user.setPassword(hashedPassword);
-			}
-
-		}
-		user.setEmail(email);
-		user.setRole(2);
-		repository.updateUser(user);
-
-		return getLoggedInUserDetails(null);
-	}
-
-	// remove user
 	@RequestMapping(value = "admin/users/remove", method = RequestMethod.POST)
 	public ModelAndView removeUser(@RequestParam("username") String username) {
 		logger.info("removeUser()");
-		
-		UserAccount user = repository.getUserByUsername(username);
-		repository.deleteUser(user);
+
+		UserAccount user = usersRepository.getUserByUsername(username);
+		usersRepository.deleteUser(user);
 
 		return getAllUsers();
 	}
 
-	// add user form---- GET
 	@RequestMapping("/admin/users/addUser#addUserForm")
 	public ModelAndView getAddUserForm(String msg) {
 		logger.info("getAddUserForm()");
-		
+
 		ModelAndView addUserPage = new ModelAndView("users");
 		addUserPage.addObject("msg", msg);
 		addBasicObjectsToModelAndView(addUserPage);
@@ -231,7 +146,6 @@ public class AdminPanelController {
 		return addUserPage;
 	}
 
-	// add user into DB action--- POST
 	@RequestMapping(value = "admin/users/addUser", method = RequestMethod.POST)
 	public ModelAndView addUser(@RequestParam Map<String, String> userParams) {
 
@@ -255,11 +169,10 @@ public class AdminPanelController {
 			role = 2;
 		}
 
-		// hash password
 		String hashedPassword = null;
 		try {
-			hashedPassword = repository.encryptUserPassword(plaintextPassword)
-					.toString();
+			hashedPassword = usersRepository.encryptUserPassword(
+					plaintextPassword).toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -267,7 +180,7 @@ public class AdminPanelController {
 		UserAccount user = new UserAccount(userLogin, hashedPassword, name,
 				lastname, role, email);
 
-		String result = repository.addUser(user);
+		String result = usersRepository.addUser(user);
 
 		if (result.equals("ok")) {
 			return getAllUsers();
@@ -276,15 +189,15 @@ public class AdminPanelController {
 		}
 
 	}
-	
-private void addBasicObjectsToModelAndView(ModelAndView modelAndView) {
-		
+
+	private void addBasicObjectsToModelAndView(ModelAndView modelAndView) {
+
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 
 		String userLogin = auth.getName();
 		modelAndView.addObject("currentUserName", userLogin);
-		
+
 	}
 
 }

@@ -101,25 +101,6 @@ window.onbeforeunload = function() {
 
 // functions -------------------------------------------
 
-function showUSerInfoByAjax(login) {
-	$('#user-info-modal').modal('show');
-	$.ajax({
-		url : "user/get-user-info-by-username",
-		data : {
-			username : login
-		},
-		success : function(response) {
-			$('#usernameResponse').text("login: " + response.username);
-			$('#userIdResponse').text("id: " + response.userId);
-			$('#userEmailResponse').text("email: " + response.email);
-			$('#userNameResponse').text("name: " + response.name);
-			$('#userLastnameResponse').text("lastname: " + response.lastname);
-		}
-	});
-};
-
-// -----------------------------------------------------
-
 function sendYourMoveByFenNotationToUser(reciever) {
 	console.log("send-fen : " + fenFromYourMove.value);
 	console.log(" to " + reciever);
@@ -192,3 +173,23 @@ function showParticipants(data) {
 function hideParticipants() {
 	$('#participants div ul').html('');
 };
+
+// ----------------------------------------------
+
+function showUSerInfoByAjax(login) {
+	$('#user-info-modal').modal('show');
+	$.ajax({
+		url : "user/get-user-info-by-username",
+		data : {
+			username : login
+		},
+		success : function(response) {
+			$('#usernameResponse').text("login: " + response.username);
+			$('#userIdResponse').text("id: " + response.userId);
+			$('#userEmailResponse').text("email: " + response.email);
+			$('#userNameResponse').text("name: " + response.name);
+			$('#userLastnameResponse').text("lastname: " + response.lastname);
+		}
+	});
+};
+

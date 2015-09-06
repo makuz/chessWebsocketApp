@@ -14,51 +14,51 @@
 		<br />
 		<div class="row contentWrapper">
 
+			<!-- DECLARE VARIABLE isLoggedIn -->
 			<security:authorize access="hasRole('ROLE_USER')" var="isLoggedIn" />
 			<security:authorize access="hasRole('ROLE_USER')">
-				<section id="playSection">
-					<h3 class="text-left">Play Chess</h3>
-					<script
-						src="<c:url value="${pageContext.request.contextPath}/resources/js/chess.js" />"></script>
-					<div id="chess-board-play-with-user">
-						<article id="aside-board">
-							<div id="board"></div>
-							<button id="startPosBtn" class="btn btn-info">start new
-								game</button>
-						</article>
-						<!-- -------------------------- -->
-						<article class="game-actions">
-							<div class="stats">
-								<p class="text-danger">
-									Status: <span id="status"></span>
-								</p>
-								<small class="text-info"> FEN: <br /> <span id="fen"></span>
-								</small><br /> <small class="text-warning"> PGN: <span id="pgn"></span>
-								</small>
-							</div>
-							<input hidden="true" type="text" id="fenFromYourMove" />
-							<section id="onlineUsersSection">
-								<hr />
-								<button class="btn btn-primary" id="connectToWebSocket">Połącz
-									mnie</button>
-								<button class="btn btn-danger pull-right" id="disconnect">Rozłącz
-									mnie</button>
-								<br />
-								<hr />
-								<div id="participants">
-									<h3>Participants :</h3>
-									<br />
-									<div id="participants-user-names">
-										<ul class="list-group"></ul>
 
-									</div>
+				<h3 class="text-left">Play Chess</h3>
+				<script
+					src="<c:url value="${pageContext.request.contextPath}/resources/js/chess.js" />"></script>
+				<div id="chess-board-play-with-user">
+					<article id="aside-board">
+						<div id="board"></div>
+						<button id="startPosBtn" class="btn btn-info">start new
+							game</button>
+					</article>
+					<!-- -------------------------- -->
+					<article class="game-actions">
+						<div class="stats">
+							<p class="text-danger">
+								Status: <span id="status"></span>
+							</p>
+							<small class="text-info"> FEN: <br /> <span id="fen"></span>
+							</small><br /> <small class="text-warning"> PGN: <span id="pgn"></span>
+							</small>
+						</div>
+						<input hidden="true" type="text" id="fenFromYourMove" />
+						<section id="onlineUsersSection">
+							<hr />
+							<button class="btn btn-primary" id="connectToWebSocket">Połącz
+								mnie</button>
+							<button class="btn btn-danger pull-right" id="disconnect">Rozłącz
+								mnie</button>
+							<hr />
+							<div id="participants">
+								<h3>Participants :</h3>
+								<br />
+								<div id="participants-user-names">
+									<ul class="list-group"></ul>
 
 								</div>
-							</section>
-						</article>
-					</div>
 
-				</section>
+							</div>
+						</section>
+					</article>
+				</div>
+
+
 
 			</security:authorize>
 			<c:if test="${!isLoggedIn}">
@@ -66,7 +66,10 @@
 					role="alert">
 					<h3>You have to be logged in to play chess with other users</h3>
 				</div>
-				<a class="btn btn-success pull-right" href="/signin">sign in</a>
+				<div id="play-chess-not-loggedin-btns" class="pull-right">
+					<a class="btn btn-info" href="/login">log in</a> <a
+						class="btn btn-success" href="/signin">sign in</a>
+				</div>
 			</c:if>
 		</div>
 	</div>

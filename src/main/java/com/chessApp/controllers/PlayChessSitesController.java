@@ -1,0 +1,48 @@
+package com.chessApp.controllers;
+
+import org.apache.log4j.Logger;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class PlayChessSitesController {
+
+	private static final Logger logger = Logger
+			.getLogger(PlayChessSitesController.class);
+
+	@RequestMapping(value = "/play-chess-with-computer", method = RequestMethod.GET)
+	public ModelAndView playChessWithComputer() {
+		logger.info("playChessWithComputer()");
+
+		ModelAndView playChessWithCompPageModel = new ModelAndView("playChess");
+		addBasicObjectsToModelAndView(playChessWithCompPageModel);
+
+		return playChessWithCompPageModel;
+	}
+
+	@RequestMapping(value = "/play-chess-with-user", method = RequestMethod.GET)
+	public ModelAndView playChessWithUser() {
+		logger.info("playChessWithUser()");
+
+		ModelAndView playChessWithUserPageModel = new ModelAndView(
+				"playChessWithUser");
+		addBasicObjectsToModelAndView(playChessWithUserPageModel);
+
+		return playChessWithUserPageModel;
+	}
+
+	private void addBasicObjectsToModelAndView(ModelAndView modelAndView) {
+
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+
+		String userLogin = auth.getName();
+		modelAndView.addObject("currentUserName", userLogin);
+
+	}
+
+}
