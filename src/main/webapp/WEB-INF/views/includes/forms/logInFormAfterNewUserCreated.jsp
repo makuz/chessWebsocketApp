@@ -9,7 +9,7 @@
 		<label class="control-label col-sm-2">Name</label>
 		<div class="col-sm-8">
 			<input type="text" class="form-control" value="${userLogin}"
-				name="j_username" required />
+				name="username" required />
 		</div>
 	</div>
 
@@ -17,7 +17,7 @@
 		<label class="control-label col-sm-2">password</label>
 		<div class="col-sm-8">
 			<input type="password" class="form-control" value="${userPassword}"
-				name="j_password" required />
+				name="password" required />
 		</div>
 	</div>
 	<div class="form-group">

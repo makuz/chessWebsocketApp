@@ -19,6 +19,7 @@ public class AdminPanelController {
 
 	@Autowired
 	private UsersRepository repository;
+	
 	private static final Logger logger = Logger
 			.getLogger(AdminPanelController.class);
 
