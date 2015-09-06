@@ -33,13 +33,14 @@ div#user-info-modal ul.list-group {
 	width: 100% !important;
 }
 
-li.list-group-item span.glyphicon {
-	margin: 2% 0 2% 10%;
-	
-}
 
 button.sendToUserBtn[disabled=true] {
 	color: black !important;
+}
+
+
+div#participants .game-user span.glyphicon-user {
+	margin: 2% 1% 2% 2%;
 }
 
 div#play-chess-not-loggedin-alert {
@@ -84,10 +85,15 @@ section#onlineUsersSection {
 
 section#onlineUsersSection ul li {
 	width: 430%;
+	padding: 5%;
 }
 
-section#onlineUsersSection ul li button.sendToUserBtn {
-	margin-left: 23%;
+div#participants span.participants-action-btns {
+	float:right;
+}
+
+div#participants span.username {
+	width: 300px;
 }
 
 div#chess-board-play-with-user article.game-actions {

@@ -23,8 +23,8 @@
 					<div id="chess-board-play-with-user">
 						<article id="aside-board">
 							<div id="board"></div>
-							<button id="startPosBtn" class="btn btn-info">start
-								new game</button>
+							<button id="startPosBtn" class="btn btn-info">start new
+								game</button>
 						</article>
 						<!-- -------------------------- -->
 						<article class="game-actions">
@@ -123,7 +123,8 @@
 				var reciever = $(this).data('username');
 				console.log(reciever);
 				sendYourMoveByFenNotationToUser(reciever);
-				event.target.style = "color: red;";	function sendYourMoveByFenNotation() {
+				event.target.style = "color: red;";
+				function sendYourMoveByFenNotation() {
 					console.log("send fen : " + fenFromYourMove.value);
 					var fenString = fenFromYourMove.value;
 					webSocket.send(JSON.stringify({
@@ -132,7 +133,8 @@
 						senderName : '${sender}'
 					}));
 
-				};
+				}
+				;
 
 			});
 
@@ -159,7 +161,7 @@
 		}
 
 		// -----------------------------------------------------
-		
+
 		function sendYourMoveByFenNotationToUser(reciever) {
 			console.log("send-fen : " + fenFromYourMove.value);
 			console.log(" to " + reciever);
@@ -173,7 +175,7 @@
 			}));
 
 		};
-	
+
 		// -----------------------------------------------
 		function closeWsConnection() {
 			console.log('closeWsConnection()');
@@ -185,7 +187,7 @@
 
 		function showParticipants(data, htmlObject) {
 			console.log("showParticipants()");
-			
+
 			var usersArr = JSON.parse(data);
 			var usernames = new Array();
 			for (var i = 0; i < usersArr.length; i++) {
@@ -198,19 +200,30 @@
 			for (var i = 0; i < usernames.length; i++) {
 
 				var userData = '<li class="list-group-item game-user">'
-						+ '<span class="glyphicon glyphicon-user"></span>&nbsp&nbsp'
-						+ '<span class="text-info username">'
+						+ '<span class="username">'
+						+ '<span class="glyphicon glyphicon-user"></span>'
 						+ usernames[i]
 						+ '</span>'
-						+ '<button class="btn btn-info sendToUserBtn" onclick="sendYourMoveByFenNotationToUser('
-						+ '\'' + usernames[i] + '\'' + ')"' + 'data-username="'
-						+ usernames[i] + '">send move</button>'
-						+ '&nbsp&nbsp'
-						+ '<button data-username="' + usernames[i] + '"'
-						+ 'onclick="showUSerInfoByAjax(' + '\'' + usernames[i]
-						+ '\'' + ')"'
+						+ '<span class="participants-action-btns">'
+						+ '<button class="btn btn-sm btn-info sendToUserBtn" onclick="sendYourMoveByFenNotationToUser('
+						+ '\''
+						+ usernames[i]
+						+ '\''
+						+ ')"'
+						+ 'data-username="'
+						+ usernames[i]
+						+ '">send move</button>'
+						+ '&nbsp;'
+						+ '<button data-username="'
+						+ usernames[i]
+						+ '"'
+						+ 'onclick="showUSerInfoByAjax('
+						+ '\''
+						+ usernames[i]
+						+ '\''
+						+ ')"'
 						+ 'class="btn btn-warning btn-sm user-info-btn">user '
-						+ 'info</button>' + '</li>';
+						+ 'info</button>' + '</span>' + '</li>';
 
 				usersPre.append(userData);
 			}
@@ -271,7 +284,12 @@
 						$('#participants div ul li span.username').each(
 								function() {
 									if ($(this).text() == '${sender}') {
-										$(this).next().attr('disabled', true);
+										var sendMoveBtn = $(this).next()
+												.children().first();
+										sendMoveBtn.attr('disabled', true);
+										sendMoveBtn.removeAttr('class');
+										sendMoveBtn.attr('class',
+												'btn btn-sm btn-default');
 										$(this).parent().css(
 												'background-color', '#B9BCBD');
 									}
