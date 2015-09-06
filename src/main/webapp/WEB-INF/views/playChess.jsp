@@ -29,6 +29,7 @@
 		</div>
 	</div>
 </div>
+<!-- IMPORT CHESS SCRIPT -->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/chessUserVsComputer.js">
 </script>
