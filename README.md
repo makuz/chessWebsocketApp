@@ -3,13 +3,13 @@
 aplikacja webowa do gry w szachy
 z wykorzystaniem technologii websocket do gry online
 
+Do uruchomienia alikacji musza byc zainstalowane:
+
+1. Java 8
+2. Maven
+3. Mongo db
+
 ### Uruchomienie w systemie linux:
-
-musza być zainstalowane:
-
-1.Java 8
-2.Maven
-3.Mongo db
 
 - uruchomic terminal
 - wpisac 
@@ -38,12 +38,6 @@ aplikacja będzie działać na adresie:
 ## localhost:8080
 
 ### Uruchomienie w systemie Windows:
-
-musza być zainstalowane:
-
-1.Java 8
-2.Maven
-3.Mongo db
 
 - otworzyc aplikacje w srodowsku eclipse 
 - kliknac prawym przyciskiem myszy na projekt
