@@ -1,6 +1,5 @@
 package com.chessApp.db;
 
-import java.security.MessageDigest;
 import java.util.Collections;
 import java.util.List;
 
