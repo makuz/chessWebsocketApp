@@ -6,7 +6,7 @@
 // Login: admin
 // Haslo: admin
 
-use chessApp_db
+use chessapp_db
 db.users.insert({username : "admin", password : "d033e22ae348aeb5660fc2140aec35850c4da997", role : 1, "userId": 0});
 
 db.users.find().pretty();

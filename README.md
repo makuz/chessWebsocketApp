@@ -1,7 +1,7 @@
-# chessWebsocketApp
+# chessApp
 
 aplikacja webowa do gry w szachy
-z wykorzystaniem technologii websocket do gry online
+z wykorzystaniem technologii websocket, do gry online
 
 Do uruchomienia alikacji musza byc zainstalowane:
 
