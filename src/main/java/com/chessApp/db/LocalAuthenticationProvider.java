@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.chessApp.enams.UserRoles;
+import com.chessApp.helper.PasswordEncrypter;
 import com.chessApp.model.UserAccount;
 
 @Component
@@ -32,6 +33,8 @@ public class LocalAuthenticationProvider extends
 
 	@Autowired
 	private PasswordEncoder encoder;
+	
+	private PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
 
 	@Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
@@ -48,7 +51,7 @@ public class LocalAuthenticationProvider extends
 		String password = (String) authentication.getCredentials();
 		String hashPassword = null;
 		try {
-			hashPassword = usersRepository.encryptUserPassword(password);
+			hashPassword = passwordEncrypter.encryptUserPassword(password);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

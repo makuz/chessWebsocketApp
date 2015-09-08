@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.chessApp.db.UsersRepository;
+import com.chessApp.helper.PasswordEncrypter;
 import com.chessApp.model.UserAccount;
 
 @Controller
@@ -20,6 +21,8 @@ public class SignInController {
 
 	@Autowired
 	private UsersRepository usersRepository;
+	
+	private PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
 
 	private static final Logger logger = Logger
 			.getLogger(SignInController.class);
@@ -69,7 +72,7 @@ public class SignInController {
 
 		String hashPassword = null;
 		try {
-			hashPassword = usersRepository.encryptUserPassword(userPassword);
+			hashPassword = passwordEncrypter.encryptUserPassword(userPassword);
 		} catch (Exception e) {
 			logger.debug(e);
 		}

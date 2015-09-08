@@ -46,49 +46,6 @@ public class UsersRepository {
 
 	}
 
-	// UPDATE add trackterms
-//	public void editTrackTermList(String username, List<String> trackTerms) {
-//
-//		logger.info("editTrackTermList()");
-//
-//		Update updateUserData = new Update();
-//		updateUserData.set("trackTermsList", trackTerms);
-//
-//		Query query = new Query();
-//		query.addCriteria(Criteria.where("username").is(username));
-//
-//		mongoTemplate.updateFirst(query, updateUserData, COLLECTION_NAME);
-//
-//	}
-//	
-//	public void removeTrackTerms(String username) {
-//		logger.info("removeTrackTerms()");
-//		
-//		Update updateUserData = new Update();
-//		updateUserData.set("trackTermsList", "");
-//		Query query = new Query();
-//		query.addCriteria(Criteria.where("username").is(username));
-//
-//		mongoTemplate.updateFirst(query, updateUserData, COLLECTION_NAME);
-//
-//	}
-
-	// UPDATE add languageParamToSearch
-//	public void editlanguageParamToSearch(String username,
-//			String languageParamToSearch) {
-//
-//		logger.info("editlanguageParamToSearch()");
-//
-//		Update updateUserData = new Update();
-//		updateUserData.set("languageParamToSearch", languageParamToSearch);
-//
-//		Query query = new Query();
-//		query.addCriteria(Criteria.where("username").is(username));
-//
-//		mongoTemplate.updateFirst(query, updateUserData, COLLECTION_NAME);
-//
-//	}
-
 	// autoIncrement function
 	public void incrementUserId(UserAccount usertoUpdate) {
 
@@ -123,7 +80,7 @@ public class UsersRepository {
 	public List<UserAccount> getUsersList() {
 
 		logger.info("getUsersList()");
-		
+
 		return mongoTemplate.findAll(UserAccount.class, COLLECTION_NAME);
 	}
 
@@ -137,17 +94,17 @@ public class UsersRepository {
 
 		return user;
 	}
-	
+
 	// READ ONE BY ID
-		public UserAccount getUserById(long userId) {
+	public UserAccount getUserById(long userId) {
 
-			logger.info("getUserById()");
-			Query query = new Query();
-			query.addCriteria(Criteria.where("userId").is(userId));
-			UserAccount user = mongoTemplate.findOne(query, UserAccount.class);
+		logger.info("getUserById()");
+		Query query = new Query();
+		query.addCriteria(Criteria.where("userId").is(userId));
+		UserAccount user = mongoTemplate.findOne(query, UserAccount.class);
 
-			return user;
-		}
+		return user;
+	}
 
 	// DELETE----------------------------
 	public void deleteUser(UserAccount user) {
@@ -158,7 +115,7 @@ public class UsersRepository {
 	// UPDATE
 	public void updateUser(UserAccount user) {
 		logger.info("updateUser()");
-		
+
 		Update updateUserData = new Update();
 		updateUserData.set("name", user.getName());
 		updateUserData.set("lastname", user.getLastname());
@@ -179,33 +136,6 @@ public class UsersRepository {
 
 		mongoTemplate.updateFirst(query, updateUserData, COLLECTION_NAME);
 
-	}
-
-	// -------------------------------------------------------------
-	// hash function for password
-	public String encryptUserPassword(String password) throws Exception {
-		MessageDigest md = MessageDigest.getInstance("SHA");
-		md.update(password.getBytes());
-
-		byte byteData[] = md.digest();
-
-		// convert the byte to hex format method 1
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < byteData.length; i++) {
-			sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16)
-					.substring(1));
-		}
-
-		// convert the byte to hex format method 2
-		StringBuffer hexString = new StringBuffer();
-		for (int i = 0; i < byteData.length; i++) {
-			String hex = Integer.toHexString(0xff & byteData[i]);
-			if (hex.length() == 1)
-				hexString.append('0');
-			hexString.append(hex);
-		}
-
-		return hexString.toString();
 	}
 
 }

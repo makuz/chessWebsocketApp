@@ -2,6 +2,7 @@ package com.chessApp.controllers;
 
 import java.util.List;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.chessApp.db.UsersRepository;
+import com.chessApp.helper.PasswordEncrypter;
 import com.chessApp.model.UserAccount;
 
 @Controller
@@ -19,6 +22,8 @@ public class AdminPanelController {
 
 	@Autowired
 	private UsersRepository usersRepository;
+	
+	private PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
 
 	private static final Logger logger = Logger
 			.getLogger(AdminPanelController.class);
@@ -98,7 +103,7 @@ public class AdminPanelController {
 			// hash password
 			String hashedPassword = null;
 			try {
-				hashedPassword = usersRepository.encryptUserPassword(pass)
+				hashedPassword = passwordEncrypter.encryptUserPassword(pass)
 						.toString();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -171,7 +176,7 @@ public class AdminPanelController {
 
 		String hashedPassword = null;
 		try {
-			hashedPassword = usersRepository.encryptUserPassword(
+			hashedPassword = passwordEncrypter.encryptUserPassword(
 					plaintextPassword).toString();
 		} catch (Exception e) {
 			e.printStackTrace();
