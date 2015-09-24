@@ -4,16 +4,20 @@
 			.getProperty("app.contextpath");
 %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <table id="usersTableForDataTableJS"
 	class="table table-condensed table-striped table-bordered table-accounts">
 	<thead>
 		<tr>
 			<td>user id</td>
+			<td style="width: 10px !important">registration date</td>
 			<td>login</td>
 			<td>role</td>
+			<td style="width: 5px !important">is confirmed</td>
 			<td>name</td>
 			<td>lastname</td>
-			<td>email</td>
+			<td style="width: 10px !important">email</td>
 			<td>actions</td>
 		</tr>
 	</thead>
@@ -22,17 +26,28 @@
 			<tr>
 				<td class="facebookBlue text-center"><c:out
 						value="${user.userId}" /></td>
+
+				<td class="info text-center"><fmt:formatDate pattern="dd-MM-yyyy"
+						value="${user.registrationDate}" /></td>
 				<td class="text-center"><c:out value="${user.username}" /></td>
-				<td><c:choose>
-						<c:when test="${user.role == 1}">
-							<p class="text-success text-center">admin</p>
-						</c:when>
-						<c:otherwise>
+				<c:choose>
+					<c:when test="${user.role eq 1}">
+						<td class="danger"><p class="text-center">admin</p></td>
+					</c:when>
+					<c:otherwise>
 
-							<p class="text-danger text-center">user</p>
-						</c:otherwise>
+						<td class="warning"><p class="text-center">user</p></td>
+					</c:otherwise>
 
-					</c:choose></td>
+				</c:choose>
+				<c:choose>
+					<c:when test="${user.isRegistrationConfirmed}">
+						<td class="success"><p class="text-center">yes</p></td>
+					</c:when>
+					<c:otherwise>
+						<td class="danger"><p class="text-center">no</p></td>
+					</c:otherwise>
+				</c:choose>
 				<td class="text-center"><c:out value="${user.name}" /></td>
 				<td class="text-center"><c:out value="${user.lastname}" /></td>
 				<td class="text-center"><c:out value="${user.email}" /></td>

@@ -104,8 +104,7 @@ public class SignInController {
 
 		}
 
-		mailService.sendRegistrationMail("marcin.kuzdowicz@wp.pl",
-				randomHashString);
+		mailService.sendRegistrationMail(userLogin, randomHashString);
 
 		return getSiteAccountCreationInfo("user created successfull", true,
 				userLogin, userPassword);

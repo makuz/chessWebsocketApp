@@ -21,7 +21,6 @@ public class UsersRepository {
 	public static final String COLLECTION_NAME = "users";
 	private final Logger logger = Logger.getLogger(UsersRepository.class);
 
-	// CREATE
 	public String addUser(UserAccount user) {
 		logger.debug("addUser()");
 
@@ -73,7 +72,6 @@ public class UsersRepository {
 		}
 	}
 
-	// READ ALL
 	public List<UserAccount> getUsersList() {
 
 		logger.debug("getUsersList()");
@@ -81,7 +79,6 @@ public class UsersRepository {
 		return mongoTemplate.findAll(UserAccount.class, COLLECTION_NAME);
 	}
 
-	// READ ONE BY NAME
 	public UserAccount getUserByUsername(String username) {
 
 		logger.debug("getUserByUsername()");
@@ -106,7 +103,6 @@ public class UsersRepository {
 		return user;
 	}
 
-	// READ ONE BY ID
 	public UserAccount getUserById(long userId) {
 
 		logger.debug("getUserById()");
@@ -118,7 +114,6 @@ public class UsersRepository {
 		return user;
 	}
 
-	// DELETE----------------------------
 	public void deleteUser(UserAccount user) {
 		logger.debug("deleteUser()");
 		mongoTemplate.remove(user, COLLECTION_NAME);
