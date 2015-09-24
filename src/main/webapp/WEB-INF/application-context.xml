@@ -11,5 +11,7 @@
 	<beans:bean id="webSocketSessionHandler"
 		class="com.chessApp.websocket.WebSocketSessionHandler" />
 
+	<beans:bean id="mailService" class="com.chessApp.mailService.MailService" />
+
 
 </beans:beans>

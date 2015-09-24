@@ -22,7 +22,7 @@ public class AdminPanelController {
 
 	@Autowired
 	private UsersRepository usersRepository;
-	
+
 	private PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
 
 	private static final Logger logger = Logger
@@ -86,7 +86,9 @@ public class AdminPanelController {
 		String adminFlagSendedByForm = userDataMap.get("j_adminFlag");
 		String email = userDataMap.get("j_email");
 
-		UserAccount user = new UserAccount(userLogin, name, lastname);
+		UserAccount user = usersRepository.getUserByUsername(userLogin);
+		user.setName(name);
+		user.setLastname(lastname);
 
 		String changePasswordFlag = userDataMap.get("j_changePasswordFlag");
 		if (changePasswordFlag != null
@@ -182,8 +184,15 @@ public class AdminPanelController {
 			e.printStackTrace();
 		}
 
-		UserAccount user = new UserAccount(userLogin, hashedPassword, name,
-				lastname, role, email);
+		UserAccount user = new UserAccount();
+
+		user.setUsername(userLogin);
+		user.setPassword(hashedPassword);
+		user.setName(name);
+		user.setLastname(lastname);
+		user.setRole(role);
+		user.setEmail(email);
+		user.setIsRegistrationConfirmed(true);
 
 		String result = usersRepository.addUser(user);
 

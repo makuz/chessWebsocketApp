@@ -1,6 +1,7 @@
 package com.chessApp.controllers;
 
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.chessApp.db.UsersRepository;
+import com.chessApp.enams.UserRoles;
 import com.chessApp.helper.PasswordEncrypter;
+import com.chessApp.mailService.MailService;
 import com.chessApp.model.UserAccount;
 
 @Controller
@@ -21,11 +24,14 @@ public class SignInController {
 
 	@Autowired
 	private UsersRepository usersRepository;
-	
+
 	private PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
 
 	private static final Logger logger = Logger
 			.getLogger(SignInController.class);
+
+	@Autowired
+	private MailService mailService;
 
 	// sign in
 	@RequestMapping("/signin")
@@ -77,11 +83,21 @@ public class SignInController {
 			logger.debug(e);
 		}
 
-		UserAccount newUser = new UserAccount(userLogin, hashPassword, 2,
-				userLogin);
-		logger.info("newUser-----");
-		logger.info(newUser);
+		UserAccount newUser = new UserAccount();
+		newUser.setUsername(userLogin);
+		newUser.setPassword(hashPassword);
+		newUser.setRole(UserRoles.USER.geNumericValue());
+		newUser.setEmail(userLogin);
+
+		String randomHashString = UUID.randomUUID().toString();
+
+		newUser.setRegistrationHashString(randomHashString);
+		newUser.setIsRegistrationConfirmed(false);
+
 		usersRepository.addUser(newUser);
+
+		mailService.sendRegistrationMail("marcin.kuzdowicz@wp.pl",
+				randomHashString);
 
 		return getSiteAccountCreationInfo("user created successfull", true,
 				userLogin, userPassword);

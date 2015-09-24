@@ -21,7 +21,7 @@ public class UserPanelController {
 
 	@Autowired
 	private UsersRepository usersRepository;
-	
+
 	private PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
 
 	private static final Logger logger = Logger
@@ -59,7 +59,9 @@ public class UserPanelController {
 		logger.info("adminFlag");
 		logger.info(adminFlagSendedByForm);
 
-		UserAccount user = new UserAccount(userLogin, name, lastname);
+		UserAccount user = usersRepository.getUserByUsername(userLogin);
+		user.setName(name);
+		user.setLastname(lastname);
 
 		String changePasswordFlag = userDataMap.get("j_changePasswordFlag");
 		if (changePasswordFlag != null

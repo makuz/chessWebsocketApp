@@ -10,7 +10,7 @@ public enum UserRoles {
 
 	ADMIN(1, "ROLE_ADMIN", "ROLE_USER"), USER(2, "ROLE_USER");
 
-	private int id;
+	private int numericValue;
 
 	private List<GrantedAuthority> userRoles;
 
@@ -28,19 +28,19 @@ public enum UserRoles {
 		return userRoles;
 	}
 
-	public int getId() {
-		return id;
+	public int geNumericValue() {
+		return numericValue;
 	}
 
 	private UserRoles(int id, String role) {
-		this.id = id;
+		this.numericValue = id;
 		List<GrantedAuthority> userRoles = new ArrayList<>();
 		userRoles.add(new SimpleGrantedAuthority(role));
 		this.userRoles = userRoles;
 	}
 
 	private UserRoles(int id, String role1, String role2) {
-		this.id = id;
+		this.numericValue = id;
 		List<GrantedAuthority> userRoles = new ArrayList<>();
 		userRoles.add(new SimpleGrantedAuthority(role1));
 		userRoles.add(new SimpleGrantedAuthority(role2));

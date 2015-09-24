@@ -1,6 +1,7 @@
-<%@ page import="com.chessApp.configs.Config"%>
+<%@ page import="com.chessApp.props.ChessAppProperties"%>
 <%
-	String contextURL = new Config().getContextUrl();
+	String contextURL = ChessAppProperties
+			.getProperty("app.contextpath");
 %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
@@ -23,8 +24,9 @@
 					Account</a></li>
 		</c:when>
 		<c:otherwise>
-		<security:authorize access="hasRole('ROLE_USER')">
-			<li><a href="<%=contextURL%>/user/your-account">Your Account</a></li>
+			<security:authorize access="hasRole('ROLE_USER')">
+				<li><a href="<%=contextURL%>/user/your-account">Your
+						Account</a></li>
 			</security:authorize>
 		</c:otherwise>
 	</c:choose>

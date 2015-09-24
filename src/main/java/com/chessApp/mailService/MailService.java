@@ -1,5 +1,7 @@
 package com.chessApp.mailService;
 
+import java.util.UUID;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -28,7 +30,7 @@ public class MailService {
 				.getProperty("mail.transport.protocol"));
 	}
 
-	private String prepareMailText() {
+	private String prepareRegistrationMailText(String randomHashForLink) {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("<html><head><meta http-equiv=\"Content-Type\" ");
@@ -43,7 +45,7 @@ public class MailService {
 		sb.append("<br />");
 		sb.append("<b>Potwierdź swój adres e-mail</b>, aby dokończyć proces rejestracji. ");
 		sb.append("<br />");
-		sb.append(prepareRegistrationAnchor());
+		sb.append(prepareRegistrationAnchor(randomHashForLink));
 		sb.append("<br />");
 		sb.append("<br />");
 		sb.append("Pozdrawiamy,");
@@ -57,15 +59,21 @@ public class MailService {
 		return sb.toString();
 	}
 
-	private String prepareRegistrationAnchor() {
+	private String prepareRegistrationAnchor(String hash) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<a target=\"_blank\" href=\"http://www.google.pl/\">");
+		sb.append("<a href=\"");
+		String domainName = ChessAppProperties.getProperty("domain.link");
+		String confirmEmailLink = domainName + "/registration/confirm/" + hash;
+		sb.append(confirmEmailLink);
+		sb.append("\">");
 		sb.append("Kliknij tutaj, aby potwierdzić adres email");
 		sb.append("</a>");
+		System.out.println(sb.toString());
 		return sb.toString();
 	}
 
-	public void sendMail(String to) {
+	public void sendMail(String to, String from, String subject,
+			String messageContent) {
 		logger.debug("sendMail()");
 
 		prepareMailSender();
@@ -77,11 +85,9 @@ public class MailService {
 
 		try {
 			mimeMessageHelper.setTo(new InternetAddress(to));
-			mimeMessageHelper.setFrom(new InternetAddress(ChessAppProperties
-					.getProperty("mail.default.message.from")));
-			mimeMessageHelper.setSubject(MailSubjectPL.REJESTRACJA);
-			mimeMessage.setContent(prepareMailText(),
-					"text/html; charset=utf-8");
+			mimeMessageHelper.setFrom(new InternetAddress(from));
+			mimeMessageHelper.setSubject(subject);
+			mimeMessage.setContent(messageContent, "text/html; charset=utf-8");
 
 		} catch (AddressException e) {
 			logger.debug(e);
@@ -94,11 +100,23 @@ public class MailService {
 
 	}
 
+	public void sendRegistrationMail(String to, String randomHashForLink) {
+
+		String from = ChessAppProperties
+				.getProperty("mail.default.message.from");
+
+		sendMail(to, from, MailSubjectPL.REJESTRACJA,
+				prepareRegistrationMailText(randomHashForLink));
+
+	}
+
 	// FOR TESTS ---------------------------
 	public static void main(String[] args) {
 
 		MailService ms = new MailService();
-		ms.sendMail("marcin.kuzdowicz@wp.pl");
+		String hash = UUID.randomUUID().toString();
+		ms.sendRegistrationMail("marcin.kuzdowicz@wp.pl", hash);
+
 	}
 
 }

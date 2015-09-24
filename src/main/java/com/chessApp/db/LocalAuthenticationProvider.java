@@ -2,8 +2,7 @@ package com.chessApp.db;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +24,7 @@ import com.chessApp.model.UserAccount;
 public class LocalAuthenticationProvider extends
 		AbstractUserDetailsAuthenticationProvider {
 
-	private final Logger logger = LoggerFactory
+	private final Logger logger = Logger
 			.getLogger(LocalAuthenticationProvider.class);
 
 	@Autowired
@@ -33,7 +32,7 @@ public class LocalAuthenticationProvider extends
 
 	@Autowired
 	private PasswordEncoder encoder;
-	
+
 	private PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
 
 	@Override
@@ -57,19 +56,19 @@ public class LocalAuthenticationProvider extends
 		}
 
 		if (!StringUtils.hasText(password)) {
-			logger.warn(username + ": no password provided", username);
+			logger.warn(username + ": no password provided");
 			throw new BadCredentialsException("Please enter password");
 		}
 
 		if (!StringUtils.hasText(username)) {
-			logger.warn(username + ": no login provided", username);
+			logger.warn(username + ": no login provided");
 			throw new BadCredentialsException("Please enter login");
 		}
 
 		UserAccount user = usersRepository.getUserByUsername(username);
 
 		if (user == null) {
-			logger.warn(username + ": user not found", username, password);
+			logger.warn(username + ": user not found");
 			throw new UsernameNotFoundException("Invalid Login");
 		}
 

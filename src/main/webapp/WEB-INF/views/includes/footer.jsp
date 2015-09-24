@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.chessApp.props.ChessAppProperties"%>
+<%
+	String version = ChessAppProperties.getProperty("chessApp.version");
+%>
 <br />
 <footer class="footer">
 	<span class="author">author: Marcin Kuzdowicz</span> <span
-		class="appTitle">chess application</span>
+		class="appTitle">chess application</span> <span class="pull-right">version: <%=version%></span>
 </footer>
 <script>
 <!-- MAKE CURRENT PAGE BUTTON ACTIVE AND DEFULT PAGE ON START ACTIVE -->

@@ -3,8 +3,7 @@ package com.chessApp.db;
 import java.util.Collections;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -20,12 +19,11 @@ public class UsersRepository {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	public static final String COLLECTION_NAME = "users";
-	private final Logger logger = LoggerFactory
-			.getLogger(UsersRepository.class);
+	private final Logger logger = Logger.getLogger(UsersRepository.class);
 
 	// CREATE
 	public String addUser(UserAccount user) {
-		logger.info("addUser()");
+		logger.debug("addUser()");
 
 		if (!mongoTemplate.collectionExists(UserAccount.class)) {
 			mongoTemplate.createCollection(UserAccount.class);
@@ -48,7 +46,7 @@ public class UsersRepository {
 	// autoIncrement function
 	public void incrementUserId(UserAccount usertoUpdate) {
 
-		logger.info("incrementUserId()");
+		logger.debug("incrementUserId()");
 		Query query = new Query();
 
 		UserAccount user = mongoTemplate.findOne(query, UserAccount.class);
@@ -78,7 +76,7 @@ public class UsersRepository {
 	// READ ALL
 	public List<UserAccount> getUsersList() {
 
-		logger.info("getUsersList()");
+		logger.debug("getUsersList()");
 
 		return mongoTemplate.findAll(UserAccount.class, COLLECTION_NAME);
 	}
@@ -86,10 +84,24 @@ public class UsersRepository {
 	// READ ONE BY NAME
 	public UserAccount getUserByUsername(String username) {
 
-		logger.info("getUserByUsername()");
+		logger.debug("getUserByUsername()");
 		Query query = new Query();
 		query.addCriteria(Criteria.where("username").is(username));
-		UserAccount user = mongoTemplate.findOne(query, UserAccount.class);
+		UserAccount user = mongoTemplate.findOne(query, UserAccount.class,
+				COLLECTION_NAME);
+
+		return user;
+	}
+
+	public UserAccount getUserByRegistrationHashString(
+			String registrationHashString) {
+		logger.debug("getUserByRegistrationHashString()");
+
+		Query query = new Query();
+		query.addCriteria(Criteria.where("registrationHashString").is(
+				registrationHashString));
+		UserAccount user = mongoTemplate.findOne(query, UserAccount.class,
+				COLLECTION_NAME);
 
 		return user;
 	}
@@ -97,29 +109,32 @@ public class UsersRepository {
 	// READ ONE BY ID
 	public UserAccount getUserById(long userId) {
 
-		logger.info("getUserById()");
+		logger.debug("getUserById()");
 		Query query = new Query();
 		query.addCriteria(Criteria.where("userId").is(userId));
-		UserAccount user = mongoTemplate.findOne(query, UserAccount.class);
+		UserAccount user = mongoTemplate.findOne(query, UserAccount.class,
+				COLLECTION_NAME);
 
 		return user;
 	}
 
 	// DELETE----------------------------
 	public void deleteUser(UserAccount user) {
-		logger.info("deleteUser()");
+		logger.debug("deleteUser()");
 		mongoTemplate.remove(user, COLLECTION_NAME);
 	}
 
 	// UPDATE
 	public void updateUser(UserAccount user) {
-		logger.info("updateUser()");
+		logger.debug("updateUser()");
 
 		Update updateUserData = new Update();
 		updateUserData.set("name", user.getName());
 		updateUserData.set("lastname", user.getLastname());
 		updateUserData.set("role", user.getRole());
 		updateUserData.set("email", user.getEmail());
+		updateUserData.set("isRegistrationConfirmed",
+				user.getIsRegistrationConfirmed());
 
 		if (user.getPassword() != null
 				&& !user.getPassword().equalsIgnoreCase("")) {
@@ -128,10 +143,6 @@ public class UsersRepository {
 
 		Query query = new Query();
 		query.addCriteria(Criteria.where("username").is(user.getUsername()));
-
-		logger.info("user to update------------");
-		UserAccount thisUser = getUserByUsername(user.getUsername());
-		logger.info(thisUser + "");
 
 		mongoTemplate.updateFirst(query, updateUserData, COLLECTION_NAME);
 
