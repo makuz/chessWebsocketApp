@@ -18,7 +18,9 @@ public class UsersRepository {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
+
 	public static final String COLLECTION_NAME = "users";
+
 	private final Logger logger = Logger.getLogger(UsersRepository.class);
 
 	public String addUser(UserAccount user) {
@@ -31,7 +33,7 @@ public class UsersRepository {
 		UserAccount testUser = getUserByUsername(user.getUsername());
 
 		if (testUser == null) {
-			incrementUserId(user);
+			autoIncrementUserId(user);
 			mongoTemplate.insert(user, COLLECTION_NAME);
 			logger.info("user added");
 			return "ok";
@@ -42,18 +44,13 @@ public class UsersRepository {
 
 	}
 
-	// autoIncrement function
-	public void incrementUserId(UserAccount usertoUpdate) {
-
+	private void autoIncrementUserId(UserAccount usertoUpdate) {
 		logger.debug("incrementUserId()");
+
 		Query query = new Query();
-
 		UserAccount user = mongoTemplate.findOne(query, UserAccount.class);
-		// query.with(new Sort(new Order(Direction.DESC, "id")));
 		if (user == null) {
-
 			usertoUpdate.setUserId(0);
-
 		} else {
 			List<UserAccount> users = mongoTemplate.findAll(UserAccount.class,
 					COLLECTION_NAME);
