@@ -1,4 +1,4 @@
-package com.chessApp.db;
+package com.chessApp.security.authenticationProvider;
 
 import java.util.List;
 
@@ -16,7 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.chessApp.enams.UserRoles;
+import com.chessApp.dao.UsersRepository;
+import com.chessApp.enums.UserRoles;
 import com.chessApp.helper.PasswordEncrypter;
 import com.chessApp.model.UserAccount;
 

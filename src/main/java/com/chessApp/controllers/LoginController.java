@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.chessApp.db.UsersRepository;
+import com.chessApp.dao.UsersRepository;
 
 @Controller
 public class LoginController {

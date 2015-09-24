@@ -1,4 +1,4 @@
-package com.chessApp.enams;
+package com.chessApp.enums;
 
 public enum WebSocketMessageType {
 

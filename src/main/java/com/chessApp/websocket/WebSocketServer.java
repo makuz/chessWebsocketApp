@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import com.chessApp.enams.WebSocketMessageType;
+import com.chessApp.enums.WebSocketMessageType;
 import com.google.gson.Gson;
 
 @Service

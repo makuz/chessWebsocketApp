@@ -15,12 +15,11 @@
 	</beans:bean>
 
 	<!-- mongodb config -->
-
 	<mongo:db-factory dbname="${db.name}" />
-	<mongo:mongo host="localhost" port="27017" />
+	<mongo:mongo host="${db.host}" port="${db.port}" />
 	<beans:bean id="mongoTemplate"
 		class="org.springframework.data.mongodb.core.MongoTemplate"
 		c:mongoDbFactory-ref="mongoDbFactory" />
-	<mongo:repositories base-package="com.chessApp.db" />
+	<mongo:repositories base-package="com.chessApp.dao" />
 
 </beans:beans>

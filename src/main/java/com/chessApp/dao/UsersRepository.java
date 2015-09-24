@@ -1,4 +1,4 @@
-package com.chessApp.db;
+package com.chessApp.dao;
 
 import java.util.Collections;
 import java.util.List;

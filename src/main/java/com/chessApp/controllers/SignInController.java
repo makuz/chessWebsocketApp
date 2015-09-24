@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.chessApp.db.UsersRepository;
-import com.chessApp.enams.UserRoles;
+import com.chessApp.dao.UsersRepository;
+import com.chessApp.enums.UserRoles;
 import com.chessApp.helper.PasswordEncrypter;
 import com.chessApp.mailService.MailService;
 import com.chessApp.model.UserAccount;
