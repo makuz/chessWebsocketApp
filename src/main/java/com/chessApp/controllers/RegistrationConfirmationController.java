@@ -30,10 +30,16 @@ public class RegistrationConfirmationController {
 		if (user != null) {
 			user.setIsRegistrationConfirmed(true);
 			usersRepository.updateUser(user);
+		} else {
+			ModelAndView error = new ModelAndView("error");
+			error.addObject("errorMessage", "SOMETHINGS GOES WRONG");
+			return error;
 		}
 
-		ModelAndView homePageModel = new ModelAndView("home");
-		return homePageModel;
+		ModelAndView confirmRegistrationMsg = new ModelAndView(
+				"confirmRegistrationMessage");
+		confirmRegistrationMsg.addObject("userEmail", user.getEmail());
+		return confirmRegistrationMsg;
 	}
 
 }

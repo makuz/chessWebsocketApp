@@ -1,4 +1,6 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <jsp:include page="includes/header.jsp" />
 <div class="container-fluid">
 <jsp:include page="includes/menu.jsp"></jsp:include>

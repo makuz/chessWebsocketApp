@@ -36,9 +36,12 @@ public class SignInController {
 
 	// sign in
 	@RequestMapping("/signin")
-	public ModelAndView getSignInForm() {
+	public ModelAndView getSignInForm(String msg) {
 
 		ModelAndView signInSite = new ModelAndView("signIn");
+		if (msg != null) {
+			signInSite.addObject("errorMessage", msg);
+		}
 		addBasicObjectsToModelAndView(signInSite);
 
 		return signInSite;
@@ -53,8 +56,7 @@ public class SignInController {
 		accountCreationInfo.addObject("msg", userCreationMsg);
 		accountCreationInfo.addObject("created", created);
 		if (created) {
-			accountCreationInfo.addObject("userLogin", userLogin);
-			accountCreationInfo.addObject("userPassword", userPassword);
+			accountCreationInfo.addObject("userMail", userLogin);
 		}
 		addBasicObjectsToModelAndView(accountCreationInfo);
 
@@ -72,9 +74,7 @@ public class SignInController {
 		// validation
 		if (!userPassword.equals(confirmPassword)) {
 
-			return getSiteAccountCreationInfo(
-					"password and confirm password have to be equal", false,
-					userLogin, userPassword);
+			return getSignInForm("password and confirm password have to be equal");
 		}
 
 		String hashPassword = null;
@@ -96,7 +96,13 @@ public class SignInController {
 		newUser.setIsRegistrationConfirmed(false);
 		newUser.setRegistrationDate(new Date());
 
-		usersRepository.addUser(newUser);
+		String creationMessage = usersRepository.addUser(newUser);
+
+		if (creationMessage.equals("fail")) {
+
+			return getSignInForm("taki login już istnieje, wybierz inny");
+
+		}
 
 		mailService.sendRegistrationMail("marcin.kuzdowicz@wp.pl",
 				randomHashString);

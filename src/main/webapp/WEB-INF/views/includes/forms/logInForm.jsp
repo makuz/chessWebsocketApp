@@ -3,7 +3,7 @@
 	String contextURL = new Config().getContextUrl();
 %>
 <form method="POST" action="<%=contextURL%>/login"
-	class="form-horizontal">
+	class="form-horizontal" autocomplete="on">
 	
 	<div class="form-group">
 		<label class="control-label col-sm-2">Name</label>

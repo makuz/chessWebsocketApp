@@ -1,7 +1,5 @@
 package com.chessApp.mailService;
 
-import java.util.UUID;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -33,14 +31,15 @@ public class MailService {
 	private String prepareRegistrationMailText(String randomHashForLink) {
 
 		StringBuilder sb = new StringBuilder();
+		String siteName = ChessAppProperties.getProperty("domain.name");
 		sb.append("<html><head><meta http-equiv=\"Content-Type\" ");
 		sb.append("content=\"text/html; charset=UTF-8\"></head><body>");
 		sb.append("<p>");
 		sb.append("<br />");
 		sb.append("Witaj,");
 		sb.append("<br />");
-		sb.append("Dziękujemy za rejestrację w serwisie <b>"
-				+ ChessAppProperties.getProperty("domain.name") + "</b>");
+		sb.append("Dziękujemy za rejestrację w serwisie <b>" + siteName
+				+ "</b>");
 		sb.append("<br />");
 		sb.append("<br />");
 		sb.append("<b>Potwierdź swój adres e-mail</b>, aby dokończyć proces rejestracji. ");
@@ -50,9 +49,15 @@ public class MailService {
 		sb.append("<br />");
 		sb.append("Pozdrawiamy,");
 		sb.append("<br />");
-		sb.append("Zespół <b>" + ChessAppProperties.getProperty("domain.name")
-				+ "</b>");
+		sb.append("Zespół <b>" + siteName + "</b>");
 		sb.append("<br />");
+		sb.append("<br />");
+		sb.append("<br />");
+		sb.append("</p>");
+		sb.append("<p>");
+		sb.append("Wiadomość została wysłana automatycznie z serwisu ");
+		sb.append(siteName);
+		sb.append("Jeżeli nie rejestrowałeś się w serwisie, poprostu zignoruj tę wiadomość. ");
 		sb.append("</p>");
 		sb.append("</body></html>");
 
@@ -107,15 +112,6 @@ public class MailService {
 
 		sendMail(to, from, MailSubjectPL.REJESTRACJA,
 				prepareRegistrationMailText(randomHashForLink));
-
-	}
-
-	// FOR TESTS ---------------------------
-	public static void main(String[] args) {
-
-		MailService ms = new MailService();
-		String hash = UUID.randomUUID().toString();
-		ms.sendRegistrationMail("marcin.kuzdowicz@wp.pl", hash);
 
 	}
 
