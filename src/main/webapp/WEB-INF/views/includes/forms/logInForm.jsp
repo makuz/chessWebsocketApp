@@ -1,6 +1,7 @@
-<%@ page import="com.chessApp.configs.Config"%>
+<%@ page import="com.chessApp.props.ChessAppProperties"%>
 <%
-	String contextURL = new Config().getContextUrl();
+	String contextURL = ChessAppProperties
+			.getProperty("app.contextpath");
 %>
 <form method="POST" action="<%=contextURL%>/login"
 	class="form-horizontal" autocomplete="on">

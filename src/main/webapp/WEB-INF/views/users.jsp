@@ -8,10 +8,11 @@
 			<%@ page import="java.util.List"%>
 			<%@ page import="com.chessApp.model.UserAccount"%>
 			<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-			<%@ page import="com.chessApp.configs.Config"%>
+			<%@ page import="com.chessApp.props.ChessAppProperties"%>
 			<%
-			String contextURL = new Config().getContextUrl();
-		%>
+				String contextURL = ChessAppProperties
+						.getProperty("app.contextpath");
+			%>
 
 			<c:choose>
 				<c:when test="${msg != null && msg  != '' }">

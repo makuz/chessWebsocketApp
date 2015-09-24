@@ -1,6 +1,7 @@
-<%@ page import="com.chessApp.configs.Config"%>
+<%@ page import="com.chessApp.props.ChessAppProperties"%>
 <%
-	String contextURL = new Config().getContextUrl();
+	String contextURL = ChessAppProperties
+			.getProperty("app.contextpath");
 %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
