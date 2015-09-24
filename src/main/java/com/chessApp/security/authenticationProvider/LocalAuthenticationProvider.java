@@ -18,6 +18,7 @@ import org.springframework.util.StringUtils;
 
 import com.chessApp.dao.UsersRepository;
 import com.chessApp.enums.UserRoles;
+import com.chessApp.exceptions.UserNotConfirmedException;
 import com.chessApp.helper.PasswordEncrypter;
 import com.chessApp.model.UserAccount;
 
@@ -71,6 +72,11 @@ public class LocalAuthenticationProvider extends
 		if (user == null) {
 			logger.warn(username + ": user not found");
 			throw new UsernameNotFoundException("Invalid Login");
+		}
+
+		if (user.getIsRegistrationConfirmed() == false) {
+			logger.warn(username + ": not confirmed");
+			throw new UserNotConfirmedException(username + ": not confirmed");
 		}
 
 		if (username.equals(user.getUsername())

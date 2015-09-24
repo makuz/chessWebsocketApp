@@ -136,6 +136,8 @@ public class UsersRepository {
 		updateUserData.set("isRegistrationConfirmed",
 				user.getIsRegistrationConfirmed());
 		updateUserData.set("registrationDate", user.getRegistrationDate());
+		updateUserData.set("registrationHashString",
+				user.getRegistrationHashString());
 
 		if (user.getPassword() != null
 				&& !user.getPassword().equalsIgnoreCase("")) {

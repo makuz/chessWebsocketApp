@@ -29,6 +29,7 @@ public class RegistrationConfirmationController {
 
 		if (user != null) {
 			user.setIsRegistrationConfirmed(true);
+			user.setRegistrationHashString("");
 			usersRepository.updateUser(user);
 		} else {
 			ModelAndView error = new ModelAndView("error");
