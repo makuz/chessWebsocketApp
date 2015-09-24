@@ -135,6 +135,7 @@ public class UsersRepository {
 		updateUserData.set("email", user.getEmail());
 		updateUserData.set("isRegistrationConfirmed",
 				user.getIsRegistrationConfirmed());
+		updateUserData.set("registrationDate", user.getRegistrationDate());
 
 		if (user.getPassword() != null
 				&& !user.getPassword().equalsIgnoreCase("")) {
@@ -147,5 +148,4 @@ public class UsersRepository {
 		mongoTemplate.updateFirst(query, updateUserData, COLLECTION_NAME);
 
 	}
-
 }

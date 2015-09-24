@@ -1,5 +1,6 @@
 package com.chessApp.controllers;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -193,6 +194,7 @@ public class AdminPanelController {
 		user.setRole(role);
 		user.setEmail(email);
 		user.setIsRegistrationConfirmed(true);
+		user.setRegistrationDate(new Date());
 
 		String result = usersRepository.addUser(user);
 

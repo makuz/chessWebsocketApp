@@ -1,5 +1,7 @@
 package com.chessApp.model;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,6 +19,7 @@ public class UserAccount implements Comparable<UserAccount> {
 	private String email;
 	private String registrationHashString;
 	private Boolean isRegistrationConfirmed;
+	private Date registrationDate;
 
 	public UserAccount() {
 
@@ -27,6 +30,14 @@ public class UserAccount implements Comparable<UserAccount> {
 		this.password = password;
 		this.role = role;
 		this.email = email;
+	}
+
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
 	}
 
 	public String getEmail() {

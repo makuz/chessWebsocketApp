@@ -1,5 +1,6 @@
 package com.chessApp.controllers;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -93,6 +94,7 @@ public class SignInController {
 
 		newUser.setRegistrationHashString(randomHashString);
 		newUser.setIsRegistrationConfirmed(false);
+		newUser.setRegistrationDate(new Date());
 
 		usersRepository.addUser(newUser);
 
