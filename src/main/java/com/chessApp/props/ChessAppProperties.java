@@ -18,68 +18,28 @@ public class ChessAppProperties {
 
 	private static Properties props;
 
-	public static String smtpServer() {
-		String smtpServer = null;
+	public static String getProperty(String key) {
+		String property = null;
 		try {
 			props = PropertiesLoaderUtils.loadProperties(resource);
-			smtpServer = props.getProperty("smtp.host");
+			property = props.getProperty(key);
 		} catch (IOException e) {
 			logger.debug(e);
 		}
-		return smtpServer;
+		return property;
 	}
-	
-	public static String appMail() {
-		String appMail = null;
-		try {
-			props = PropertiesLoaderUtils.loadProperties(resource);
-			appMail = props.getProperty("app.mail");
-		} catch (IOException e) {
-			logger.debug(e);
-		}
-		return appMail;
-	}
-	
-	public static String dbName() {
-		String dbName = null;
-		try {
-			props = PropertiesLoaderUtils.loadProperties(resource);
-			dbName = props.getProperty("db.name");
-		} catch (IOException e) {
-			logger.debug(e);
-		}
-		return dbName;
-	}
-	
-	public static String appContextpath() {
-		String appContextpath = null;
-		try {
-			props = PropertiesLoaderUtils.loadProperties(resource);
-			appContextpath = props.getProperty("app.contextpath");
-		} catch (IOException e) {
-			logger.debug(e);
-		}
-		return appContextpath;
-	}
-	
-	public static String domainName() {
-		String domainName = null;
-		try {
-			props = PropertiesLoaderUtils.loadProperties(resource);
-			domainName = props.getProperty("domain.name");
-		} catch (IOException e) {
-			logger.debug(e);
-		}
-		return domainName;
-	}
-	
+
 	// FOR TEST
 	public static void main(String[] args) {
-		System.out.println(ChessAppProperties.smtpServer());
-		System.out.println(ChessAppProperties.appMail());
-		System.out.println(ChessAppProperties.dbName());
-		System.out.println(ChessAppProperties.appContextpath());
-		System.out.println(ChessAppProperties.domainName());
+		System.out.println(ChessAppProperties.getProperty("smtp.host"));
+		System.out.println(ChessAppProperties
+				.getProperty("mail.default.message.from"));
+		System.out.println(ChessAppProperties.getProperty("db.name"));
+		System.out.println(ChessAppProperties.getProperty("app.contextpath"));
+		System.out.println(ChessAppProperties.getProperty("domain.name"));
+		System.out.println(ChessAppProperties.getProperty("port"));
+		System.out.println(ChessAppProperties
+				.getProperty("mail.transport.protocol"));
 	}
 
 }

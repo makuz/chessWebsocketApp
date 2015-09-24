@@ -12,7 +12,4 @@
 		class="com.chessApp.websocket.WebSocketSessionHandler" />
 
 
-
-
-
 </beans:beans>
