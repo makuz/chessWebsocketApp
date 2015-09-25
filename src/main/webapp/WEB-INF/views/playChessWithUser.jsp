@@ -77,6 +77,7 @@
 	</div>
 </div>
 
+<jsp:include page="includes/modal_boxes/game_handshake_modal.jsp" />
 <jsp:include page="includes/modal_boxes/user_info_modal.jsp" />
 
 <!-- JAVASCRIPTS -->

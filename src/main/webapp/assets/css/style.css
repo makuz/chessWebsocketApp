@@ -32,8 +32,19 @@ div#user-info-modal ul.list-group {
 	width: 100% !important;
 }
 
-button.sendToUserBtn[disabled=true] {
+button.send-to-user-btn[disabled=true] {
 	color: black !important;
+}
+
+button.send-to-user-btn {
+	width: 6em !important;
+	padding: 0;
+	margin-left: 0.4em;
+}
+
+button.user-info-btn {
+	width: 3em !important;
+	padding: 0;
 }
 
 div#participants {
@@ -63,7 +74,7 @@ div.user-profile-form {
 	border-radius: 5px;
 }
 
-div.user-profile-form label{
+div.user-profile-form label {
 	color: #3B5998 !important;
 }
 
@@ -107,6 +118,10 @@ div#chess-board-play-with-user article#aside-board {
 	margin-right: 1%;
 }
 
+div#game-handshake-modal {
+	margin-top: 13%;
+}
+
 section#onlineUsersSection {
 	margin: 0 auto;
 }
@@ -124,6 +139,8 @@ div#participants span.participants-action-btns {
 
 div#participants span.username {
 	width: 300px;
+	margin-left: -0.5em;
+	font-size: 90%;
 }
 
 div#chess-board-play-with-user article.game-actions {

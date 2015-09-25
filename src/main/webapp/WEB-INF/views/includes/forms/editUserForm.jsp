@@ -78,21 +78,17 @@
 		<c:choose>
 			<c:when test="${user.role==1}">
 				<div class="form-group">
-					<label class="control-label col-sm-2">grant admin
-						authorities</label>
-					<div class="col-sm-8">
-						<input type="checkbox" class="form-control" name="j_adminFlag"
-							checked />
-					</div>
+					<label class="col-sm-8 col-sm-offset-2"> <input
+						type="checkbox" name="j_adminFlag" checked /> grant admin
+						authorities
+					</label>
 				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="form-group">
-					<label class="control-label col-sm-2">grant admin
-						authorities</label>
-					<div class="col-sm-8">
-						<input type="checkbox" class="form-control" name="j_adminFlag" />
-					</div>
+					<label class="col-sm-8 col-sm-offset-2"> <input
+						type="checkbox" name="j_adminFlag" /> grant admin authorities
+					</label>
 				</div>
 			</c:otherwise>
 		</c:choose>

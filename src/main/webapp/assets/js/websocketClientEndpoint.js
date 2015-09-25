@@ -46,24 +46,53 @@ function connectToWebSocket() {
 					game = new Chess(fenStr);
 					updateStatus();
 				}
-			} else {
+			} else if (message.type == "game-handshake-invitation") {
 
+				showGameHandshakeModalBox(message.senderName);
+
+			} else if (message.type == "game-handshake-agreement") {
+
+				alert("game agreement");
+
+			} else if (message.type == "game-handshake-refuse") {
+
+				alert("game refused");
+
+			} else {
 				showParticipants(event.data);
 
-				$('#participants div ul li span.username').each(function() {
-					if ($(this).text() == WEBSOCKET_CLIENT_NAME) {
-						var sendMoveBtn = $(this).next().children().first();
-						sendMoveBtn.attr('disabled', true);
-						sendMoveBtn.removeAttr('class');
-						sendMoveBtn.attr('class', 'btn btn-sm btn-default');
-						$(this).parent().css('background-color', '#B9BCBD');
-					}
-				});
-
+				$('#participants div ul li span.username')
+						.each(
+								function() {
+									if ($(this).text() == WEBSOCKET_CLIENT_NAME) {
+										var sendMoveBtn = $(this).next()
+												.children().first();
+										sendMoveBtn.attr('disabled', true);
+										sendMoveBtn.removeAttr('class');
+										sendMoveBtn
+												.attr('class',
+														'btn btn-sm btn-default send-to-user-btn');
+										$(this).parent().css(
+												'background-color', '#B9BCBD');
+									}
+								});
 			}
 		}
 
 	};
+
+	// -----------------------------------
+
+	function showGameHandshakeModalBox(sender) {
+
+		$('#game-handshake-modal-title').html(
+				"Do you want to play with: "
+						+ "<span class=\"text-primary\"><b>" + sender
+						+ "</b></span>");
+		$('#game-handshake-msgTo').val(sender);
+		$('#game-handshake-modal').modal('show');
+
+	}
 
 	// -----------------------------------
 
@@ -100,6 +129,58 @@ window.onbeforeunload = function() {
 };
 
 // functions -------------------------------------------
+
+function inviteUserToGame(reciever) {
+	console.log("game-handshake from " + WEBSOCKET_CLIENT_NAME);
+	console.log(" to " + reciever);
+	var msg = "invitation";
+	webSocket.send(JSON.stringify({
+		type : "game-handshake-invitation",
+		handshakeMsg : msg,
+		senderName : WEBSOCKET_CLIENT_NAME,
+		sendTo : reciever
+	}));
+}
+
+// --------------------------------------------------------
+
+function agreementToPlay() {
+
+	var usernameToPlayWith = $('#game-handshake-msgTo').val();
+	var myUserName = WEBSOCKET_CLIENT_NAME;
+	console.log("game-handshake-agreement from");
+	console.log(myUserName + " with " + usernameToPlayWith);
+	var msg = "agreement";
+	webSocket.send(JSON.stringify({
+		type : "game-handshake-agreement",
+		handshakeMsg : msg,
+		senderName : WEBSOCKET_CLIENT_NAME,
+		sendTo : usernameToPlayWith
+	}));
+
+	$('#game-handshake-modal').modal('hide');
+
+}
+
+// --------------------------------------------------------
+
+function refusedToPlay() {
+
+	var usernameNotToPlayWith = $('#game-handshake-msgTo').val();
+	var myUserName = WEBSOCKET_CLIENT_NAME;
+	console.log("game-handshake-refuse from");
+	console.log(myUserName + " to " + usernameNotToPlayWith);
+	var msg = "refuse";
+	webSocket.send(JSON.stringify({
+		type : "game-handshake-refuse",
+		handshakeMsg : msg,
+		senderName : WEBSOCKET_CLIENT_NAME,
+		sendTo : usernameNotToPlayWith
+	}));
+	
+	$('#game-handshake-modal').modal('hide');
+
+}
 
 function sendYourMoveByFenNotationToUser(reciever) {
 	console.log("send-fen : " + fenFromYourMove.value);
@@ -144,14 +225,22 @@ function showParticipants(data) {
 				+ usernames[i]
 				+ '</span>'
 				+ '<span class="participants-action-btns">'
-				+ '<button class="btn btn-sm btn-info sendToUserBtn" onclick="sendYourMoveByFenNotationToUser('
+				+ '<button class="btn btn-sm btn-danger send-to-user-btn" onclick="inviteUserToGame('
 				+ '\''
 				+ usernames[i]
 				+ '\''
 				+ ')"'
 				+ 'data-username="'
 				+ usernames[i]
-				+ '">send move</button>'
+				+ '">invite</button>'
+				+ '<button class="btn btn-sm btn-info send-to-user-btn" onclick="sendYourMoveByFenNotationToUser('
+				+ '\''
+				+ usernames[i]
+				+ '\''
+				+ ')"'
+				+ 'data-username="'
+				+ usernames[i]
+				+ '">send-move</button>'
 				+ '&nbsp;'
 				+ '<button data-username="'
 				+ usernames[i]
@@ -161,8 +250,8 @@ function showParticipants(data) {
 				+ usernames[i]
 				+ '\''
 				+ ')"'
-				+ 'class="btn btn-warning btn-sm user-info-btn">user '
-				+ 'info</button>' + '</span>' + '</li>';
+				+ 'class="btn btn-warning btn-sm user-info-btn">info'
+				+ '</button>' + '</span>' + '</li>';
 
 		participantsList.append(userData);
 	}

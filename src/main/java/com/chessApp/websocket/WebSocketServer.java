@@ -36,10 +36,53 @@ public class WebSocketServer {
 			@PathParam("sender") String sender) throws IOException {
 
 		log.info("wiadomość odebrana przez server: ");
+
 		WebSocketMessage message = gson.fromJson(msg, WebSocketMessage.class);
+
+		log.info(" typ " + message.getType());
 		log.info(message);
 
-		if (message.getType().equals(WebSocketMessageType.CHESS_MOVE.message())) {
+		if (message.getType().equals(
+				WebSocketMessageType.GAME_HANDSHAKE_INVITATION.message())) {
+			log.info("od usera " + message.getSenderName());
+
+			if (message.getSendTo() != null
+					&& StringUtils.isNotEmpty(message.getSendTo())) {
+
+				log.info("do usera " + message.getSendTo());
+
+				sessionHandler.sendToSession(message.getSendTo(), msg);
+
+			}
+
+		} else if (message.getType().equals(
+				WebSocketMessageType.GAME_HANDSHAKE_AGREEMENT.message())) {
+			log.info("od usera " + message.getSenderName());
+
+			if (message.getSendTo() != null
+					&& StringUtils.isNotEmpty(message.getSendTo())) {
+
+				log.info("do usera " + message.getSendTo());
+
+				sessionHandler.sendToSession(message.getSendTo(), msg);
+
+			}
+
+		} else if (message.getType().equals(
+				WebSocketMessageType.GAME_HANDSHAKE_REFUSE.message())) {
+			log.info("od usera " + message.getSenderName());
+
+			if (message.getSendTo() != null
+					&& StringUtils.isNotEmpty(message.getSendTo())) {
+
+				log.info("do usera " + message.getSendTo());
+
+				sessionHandler.sendToSession(message.getSendTo(), msg);
+
+			}
+
+		} else if (message.getType().equals(
+				WebSocketMessageType.CHESS_MOVE.message())) {
 			log.info("od usera " + message.getSenderName());
 			log.info("fen " + message.getFen());
 

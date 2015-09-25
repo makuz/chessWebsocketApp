@@ -64,10 +64,10 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="control-label col-sm-2">grant admin authorities</label>
-		<div class="col-sm-8">
-			<input type="checkbox" class="form-control" name="j_adminFlag" />
-		</div>
+		<label class="col-sm-8 col-sm-offset-2"> <input
+			type="checkbox" name="j_adminFlag" /> grant admin
+			authorities
+		</label>
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">

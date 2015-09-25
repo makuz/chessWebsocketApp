@@ -7,6 +7,11 @@ public class WebSocketGameUser {
 
 	private long id;
 	private String username;
+	private Boolean isPlayingNow;
+	private String playNowWithUser;
+	private long numberOfScores;
+	private String chessColor;
+	private Boolean isDuringHandShake;
 
 	public WebSocketGameUser() {
 	}
@@ -15,7 +20,29 @@ public class WebSocketGameUser {
 		this.username = username;
 	}
 
-	private long numberOfScores;
+	public Boolean getIsDuringHandShake() {
+		return isDuringHandShake;
+	}
+
+	public void setIsDuringHandShake(Boolean isDuringHandShake) {
+		this.isDuringHandShake = isDuringHandShake;
+	}
+
+	public String getChessColor() {
+		return chessColor;
+	}
+
+	public String getPlayNowWithUser() {
+		return playNowWithUser;
+	}
+
+	public void setPlayNowWithUser(String playNowWithUser) {
+		this.playNowWithUser = playNowWithUser;
+	}
+
+	public void setChessColor(String chessColor) {
+		this.chessColor = chessColor;
+	}
 
 	public long getId() {
 		return id;
@@ -23,6 +50,14 @@ public class WebSocketGameUser {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public Boolean getIsPlayingNow() {
+		return isPlayingNow;
+	}
+
+	public void setIsPlayingNow(Boolean isPlayingNow) {
+		this.isPlayingNow = isPlayingNow;
 	}
 
 	public String getUsername() {
@@ -43,7 +78,9 @@ public class WebSocketGameUser {
 
 	@Override
 	public String toString() {
-		return "WebSocketGameUser [id=" + id + ", username=" + username + "]";
+		return "WebSocketGameUser [id=" + id + ", username=" + username
+				+ ", isPlayingNow=" + isPlayingNow + ", numberOfScores="
+				+ numberOfScores + "]";
 	}
 
 }

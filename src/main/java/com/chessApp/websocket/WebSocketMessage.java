@@ -13,6 +13,8 @@ public class WebSocketMessage {
 
 	private String sendTo;
 
+	private String sendFrom;
+
 	public WebSocketMessage() {
 
 	}
@@ -23,6 +25,14 @@ public class WebSocketMessage {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getSendFrom() {
+		return sendFrom;
+	}
+
+	public void setSendFrom(String sendFrom) {
+		this.sendFrom = sendFrom;
 	}
 
 	public String getSendTo() {
