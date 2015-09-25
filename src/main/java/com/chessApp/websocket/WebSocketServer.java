@@ -38,70 +38,49 @@ public class WebSocketServer {
 		log.info("wiadomość odebrana przez server: ");
 
 		WebSocketMessage message = gson.fromJson(msg, WebSocketMessage.class);
+		String messageType = message.getType();
 
-		log.info(" typ " + message.getType());
-		log.info(message);
-
-		if (message.getType().equals(
+		if (messageType.equals(
 				WebSocketMessageType.GAME_HANDSHAKE_INVITATION.message())) {
-			log.info("od usera " + message.getSenderName());
 
-			if (message.getSendTo() != null
-					&& StringUtils.isNotEmpty(message.getSendTo())) {
+			sendMessageToOneUser(message, msg);
 
-				log.info("do usera " + message.getSendTo());
-
-				sessionHandler.sendToSession(message.getSendTo(), msg);
-
-			}
-
-		} else if (message.getType().equals(
+		} else if (messageType.equals(
 				WebSocketMessageType.GAME_HANDSHAKE_AGREEMENT.message())) {
-			log.info("od usera " + message.getSenderName());
 
-			if (message.getSendTo() != null
-					&& StringUtils.isNotEmpty(message.getSendTo())) {
+			sendMessageToOneUser(message, msg);
 
-				log.info("do usera " + message.getSendTo());
-
-				sessionHandler.sendToSession(message.getSendTo(), msg);
-
-			}
-
-		} else if (message.getType().equals(
+		} else if (messageType.equals(
 				WebSocketMessageType.GAME_HANDSHAKE_REFUSE.message())) {
-			log.info("od usera " + message.getSenderName());
 
-			if (message.getSendTo() != null
-					&& StringUtils.isNotEmpty(message.getSendTo())) {
+			sendMessageToOneUser(message, msg);
 
-				log.info("do usera " + message.getSendTo());
-
-				sessionHandler.sendToSession(message.getSendTo(), msg);
-
-			}
-
-		} else if (message.getType().equals(
+		} else if (messageType.equals(
 				WebSocketMessageType.CHESS_MOVE.message())) {
-			log.info("od usera " + message.getSenderName());
-			log.info("fen " + message.getFen());
 
-			if (message.getSendTo() != null
-					&& StringUtils.isNotEmpty(message.getSendTo())) {
+			sendMessageToOneUser(message, msg);
 
-				log.info("do usera " + message.getSendTo());
-
-				sessionHandler.sendToSession(message.getSendTo(), msg);
-
-			}
-
-		} else if (message.getType().equals(
+		} else if (messageType.equals(
 				WebSocketMessageType.USER_CONNECT.message())) {
-			log.info(message.getType() + " from user "
-					+ message.getSenderName());
+
+			log.info("user " + message.getSenderName() + " join ");
+
 			sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 		}
 
+	}
+
+	private void sendMessageToOneUser(WebSocketMessage message, String content) {
+		log.debug("sendMessageToOneUser()");
+		log.debug("typ wiadomosci : " + message.getType());
+		log.debug("od usera " + message.getSenderName() + " do usera "
+				+ message.getSendTo());
+
+		String toUsername = message.getSendTo();
+		if (toUsername != null && StringUtils.isNotEmpty(toUsername)) {
+
+			sessionHandler.sendToSession(toUsername, content);
+		}
 	}
 
 	@OnOpen
