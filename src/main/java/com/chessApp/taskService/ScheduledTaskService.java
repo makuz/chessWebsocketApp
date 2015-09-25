@@ -9,6 +9,7 @@ import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.chessApp.dao.UsersRepository;
 import com.chessApp.model.UserAccount;
@@ -46,17 +47,22 @@ public class ScheduledTaskService {
 		for (UserAccount userAccount : allUsers) {
 			Date userRegistrationDate = userAccount.getRegistrationDate();
 			Boolean isUserConfirmed = userAccount.getIsRegistrationConfirmed();
+			String registrationToken = userAccount.getRegistrationHashString();
+			Boolean registrationTokenIsNotEmpty = !StringUtils
+					.isEmpty(registrationToken);
 
-			if (isUserConfirmed == false) {
-				if (isDeprecated(userRegistrationDate)) {
+			if (registrationToken != null && registrationTokenIsNotEmpty) {
+				if (isUserConfirmed == false) {
+					if (isDeprecated(userRegistrationDate)) {
 
-					usersRpository.deleteUser(userAccount);
+						usersRpository.deleteUser(userAccount);
 
-					logger.debug("User: " + userAccount.getUsername()
-							+ " was deprecated");
-					logger.debug(userAccount.getUsername()
-							+ " was removed from db");
+						logger.debug("User: " + userAccount.getUsername()
+								+ " was deprecated");
+						logger.debug(userAccount.getUsername()
+								+ " was removed from db");
 
+					}
 				}
 			}
 

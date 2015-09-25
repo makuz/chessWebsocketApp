@@ -12,7 +12,7 @@
 			<h3 class="text-left">Play Chess with us</h3>
 			<br />
 			<script
-				src="<c:url value="${pageContext.request.contextPath}/resources/js/chess.js" />"></script>
+				src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>
 
 			<img id="home-img" class="img-responsive"
 				src="<c:url value="${pageContext.request.contextPath}/resources/images/chess2.jpg" />" />

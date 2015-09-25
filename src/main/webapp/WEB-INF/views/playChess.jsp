@@ -11,7 +11,7 @@
 		<div class="row contentWrapper">
 			<h3 class="text-left">Play Chess</h3>
 			<script
-				src="<c:url value="${pageContext.request.contextPath}/resources/js/chess.js" />"></script>
+				src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>
 			<div id="chess-board-play-with-computer">
 				<div id="board"></div>
 				<br />

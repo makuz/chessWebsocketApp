@@ -64,6 +64,10 @@ public class MailService {
 		sb.append("<br />");
 		sb.append(prepareRegistrationAnchor(randomHashForLink));
 		sb.append("<br />");
+		sb.append("Konto należy potwierdzić w przeciągu tygodnia, w przeciwnym razie dane zostaną usunięte.");
+		sb.append("<br />");
+		sb.append("Link aktywacyjny również straci swoją ważność po tygodniu.");
+		sb.append("<br />");
 		sb.append("<br />");
 		sb.append("Pozdrawiamy,");
 		sb.append("<br />");
