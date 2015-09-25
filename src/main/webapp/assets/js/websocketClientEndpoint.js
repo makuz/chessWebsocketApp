@@ -194,6 +194,14 @@ function agreementToPlay() {
 	}));
 
 	$('#game-handshake-modal').modal('hide');
+	
+	var alertMessage = "<br />"
+		+ "<div class=\"alert alert-info\">"
+		+ "<p>you are playing now with: <span class=\"text-info\"><b>"
+		+ usernameToPlayWith + "</b></span></p>" + "</div>";
+
+$('#connection-status').append(alertMessage);
+	
 
 }
 

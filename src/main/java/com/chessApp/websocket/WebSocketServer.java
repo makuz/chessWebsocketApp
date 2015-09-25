@@ -12,7 +12,6 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +27,9 @@ public class WebSocketServer {
 
 	private final WebsocketUsesrHandler usesrHandler = new WebsocketUsesrHandler();
 
+	private GameMessageExchangeProtocol gameMessageProtocol = new GameMessageExchangeProtocol(
+			sessionHandler);
+
 	private Gson gson = new Gson();
 
 	@OnMessage
@@ -37,46 +39,9 @@ public class WebSocketServer {
 		log.info("wiadomość odebrana przez server: ");
 
 		WebSocketMessage message = gson.fromJson(msg, WebSocketMessage.class);
-		String messageType = message.getType();
 
-		if (messageType.equals(WebSocketMessageType.GAME_HANDSHAKE_INVITATION)) {
+		gameMessageProtocol.proccessMessage(message, msg);
 
-			sendMessageToOneUser(message, msg);
-
-		} else if (messageType
-				.equals(WebSocketMessageType.GAME_HANDSHAKE_AGREEMENT)) {
-
-			sendMessageToOneUser(message, msg);
-
-		} else if (messageType
-				.equals(WebSocketMessageType.GAME_HANDSHAKE_REFUSE)) {
-
-			sendMessageToOneUser(message, msg);
-
-		} else if (messageType.equals(WebSocketMessageType.CHESS_MOVE)) {
-
-			sendMessageToOneUser(message, msg);
-
-		} else if (messageType.equals(WebSocketMessageType.USER_CONNECT)) {
-
-			log.info("user " + message.getSenderName() + " join ");
-
-			sessionHandler.sendToAllConnectedSessionsActualParticipantList();
-		}
-
-	}
-
-	private void sendMessageToOneUser(WebSocketMessage message, String content) {
-		log.debug("sendMessageToOneUser()");
-		log.debug("typ wiadomosci : " + message.getType());
-		log.debug("od usera " + message.getSenderName() + " do usera "
-				+ message.getSendTo());
-
-		String toUsername = message.getSendTo();
-		if (toUsername != null && StringUtils.isNotEmpty(toUsername)) {
-
-			sessionHandler.sendToSession(toUsername, content);
-		}
 	}
 
 	@OnOpen
