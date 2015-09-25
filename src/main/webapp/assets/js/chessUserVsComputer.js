@@ -37,7 +37,7 @@ var onDrop = function(source, target) {
 		from : source,
 		to : target,
 		promotion : 'q' // NOTE: always promote to a queen for example
-						// simplicity
+	// simplicity
 	});
 
 	// illegal move
@@ -57,6 +57,7 @@ var onSnapEnd = function() {
 };
 
 var cfg = {
+	pieceTheme : '/resources/images/chesspieces/wikipedia/{piece}.png',
 	draggable : true,
 	position : 'start',
 	onDragStart : onDragStart,

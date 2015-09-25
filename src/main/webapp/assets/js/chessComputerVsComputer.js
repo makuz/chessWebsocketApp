@@ -7,7 +7,13 @@
  */
 
 var board, game = new Chess();
-board = ChessBoard('board', 'start');
+
+var cfg = {
+	pieceTheme : '/resources/images/chesspieces/wikipedia/{piece}.png',
+	position : 'start'
+};
+
+board = ChessBoard('board', cfg);
 
 statusEl = $('#status'), fenEl = $('#fen'), pgnEl = $('#pgn');
 
