@@ -19,6 +19,11 @@ function connectToWebSocket() {
 	webSocket.onopen = function(event) {
 		console.log("Server connected \n");
 		console.log(event.data);
+
+		$('#connection-status').html(
+				"<div class=\"alert alert-success connection-status-msg\">"
+						+ "<h2>You are connected!</h2></div>");
+
 		webSocket.send(JSON.stringify({
 			type : "welcome-msg",
 			senderName : WEBSOCKET_CLIENT_NAME
@@ -54,6 +59,13 @@ function connectToWebSocket() {
 
 				alert("game agreement");
 
+				var alertMessage = "<br />"
+						+ "<div class=\"alert alert-info\">"
+						+ "<p>you are playing now with: <span class=\"text-info\"><b>"
+						+ message.senderName + "</b></span></p>" + "</div>";
+
+				$('#connection-status').append(alertMessage);
+
 			} else if (message.type == "game-handshake-refuse") {
 
 				alert("game refused");
@@ -61,21 +73,13 @@ function connectToWebSocket() {
 			} else {
 				showParticipants(event.data);
 
-				$('#participants div ul li span.username')
-						.each(
-								function() {
-									if ($(this).text() == WEBSOCKET_CLIENT_NAME) {
-										var sendMoveBtn = $(this).next()
-												.children().first();
-										sendMoveBtn.attr('disabled', true);
-										sendMoveBtn.removeAttr('class');
-										sendMoveBtn
-												.attr('class',
-														'btn btn-sm btn-default send-to-user-btn');
-										$(this).parent().css(
-												'background-color', '#B9BCBD');
-									}
-								});
+				$('#participants div ul li span.username').each(function() {
+					if ($(this).text() == WEBSOCKET_CLIENT_NAME) {
+
+						$(this).parent().find('button').remove();
+						$(this).parent().css('background-color', '#ddd');
+					}
+				});
 			}
 		}
 
@@ -101,6 +105,11 @@ function connectToWebSocket() {
 			type : "goodbye-msg",
 			senderName : WEBSOCKET_CLIENT_NAME
 		}));
+
+		$('#connection-status').html(
+				"<div class=\"alert alert-warning connection-status-msg\">"
+						+ "<h2>You are disconnected!</h2></div>");
+
 		hideParticipants();
 		console.log(event);
 	};
@@ -177,7 +186,7 @@ function refusedToPlay() {
 		senderName : WEBSOCKET_CLIENT_NAME,
 		sendTo : usernameNotToPlayWith
 	}));
-	
+
 	$('#game-handshake-modal').modal('hide');
 
 }

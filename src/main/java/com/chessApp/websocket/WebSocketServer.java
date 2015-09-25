@@ -16,7 +16,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import com.chessApp.enums.WebSocketMessageType;
 import com.google.gson.Gson;
 
 @Service
@@ -40,28 +39,25 @@ public class WebSocketServer {
 		WebSocketMessage message = gson.fromJson(msg, WebSocketMessage.class);
 		String messageType = message.getType();
 
-		if (messageType.equals(
-				WebSocketMessageType.GAME_HANDSHAKE_INVITATION.message())) {
+		if (messageType.equals(WebSocketMessageType.GAME_HANDSHAKE_INVITATION)) {
 
 			sendMessageToOneUser(message, msg);
 
-		} else if (messageType.equals(
-				WebSocketMessageType.GAME_HANDSHAKE_AGREEMENT.message())) {
+		} else if (messageType
+				.equals(WebSocketMessageType.GAME_HANDSHAKE_AGREEMENT)) {
 
 			sendMessageToOneUser(message, msg);
 
-		} else if (messageType.equals(
-				WebSocketMessageType.GAME_HANDSHAKE_REFUSE.message())) {
+		} else if (messageType
+				.equals(WebSocketMessageType.GAME_HANDSHAKE_REFUSE)) {
 
 			sendMessageToOneUser(message, msg);
 
-		} else if (messageType.equals(
-				WebSocketMessageType.CHESS_MOVE.message())) {
+		} else if (messageType.equals(WebSocketMessageType.CHESS_MOVE)) {
 
 			sendMessageToOneUser(message, msg);
 
-		} else if (messageType.equals(
-				WebSocketMessageType.USER_CONNECT.message())) {
+		} else if (messageType.equals(WebSocketMessageType.USER_CONNECT)) {
 
 			log.info("user " + message.getSenderName() + " join ");
 

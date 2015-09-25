@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.chessApp.dao.UsersRepository;
-import com.chessApp.enums.UserRoles;
 import com.chessApp.mailService.MailService;
 import com.chessApp.model.UserAccount;
 import com.chessApp.security.PasswordEncryptor;
+import com.chessApp.security.UserRoles;
 
 @Controller
 public class SignInController {

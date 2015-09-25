@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.chessApp.dao.UsersRepository;
-import com.chessApp.enums.UserRoles;
 import com.chessApp.exceptions.UserNotConfirmedException;
 import com.chessApp.model.UserAccount;
 

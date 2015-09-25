@@ -39,6 +39,7 @@
 						</div>
 						<input hidden="true" type="text" id="fenFromYourMove" />
 						<section id="onlineUsersSection">
+						<div id="connection-status"></div>
 							<hr />
 							<button class="btn btn-primary" id="connectToWebSocket">Połącz
 								mnie</button>

@@ -1,4 +1,4 @@
-package com.chessApp.enums;
+package com.chessApp.security;
 
 import java.util.ArrayList;
 import java.util.List;
