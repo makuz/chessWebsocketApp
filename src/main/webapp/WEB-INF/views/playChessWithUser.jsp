@@ -39,7 +39,7 @@
 						</div>
 						<input hidden="true" type="text" id="fenFromYourMove" />
 						<section id="onlineUsersSection">
-						<div id="connection-status"></div>
+							<div id="connection-status"></div>
 							<hr />
 							<button class="btn btn-primary" id="connectToWebSocket">Połącz
 								mnie</button>
@@ -95,37 +95,12 @@
 
 		$(function() {
 
-			var disconnectBtn = $('#disconnect');
-
-			var connectBtn = $('#connectToWebSocket');
-
-			// connect onclick
-			connectBtn.click(function(event) {
+			$('#connectToWebSocket').click(function(event) {
 				connectToWebSocket();
-				if (disconnectBtn.attr("disabled", true)) {
-					disconnectBtn.removeAttr("class");
-					disconnectBtn.attr("disabled", false);
-					disconnectBtn.attr("class", "btn btn-danger pull-right");
-				}
-
-				$(this).removeAttr("class");
-				$(this).attr("disabled", true);
-				$(this).attr("class", "btn btn-default");
-				console.log($(this));
 			});
 
-			// disconnect onclick
-			disconnectBtn.click(function() {
+			$('#disconnect').click(function() {
 				closeWsConnection();
-				if (connectBtn.attr("disabled", true)) {
-					connectBtn.removeAttr("class");
-					connectBtn.removeAttr("disabled");
-					connectBtn.attr("disabled", false);
-					connectBtn.attr("class", "btn btn-primary");
-				}
-				$(this).removeAttr("class");
-				$(this).attr("disabled", true);
-				$(this).attr("class", "btn btn-default pull-right");
 			});
 
 		});

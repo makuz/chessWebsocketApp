@@ -20,14 +20,27 @@ function connectToWebSocket() {
 		console.log("Server connected \n");
 		console.log(event.data);
 
-		$('#connection-status').html(
-				"<div class=\"alert alert-success connection-status-msg\">"
-						+ "<h2>You are connected!</h2></div>");
-
 		webSocket.send(JSON.stringify({
 			type : "welcome-msg",
 			senderName : WEBSOCKET_CLIENT_NAME
 		}));
+
+		$('#connection-status').html(
+				"<div class=\"alert alert-success connection-status-msg\">"
+						+ "<h2>You are connected!</h2></div>");
+
+		var disconnectBtn = $('#disconnect');
+		var connectBtn = $('#connectToWebSocket');
+
+		if (disconnectBtn.attr("disabled", true)) {
+			disconnectBtn.removeAttr("class");
+			disconnectBtn.attr("disabled", false);
+			disconnectBtn.attr("class", "btn btn-danger pull-right");
+		}
+
+		connectBtn.removeAttr("class");
+		connectBtn.attr("disabled", true);
+		connectBtn.attr("class", "btn btn-default");
 
 	};
 
@@ -109,6 +122,19 @@ function connectToWebSocket() {
 		$('#connection-status').html(
 				"<div class=\"alert alert-warning connection-status-msg\">"
 						+ "<h2>You are disconnected!</h2></div>");
+
+		var disconnectBtn = $('#disconnect');
+		var connectBtn = $('#connectToWebSocket');
+
+		if (connectBtn.attr("disabled", true)) {
+			connectBtn.removeAttr("class");
+			connectBtn.removeAttr("disabled");
+			connectBtn.attr("disabled", false);
+			connectBtn.attr("class", "btn btn-primary");
+		}
+		disconnectBtn.removeAttr("class");
+		disconnectBtn.attr("disabled", true);
+		disconnectBtn.attr("class", "btn btn-default pull-right");
 
 		hideParticipants();
 		console.log(event);
