@@ -32,9 +32,9 @@
 	
 	<beans:import resource="./application-context.xml" />
 
-	<beans:bean id="authenticationProvider" class="com.chessApp.security.authenticationProvider.LocalAuthenticationProvider"></beans:bean>
+	<beans:bean id="authenticationProvider" class="com.chessApp.security.LocalAuthenticationProvider"></beans:bean>
 
-	<beans:bean id="usersRepository" class="com.chessApp.dao.UsersRepository"></beans:bean>
+	<beans:bean id="usersRepositoryImpl" class="com.chessApp.daoimpl.UsersRepositoryImpl"></beans:bean>
 
 	<beans:bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />

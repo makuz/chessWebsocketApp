@@ -1,4 +1,4 @@
-package com.chessApp.security.authenticationProvider;
+package com.chessApp.security;
 
 import java.util.List;
 
@@ -19,7 +19,6 @@ import org.springframework.util.StringUtils;
 import com.chessApp.dao.UsersRepository;
 import com.chessApp.enums.UserRoles;
 import com.chessApp.exceptions.UserNotConfirmedException;
-import com.chessApp.helper.PasswordEncrypter;
 import com.chessApp.model.UserAccount;
 
 @Component

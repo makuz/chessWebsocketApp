@@ -20,7 +20,6 @@ public class LoginController {
 	private static final Logger logger = Logger
 			.getLogger(LoginController.class);
 
-	// log in
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView logIn() {
 		logger.info("logIn()");
@@ -30,7 +29,6 @@ public class LoginController {
 		return loginPageModel;
 	}
 
-	// invalid login
 	@RequestMapping("/fail")
 	public ModelAndView getFailPage() {
 

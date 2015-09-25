@@ -20,6 +20,6 @@
 	<beans:bean id="mongoTemplate"
 		class="org.springframework.data.mongodb.core.MongoTemplate"
 		c:mongoDbFactory-ref="mongoDbFactory" />
-	<mongo:repositories base-package="com.chessApp.dao" />
+	<mongo:repositories base-package="com.chessApp.daoimpl" />
 
 </beans:beans>

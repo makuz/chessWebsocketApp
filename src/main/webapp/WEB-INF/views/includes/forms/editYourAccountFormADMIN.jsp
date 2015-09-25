@@ -7,7 +7,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 
-<form method="POST" action="<%=contextURL%>/admin/your-account"
+<form method="POST" action="<%=contextURL%>/admin/users/editUser"
 	class="form-horizontal">
 
 	<div class="form-group col-sm-12">

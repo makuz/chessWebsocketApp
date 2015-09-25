@@ -1,4 +1,4 @@
-package com.chessApp.helper;
+package com.chessApp.security;
 
 import java.security.MessageDigest;
 
