@@ -1,11 +1,17 @@
 package com.chessApp.mailService;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -19,13 +25,25 @@ public class MailService {
 
 	private JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
+	private static Resource resource = new ClassPathResource(
+			"/chessApp.properties");
+
 	private void prepareMailSender() {
-		mailSender.setUsername(ChessAppProperties.getProperty("username"));
-		mailSender.setPassword(ChessAppProperties.getProperty("password"));
-		mailSender.setHost(ChessAppProperties.getProperty("smtp.host"));
-		// mailSender.setPort(Integer.parseInt(ChessAppProperties.getProperty("port")));
-		mailSender.setProtocol(ChessAppProperties
+
+		Properties properties = new Properties();
+		try {
+			properties = PropertiesLoaderUtils.loadProperties(resource);
+		} catch (IOException e) {
+			logger.debug(e);
+		}
+
+		mailSender.setUsername(properties.getProperty("username"));
+		mailSender.setPassword(properties.getProperty("password"));
+		mailSender.setHost(properties.getProperty("smtp.host"));
+		mailSender.setPort(Integer.parseInt(properties.getProperty("port")));
+		mailSender.setProtocol(properties
 				.getProperty("mail.transport.protocol"));
+		mailSender.setJavaMailProperties(properties);
 	}
 
 	private String prepareRegistrationMailText(String randomHashForLink) {

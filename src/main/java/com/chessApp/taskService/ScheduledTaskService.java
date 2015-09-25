@@ -46,11 +46,16 @@ public class ScheduledTaskService {
 		for (UserAccount userAccount : allUsers) {
 			Date userRegistrationDate = userAccount.getRegistrationDate();
 			Boolean isUserConfirmed = userAccount.getIsRegistrationConfirmed();
-			
-			System.out.println(userRegistrationDate + " " + isUserConfirmed);
-			
+
 			if (isUserConfirmed == false) {
 				if (isDeprecated(userRegistrationDate)) {
+
+					usersRpository.deleteUser(userAccount);
+
+					logger.debug("User: " + userAccount.getUsername()
+							+ " was deprecated");
+					logger.debug(userAccount.getUsername()
+							+ " was removed from db");
 
 				}
 			}

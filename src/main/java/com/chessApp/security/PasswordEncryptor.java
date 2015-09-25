@@ -2,7 +2,7 @@ package com.chessApp.security;
 
 import java.security.MessageDigest;
 
-public class PasswordEncrypter {
+public class PasswordEncryptor {
 
 	public String encryptUserPassword(String password) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("SHA");

@@ -34,7 +34,7 @@ public class LocalAuthenticationProvider extends
 	@Autowired
 	private PasswordEncoder encoder;
 
-	private PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
+	private PasswordEncryptor passwordEncrypter = new PasswordEncryptor();
 
 	@Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails,

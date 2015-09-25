@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.chessApp.dao.UsersRepository;
 import com.chessApp.model.UserAccount;
-import com.chessApp.security.PasswordEncrypter;
+import com.chessApp.security.PasswordEncryptor;
 
 @Controller
 public class AdminPanelController {
@@ -24,7 +24,7 @@ public class AdminPanelController {
 	@Autowired
 	private UsersRepository usersRepository;
 
-	private PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
+	private PasswordEncryptor passwordEncrypter = new PasswordEncryptor();
 
 	private static final Logger logger = Logger
 			.getLogger(AdminPanelController.class);
