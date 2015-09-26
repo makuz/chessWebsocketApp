@@ -11,6 +11,8 @@ public class WebSocketMessageType {
 	public final static String GAME_HANDSHAKE_REFUSE = "game-handshake-refuse";
 
 	public final static String CHESS_MOVE = "chess-move";
+	
+	public final static String GAME_OVER = "game-over";
 
 	public final static String USER_DISCONNECT = "goodbye-msg";
 

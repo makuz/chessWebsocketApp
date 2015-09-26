@@ -40,6 +40,7 @@
 						<input hidden="true" type="text" id="fenFromYourMove" />
 						<section id="onlineUsersSection">
 							<div id="connection-status"></div>
+							<div id="game-status"></div>
 							<hr />
 							<button class="btn btn-primary" id="connectToWebSocket">Połącz
 								mnie</button>
@@ -78,7 +79,8 @@
 	</div>
 </div>
 
-<jsp:include page="includes/modal_boxes/game_handshake_modal.jsp" />
+<jsp:include page="includes/modal_boxes/game_handshake_invitaion_modal.jsp" />
+<jsp:include page="includes/modal_boxes/game_handshake_response_modal.jsp" />
 <jsp:include page="includes/modal_boxes/user_info_modal.jsp" />
 
 <!-- JAVASCRIPTS -->

@@ -22,7 +22,7 @@ function connectToWebSocket() {
 
 		webSocket.send(JSON.stringify({
 			type : "welcome-msg",
-			senderName : WEBSOCKET_CLIENT_NAME
+			sendFrom : WEBSOCKET_CLIENT_NAME
 		}));
 
 		$('#connection-status').html(
@@ -66,22 +66,29 @@ function connectToWebSocket() {
 				}
 			} else if (message.type == "game-handshake-invitation") {
 
-				showGameHandshakeModalBox(message.senderName);
+				showGameHandshakeModalBox(message.sendFrom);
 
 			} else if (message.type == "game-handshake-agreement") {
 
-				alert("game agreement");
+				$('#game-handshake-response-modal-title').html(
+						"game agreement from user: "
+								+ "<span class=\"text-primary\"><b>"
+								+ message.sendFrom + "</b></span>");
+				$('#game-handshake-response-modal').modal('show');
 
-				var alertMessage = "<br />"
-						+ "<div class=\"alert alert-info\">"
+				var alertMessage = "<div class=\"alert alert-info\">"
 						+ "<p>you are playing now with: <span class=\"text-info\"><b>"
-						+ message.senderName + "</b></span></p>" + "</div>";
+						+ message.sendFrom + "</b></span></p>" + "</div>";
 
-				$('#connection-status').append(alertMessage);
+				$('#game-status').html(alertMessage);
 
 			} else if (message.type == "game-handshake-refuse") {
 
-				alert("game refused");
+				$('#game-handshake-response-modal-title').html(
+						"game refused from user: "
+								+ "<span class=\"text-primary\"><b>"
+								+ message.sendFrom + "</b></span>");
+				$('#game-handshake-response-modal').modal('show');
 
 			} else {
 				showParticipants(event.data);
@@ -116,7 +123,7 @@ function connectToWebSocket() {
 	webSocket.onclose = function(event) {
 		webSocket.send(JSON.stringify({
 			type : "goodbye-msg",
-			senderName : WEBSOCKET_CLIENT_NAME
+			sendFrom : WEBSOCKET_CLIENT_NAME
 		}));
 
 		$('#connection-status').html(
@@ -135,6 +142,8 @@ function connectToWebSocket() {
 		disconnectBtn.removeAttr("class");
 		disconnectBtn.attr("disabled", true);
 		disconnectBtn.attr("class", "btn btn-default pull-right");
+		
+		$('#game-status').html('');
 
 		hideParticipants();
 		console.log(event);
@@ -172,7 +181,7 @@ function inviteUserToGame(reciever) {
 	webSocket.send(JSON.stringify({
 		type : "game-handshake-invitation",
 		handshakeMsg : msg,
-		senderName : WEBSOCKET_CLIENT_NAME,
+		sendFrom : WEBSOCKET_CLIENT_NAME,
 		sendTo : reciever
 	}));
 }
@@ -189,19 +198,17 @@ function agreementToPlay() {
 	webSocket.send(JSON.stringify({
 		type : "game-handshake-agreement",
 		handshakeMsg : msg,
-		senderName : WEBSOCKET_CLIENT_NAME,
+		sendFrom : WEBSOCKET_CLIENT_NAME,
 		sendTo : usernameToPlayWith
 	}));
 
 	$('#game-handshake-modal').modal('hide');
-	
-	var alertMessage = "<br />"
-		+ "<div class=\"alert alert-info\">"
-		+ "<p>you are playing now with: <span class=\"text-info\"><b>"
-		+ usernameToPlayWith + "</b></span></p>" + "</div>";
 
-$('#connection-status').append(alertMessage);
-	
+	var alertMessage = "<div class=\"alert alert-info\">"
+			+ "<p>you are playing now with: <span class=\"text-info\"><b>"
+			+ usernameToPlayWith + "</b></span></p>" + "</div>";
+
+	$('#game-status').html(alertMessage);
 
 }
 
@@ -217,7 +224,7 @@ function refusedToPlay() {
 	webSocket.send(JSON.stringify({
 		type : "game-handshake-refuse",
 		handshakeMsg : msg,
-		senderName : WEBSOCKET_CLIENT_NAME,
+		sendFrom : WEBSOCKET_CLIENT_NAME,
 		sendTo : usernameNotToPlayWith
 	}));
 
@@ -233,7 +240,7 @@ function sendYourMoveByFenNotationToUser(reciever) {
 	webSocket.send(JSON.stringify({
 		type : "chess-move",
 		fen : fenString,
-		senderName : WEBSOCKET_CLIENT_NAME,
+		sendFrom : WEBSOCKET_CLIENT_NAME,
 		sendTo : reciever
 	}));
 
@@ -251,46 +258,45 @@ function closeWsConnection() {
 function showParticipants(data) {
 	console.log("showParticipants()");
 
-	var usersArr = JSON.parse(data);
-	var usernames = new Array();
-	for (var i = 0; i < usersArr.length; i++) {
-		usernames.push(usersArr[i].username);
-	}
-
+	var participantsArr = JSON.parse(data);
 	var participantsList = $('#participants div ul');
 	participantsList.html('');
+
 	var allText = "";
-	for (var i = 0; i < usernames.length; i++) {
+	for (var i = 0; i < participantsArr.length; i++) {
 
 		var userData = '<li class="list-group-item game-user">'
 				+ '<span class="username">'
 				+ '<span class="glyphicon glyphicon-user"></span>'
-				+ usernames[i]
+				+ participantsArr[i].username
+				+ '</span>'
+				+ '<span class="small"> '
+				+ participantsArr[i].communicationStatus
 				+ '</span>'
 				+ '<span class="participants-action-btns">'
 				+ '<button class="btn btn-sm btn-danger send-to-user-btn" onclick="inviteUserToGame('
 				+ '\''
-				+ usernames[i]
+				+ participantsArr[i].username
 				+ '\''
 				+ ')"'
 				+ 'data-username="'
-				+ usernames[i]
+				+ participantsArr[i].username
 				+ '">invite</button>'
 				+ '<button class="btn btn-sm btn-info send-to-user-btn" onclick="sendYourMoveByFenNotationToUser('
 				+ '\''
-				+ usernames[i]
+				+ participantsArr[i].username
 				+ '\''
 				+ ')"'
 				+ 'data-username="'
-				+ usernames[i]
+				+ participantsArr[i].username
 				+ '">send-move</button>'
 				+ '&nbsp;'
 				+ '<button data-username="'
-				+ usernames[i]
+				+ participantsArr[i].username
 				+ '"'
 				+ 'onclick="showUSerInfoByAjax('
 				+ '\''
-				+ usernames[i]
+				+ participantsArr[i].username
 				+ '\''
 				+ ')"'
 				+ 'class="btn btn-warning btn-sm user-info-btn">info'

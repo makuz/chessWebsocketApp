@@ -9,8 +9,6 @@ public class WebSocketMessage {
 
 	private String fen;
 
-	private String senderName;
-
 	private String sendTo;
 
 	private String sendFrom;
@@ -51,18 +49,10 @@ public class WebSocketMessage {
 		this.fen = fen;
 	}
 
-	public String getSenderName() {
-		return senderName;
-	}
-
-	public void setSenderName(String senderName) {
-		this.senderName = senderName;
-	}
-
 	@Override
 	public String toString() {
-		return "Message [type=" + type + ", fen=" + fen + ", senderName="
-				+ senderName + ", sendTo=" + sendTo + "]";
+		return "WebSocketMessage [type=" + type + ", fen=" + fen + ", sendTo="
+				+ sendTo + ", sendFrom=" + sendFrom + "]";
 	}
 
 }

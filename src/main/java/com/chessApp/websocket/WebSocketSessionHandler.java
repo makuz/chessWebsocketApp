@@ -55,10 +55,10 @@ public class WebSocketSessionHandler {
 		}
 	}
 
-	public void sendToSession(String sendToUsernameName, String message) {
+	public void sendToSession(String toUsernameName, String fromUsername, String message) {
 		logger.info("sendToSession()");
 
-		Session userSession = sessionsMap.get(sendToUsernameName);
+		Session userSession = sessionsMap.get(toUsernameName);
 		if (userSession != null) {
 			try {
 				userSession.getBasicRemote().sendText(message);

@@ -118,7 +118,7 @@ div#chess-board-play-with-user article#aside-board {
 	margin-right: 1%;
 }
 
-div#game-handshake-modal {
+div#game-handshake-modal, div#game-handshake-response-modal {
 	margin-top: 13%;
 }
 

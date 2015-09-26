@@ -28,7 +28,7 @@ public class WebSocketServer {
 	private final WebsocketUsesrHandler usesrHandler = new WebsocketUsesrHandler();
 
 	private GameMessageExchangeProtocol gameMessageProtocol = new GameMessageExchangeProtocol(
-			sessionHandler);
+			sessionHandler, usesrHandler);
 
 	private Gson gson = new Gson();
 
@@ -53,6 +53,7 @@ public class WebSocketServer {
 		if (usesrHandler.userListNotContainsUsername(sender)) {
 
 			WebSocketGameUser gameUser = new WebSocketGameUser(sender);
+			gameUser.setCommunicationStatus(GameUserCommunicationStatus.WAIT_FOR_NEW_GAME);
 			synchronized (this) {
 				wsSession.getUserProperties().put("sessionOwner",
 						gameUser.getUsername());
@@ -80,6 +81,7 @@ public class WebSocketServer {
 	@OnError
 	public void onErrorReceived(Throwable t) {
 		log.debug("there was an error with connection");
+		log.debug(t);
 	}
 
 }

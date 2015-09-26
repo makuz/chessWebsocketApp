@@ -1,4 +1,4 @@
-<!-- USER INFORMATION MODAL -->
+<!-- USER GAME INVITAION MODAL -->
 <div class="modal fade" id="game-handshake-modal" aria-hidden="true">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">

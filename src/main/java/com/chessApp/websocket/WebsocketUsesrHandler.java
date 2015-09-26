@@ -42,12 +42,58 @@ public class WebsocketUsesrHandler {
 		logger.info("user: " + gameUser + " removed from live game repository");
 	}
 
+	public synchronized void setUserComunicationStatus(String username,
+			String status) {
+		WebSocketGameUser gameUser = gameUsersMap.get(username);
+		gameUser.setCommunicationStatus(status);
+	}
+
+	public synchronized void setComStatusIsDuringHandshake(String username) {
+		logger.debug("setComStatusIsPlaying()");
+		printIfNull(username);
+
+		setUserComunicationStatus(username,
+				GameUserCommunicationStatus.IS_DURING_HANDSHAKE);
+	}
+
+	public synchronized void setComStatusWaitForNewGame(String username) {
+		logger.debug("setComStatusWaitForNewGame()");
+
+		WebSocketGameUser gameUser = gameUsersMap.get(username);
+		gameUser.setCommunicationStatus(GameUserCommunicationStatus.WAIT_FOR_NEW_GAME);
+		gameUser.setPlayNowWithUser(null);
+	}
+
+	public synchronized void setComStatusIsPlaying(String toUsername,
+			String fromUsername) {
+		logger.debug("setComStatusIsPlaying()");
+		printIfNull(toUsername);
+		printIfNull(fromUsername);
+
+		WebSocketGameUser gameUser = gameUsersMap.get(toUsername);
+		gameUser.setCommunicationStatus(GameUserCommunicationStatus.IS_PLAYING);
+		gameUser.setPlayNowWithUser(fromUsername);
+		
+		System.out.println("-------------------------------------");
+		System.out.println("-------------------------------------");
+		System.out.println("-------------------------------------");
+		System.out.println("-------------------------------------");
+		System.out.println("---------------game user--------------");
+		System.out.println(gameUser);
+	}
+
 	public void printOutUsersList() {
 		logger.info("printOutUsersList()");
 		for (String key : gameUsersMap.keySet()) {
 			System.out.println(gameUsersMap.get(key));
 		}
 
+	}
+	
+	private void printIfNull(Object object) {
+		if (object == null) {
+			System.out.println("there was null");
+		}
 	}
 
 }
