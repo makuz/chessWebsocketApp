@@ -137,9 +137,8 @@ div#participants span.participants-action-btns {
 	float: right;
 }
 
-div#participants span.username {
-	width: 300px;
-	margin-left: -0.5em;
+div#participants button.username {
+	margin-left: 0;
 	font-size: 90%;
 }
 

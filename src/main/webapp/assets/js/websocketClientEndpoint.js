@@ -82,6 +82,8 @@ function connectToWebSocket() {
 
 				$('#game-status').html(alertMessage);
 
+				$('#quit-game-btn').data("gamePartner", message.sendFrom);
+
 			} else if (message.type == "game-handshake-refuse") {
 
 				$('#game-handshake-response-modal-title').html(
@@ -90,16 +92,27 @@ function connectToWebSocket() {
 								+ message.sendFrom + "</b></span>");
 				$('#game-handshake-response-modal').modal('show');
 
+			} else if (message.type == "quit-game") {
+
+				$('#game-status').html('');
+
 			} else {
 				showParticipants(event.data);
 
-				$('#participants div ul li span.username').each(function() {
-					if ($(this).text() == WEBSOCKET_CLIENT_NAME) {
+				$('#participants div ul li button.username')
+						.each(
+								function() {
+									if ($(this).text().trim() == WEBSOCKET_CLIENT_NAME) {
 
-						$(this).parent().find('button').remove();
-						$(this).parent().css('background-color', '#ddd');
-					}
-				});
+										$(this)
+												.parent()
+												.find(
+														'span.participants-action-btns')
+												.remove();
+										$(this).parent().css(
+												'background-color', '#C9C9C9');
+									}
+								});
 			}
 		}
 
@@ -142,7 +155,7 @@ function connectToWebSocket() {
 		disconnectBtn.removeAttr("class");
 		disconnectBtn.attr("disabled", true);
 		disconnectBtn.attr("class", "btn btn-default pull-right");
-		
+
 		$('#game-status').html('');
 
 		hideParticipants();
@@ -210,6 +223,20 @@ function agreementToPlay() {
 
 	$('#game-status').html(alertMessage);
 
+	$('#quit-game-btn').data("gamePartner", usernameToPlayWith);
+
+}
+
+function quitGame() {
+
+	webSocket.send(JSON.stringify({
+		type : "quit-game",
+		sendFrom : WEBSOCKET_CLIENT_NAME,
+		sendTo : $('#quit-game-btn').data("gamePartner")
+	}));
+
+	$('#game-status').html('');
+
 }
 
 // --------------------------------------------------------
@@ -262,47 +289,56 @@ function showParticipants(data) {
 	var participantsList = $('#participants div ul');
 	participantsList.html('');
 
-	var allText = "";
 	for (var i = 0; i < participantsArr.length; i++) {
 
-		var userData = '<li class="list-group-item game-user">'
-				+ '<span class="username">'
-				+ '<span class="glyphicon glyphicon-user"></span>'
-				+ participantsArr[i].username
-				+ '</span>'
-				+ '<span class="small"> '
-				+ participantsArr[i].communicationStatus
-				+ '</span>'
-				+ '<span class="participants-action-btns">'
-				+ '<button class="btn btn-sm btn-danger send-to-user-btn" onclick="inviteUserToGame('
-				+ '\''
-				+ participantsArr[i].username
-				+ '\''
-				+ ')"'
-				+ 'data-username="'
-				+ participantsArr[i].username
-				+ '">invite</button>'
-				+ '<button class="btn btn-sm btn-info send-to-user-btn" onclick="sendYourMoveByFenNotationToUser('
-				+ '\''
-				+ participantsArr[i].username
-				+ '\''
-				+ ')"'
-				+ 'data-username="'
-				+ participantsArr[i].username
-				+ '">send-move</button>'
-				+ '&nbsp;'
-				+ '<button data-username="'
-				+ participantsArr[i].username
-				+ '"'
-				+ 'onclick="showUSerInfoByAjax('
-				+ '\''
-				+ participantsArr[i].username
-				+ '\''
-				+ ')"'
-				+ 'class="btn btn-warning btn-sm user-info-btn">info'
-				+ '</button>' + '</span>' + '</li>';
+		var liElementOpening = '<li class="list-group-item game-user">';
 
-		participantsList.append(userData);
+		var participantData = '<button class="username btn"'
+				+ 'onclick="showUSerInfoByAjax(' + '\''
+				+ participantsArr[i].username + '\'' + ')"' + '>'
+				+ '<span class="glyphicon glyphicon-user" />' + '&nbsp;'
+				+ participantsArr[i].username + '</button>'
+				+ '<span class="small"> ' + '&nbsp;'
+				+ participantsArr[i].communicationStatus + '</span>';
+
+		var participantPlayWithUserInfo = "";
+
+		if (participantsArr[i].playNowWithUser != undefined
+				&& participantsArr[i].playNowWithUser != '') {
+			participantPlayWithUserInfo = '<span class="small text-success"> with <b>'
+					+ participantsArr[i].playNowWithUser + '</b></span>';
+		}
+
+		if (participantsArr[i].communicationStatus == 'is-playing') {
+			console.log('participant is playing');
+			var participantActionBtns = '<span class="participants-action-btns">'
+					+ '<button class="btn btn-sm btn-info send-to-user-btn" onclick="sendYourMoveByFenNotationToUser('
+					+ '\''
+					+ participantsArr[i].username
+					+ '\''
+					+ ')"'
+					+ 'data-username="'
+					+ participantsArr[i].username
+					+ '">send-move</button>' + '</span>';
+		} else {
+			var participantActionBtns = '<span class="participants-action-btns">'
+					+ '<button class="btn btn-sm btn-danger send-to-user-btn" onclick="inviteUserToGame('
+					+ '\''
+					+ participantsArr[i].username
+					+ '\''
+					+ ')"'
+					+ 'data-username="'
+					+ participantsArr[i].username
+					+ '">invite</button>' + '</span>';
+		}
+
+		var liElementClosing = '</li>';
+
+		var participantListElementContent = liElementOpening + participantData
+				+ participantPlayWithUserInfo + participantActionBtns
+				+ liElementClosing;
+
+		participantsList.append(participantListElementContent);
 	}
 };
 

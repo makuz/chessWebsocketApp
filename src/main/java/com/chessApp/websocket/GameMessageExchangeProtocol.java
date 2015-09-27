@@ -18,45 +18,42 @@ public class GameMessageExchangeProtocol {
 		this.usesrHandler = usesrHandler;
 	}
 
-	public void proccessMessage(WebSocketMessage message,
+	public void proccessMessage(WebSocketMessage messageObj,
 			String messageJsonString) {
 
-		String messageType = message.getType();
+		String messageType = messageObj.getType();
 
 		if (messageType.equals(WebSocketMessageType.GAME_HANDSHAKE_INVITATION)) {
-			log.debug(WebSocketMessageType.GAME_HANDSHAKE_INVITATION);
 
-			sendMessageToOneUser(message, messageJsonString);
-			setUserComStatusIsDuringHandshakeAndRefresh(message);
+			sendMessageToOneUser(messageObj, messageJsonString);
+			setUserComStatusIsDuringHandshakeAndRefresh(messageObj);
 
 		} else if (messageType
 				.equals(WebSocketMessageType.GAME_HANDSHAKE_AGREEMENT)) {
-			log.debug(WebSocketMessageType.GAME_HANDSHAKE_AGREEMENT);
 
-			sendMessageToOneUser(message, messageJsonString);
-			setUserComStatusIsPlayingAndRefresh(message);
+			sendMessageToOneUser(messageObj, messageJsonString);
+			setUserComStatusIsPlayingAndRefresh(messageObj);
 
 		} else if (messageType
 				.equals(WebSocketMessageType.GAME_HANDSHAKE_REFUSE)) {
-			log.debug(WebSocketMessageType.GAME_HANDSHAKE_REFUSE);
 
-			sendMessageToOneUser(message, messageJsonString);
-			setUserComStatusWaitForNewGameAndRefresh(message);
+			sendMessageToOneUser(messageObj, messageJsonString);
+			setUserComStatusWaitForNewGameAndRefresh(messageObj);
 
 		} else if (messageType.equals(WebSocketMessageType.CHESS_MOVE)) {
-			log.debug(WebSocketMessageType.CHESS_MOVE);
 
-			sendMessageToOneUser(message, messageJsonString);
+			sendMessageToOneUser(messageObj, messageJsonString);
 
-		} else if (messageType.equals(WebSocketMessageType.GAME_OVER)) {
-			log.debug(WebSocketMessageType.GAME_OVER);
+		} else if (messageType.equals(WebSocketMessageType.GAME_OVER)
+				|| messageType.equals(WebSocketMessageType.QUIT_GAME)) {
 
-			setUserComStatusWaitForNewGameAndRefresh(message);
+			sendMessageToOneUser(messageObj, messageJsonString);
+			setUserComStatusWaitForNewGameAndRefresh(messageObj);
 
 		} else if (messageType.equals(WebSocketMessageType.USER_CONNECT)) {
-			log.debug(WebSocketMessageType.USER_CONNECT);
 
-			log.info("user " + message.getSendFrom() + " join ");
+			log.info("user " + messageObj.getSendFrom()
+					+ " join to participants");
 
 			sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 		}

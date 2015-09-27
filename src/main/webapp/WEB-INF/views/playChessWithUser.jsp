@@ -42,6 +42,9 @@
 							<div id="connection-status"></div>
 							<div id="game-status"></div>
 							<hr />
+							<button class="btn btn-warning" data-gamePartner=""
+								id="quit-game-btn">quit game</button>
+							<hr />
 							<button class="btn btn-primary" id="connectToWebSocket">Połącz
 								mnie</button>
 							<button class="btn btn-danger pull-right" id="disconnect">Rozłącz
@@ -79,8 +82,10 @@
 	</div>
 </div>
 
-<jsp:include page="includes/modal_boxes/game_handshake_invitaion_modal.jsp" />
-<jsp:include page="includes/modal_boxes/game_handshake_response_modal.jsp" />
+<jsp:include
+	page="includes/modal_boxes/game_handshake_invitaion_modal.jsp" />
+<jsp:include
+	page="includes/modal_boxes/game_handshake_response_modal.jsp" />
 <jsp:include page="includes/modal_boxes/user_info_modal.jsp" />
 
 <!-- JAVASCRIPTS -->
@@ -103,6 +108,10 @@
 
 			$('#disconnect').click(function() {
 				closeWsConnection();
+			});
+
+			$('#quit-game-btn').click(function() {
+				quitGame();
 			});
 
 		});

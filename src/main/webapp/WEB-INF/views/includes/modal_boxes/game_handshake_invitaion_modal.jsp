@@ -11,7 +11,7 @@
 				<h4 class="modal-title" id="game-handshake-modal-title"></h4>
 			</div>
 			<div class="modal-body text-center">
-				<input id="game-handshake-msgTo" type="text" />
+				<input id="game-handshake-msgTo" type="hidden" />
 
 				<p class="text-center">
 					<button type="button" onclick="agreementToPlay()"
