@@ -73,6 +73,8 @@ function connectToWebSocket() {
 
 			} else if (message.type == "game-handshake-agreement") {
 
+				$('#game-status').data('isPlaying', true);
+
 				$('#game-handshake-response-modal-title').html(
 						"game agreement from user: "
 								+ "<span class=\"text-primary\"><b>"
@@ -84,6 +86,21 @@ function connectToWebSocket() {
 						+ message.sendFrom + "</b></span></p>" + "</div>";
 
 				$('#game-status').html(alertMessage);
+
+				$('#your-username')
+						.html(
+								"you: <b>"
+										+ WEBSOCKET_CLIENT_NAME
+										+ "</b> | color: "
+										+ WEBSOCKET_CLIENT_NAME.chessColor
+										+ " "
+										+ "<span class=\"glyphicon glyphicon-hand-right\"/> ");
+
+				$('#opponent-username').html(
+						"opponent: <b>" + message.sendFrom + "</b> | color: "
+								+ WEBSOCKET_CLIENT_NAME.chessColor + " ");
+
+				$('#send-move-btn').data("opponentName", message.sendFrom);
 
 				$('#quit-game-btn').data("gamePartner", message.sendFrom);
 
@@ -97,8 +114,16 @@ function connectToWebSocket() {
 
 			} else if (message.type == "quit-game"
 					|| message.type == "goodbye-msg") {
+				
+				$('#game-status').data('isPlaying', false);
 
 				$('#game-status').html('');
+
+				$('#opponent-username').html('');
+
+				$('#send-move-btn').data("opponentName", '');
+
+				$('#quit-game-btn').data("gamePartner", '');
 
 			} else if (message.type == "try-later") {
 
@@ -120,6 +145,15 @@ function connectToWebSocket() {
 										$(this).parent().css(
 												'background-color', '#C9C9C9');
 									}
+
+									if ($('#game-status').data('isPlaying') == true) {
+										$(this)
+												.parent()
+												.find(
+														'span.participants-action-btns')
+												.remove();
+									}
+
 								});
 			}
 		}
@@ -221,11 +255,23 @@ function agreementToPlay() {
 
 	$('#game-handshake-modal').modal('hide');
 
+	$('#game-status').data('isPlaying', true);
+
 	var alertMessage = "<div class=\"alert alert-info\">"
 			+ "<p>you are playing now with: <span class=\"text-info\"><b>"
 			+ usernameToPlayWith + "</b></span></p>" + "</div>";
 
 	$('#game-status').html(alertMessage);
+
+	$('#your-username').html(
+			"you: <b>" + WEBSOCKET_CLIENT_NAME + "</b> | color: "
+					+ WEBSOCKET_CLIENT_NAME.chessColor + " ");
+
+	$('#opponent-username').html(
+			"opponent: <b>" + usernameToPlayWith + "</b> | color: "
+					+ usernameToPlayWith.chessColor + " ");
+
+	$('#send-move-btn').data("opponentName", usernameToPlayWith);
 
 	$('#quit-game-btn').data("gamePartner", usernameToPlayWith);
 
@@ -240,8 +286,16 @@ function quitGame() {
 		sendFrom : WEBSOCKET_CLIENT_NAME,
 		sendTo : $('#quit-game-btn').data("gamePartner")
 	}));
+	
+	$('#game-status').data('isPlaying', false);
 
 	$('#game-status').html('');
+
+	$('#opponent-username').html('');
+
+	$('#send-move-btn').data("opponentName", '');
+
+	$('#quit-game-btn').data("gamePartner", '');
 
 }
 
@@ -281,10 +335,31 @@ function sendYourMoveByFenNotationToUser(reciever) {
 
 };
 
+// --------------------------------------------------------
+
+function sendYourMoveByFenNotationToUser_temp() {
+
+	var reciever = $('#send-move-btn').data('opponentName');
+
+	console.log("send-fen : " + fenFromYourMove.value);
+	console.log(" to " + reciever);
+	console.log(" from " + WEBSOCKET_CLIENT_NAME);
+	var fenString = fenFromYourMove.value;
+	webSocket.send(JSON.stringify({
+		type : "chess-move",
+		fen : fenString,
+		sendFrom : WEBSOCKET_CLIENT_NAME,
+		sendTo : reciever
+	}));
+
+};
+
 // -----------------------------------------------
 function closeWsConnection() {
 	console.log('closeWsConnection()');
 	$('.connectToUserBtn').css("color", "white");
+	
+	$('#game-status').data('isPlaying', false);
 
 	webSocket.close();
 };
@@ -301,14 +376,26 @@ function showParticipants(data) {
 	for (var i = 0; i < participantsArr.length; i++) {
 
 		var liElementOpening = '<li class="list-group-item game-user">';
+		var participantData = "";
 
-		var participantData = '<button class="username btn"'
-				+ 'onclick="showUSerInfoByAjax(' + '\''
-				+ participantsArr[i].username + '\'' + ')"' + '>'
-				+ '<span class="glyphicon glyphicon-user" />' + '&nbsp;'
-				+ participantsArr[i].username + '</button>'
-				+ '<span class="small"> ' + '&nbsp;'
-				+ participantsArr[i].communicationStatus + '</span>';
+		if (participantsArr[i].communicationStatus == 'is-playing') {
+
+			participantData = '<button class="username btn"'
+					+ 'onclick="showUSerInfoByAjax(' + '\''
+					+ participantsArr[i].username + '\'' + ')"' + '>'
+					+ '<span class="glyphicon glyphicon-user text-danger" />'
+					+ '&nbsp;' + participantsArr[i].username + '</button>'
+					+ '<span class="small"> ' + '&nbsp;'
+					+ participantsArr[i].communicationStatus + '</span>';
+		} else {
+			participantData = '<button class="username btn"'
+					+ 'onclick="showUSerInfoByAjax(' + '\''
+					+ participantsArr[i].username + '\'' + ')"' + '>'
+					+ '<span class="glyphicon glyphicon-user text-success" />'
+					+ '&nbsp;' + participantsArr[i].username + '</button>'
+					+ '<span class="small"> ' + '&nbsp;'
+					+ participantsArr[i].communicationStatus + '</span>';
+		}
 
 		var participantPlayWithUserInfo = "";
 
@@ -318,27 +405,31 @@ function showParticipants(data) {
 					+ participantsArr[i].playNowWithUser + '</b></span>';
 		}
 
-		if (participantsArr[i].communicationStatus == 'is-playing') {
-			console.log('participant is playing');
-			var participantActionBtns = '<span class="participants-action-btns">'
-					+ '<button class="btn btn-sm btn-info send-to-user-btn" onclick="sendYourMoveByFenNotationToUser('
-					+ '\''
-					+ participantsArr[i].username
-					+ '\''
-					+ ')"'
-					+ 'data-username="'
-					+ participantsArr[i].username
-					+ '">send-move</button>' + '</span>';
-		} else {
-			var participantActionBtns = '<span class="participants-action-btns">'
+		var participantActionBtns = "";
+
+		if (participantsArr[i].communicationStatus == 'wait-for-new-game') {
+
+			participantActionBtns = '<span class="participants-action-btns">'
 					+ '<button class="btn btn-sm btn-danger send-to-user-btn" onclick="inviteUserToGame('
-					+ '\''
-					+ participantsArr[i].username
-					+ '\''
-					+ ')"'
-					+ 'data-username="'
-					+ participantsArr[i].username
+					+ '\'' + participantsArr[i].username + '\'' + ')"'
+					+ 'data-username="' + participantsArr[i].username
 					+ '">invite</button>' + '</span>';
+
+		} else {
+
+			// console.log('participant is playing');
+			// var participantActionBtns = '<span
+			// class="participants-action-btns">'
+			// + '<button class="btn btn-sm btn-info send-to-user-btn"
+			// onclick="sendYourMoveByFenNotationToUser('
+			// + '\''
+			// + participantsArr[i].username
+			// + '\''
+			// + ')"'
+			// + 'data-username="'
+			// + participantsArr[i].username
+			// + '">send-move</button>' + '</span>';
+
 		}
 
 		var liElementClosing = '</li>';

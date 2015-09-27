@@ -12,14 +12,14 @@ public class GameMessageExchangeProtocol {
 
 	private WebSocketSessionHandler sessionHandler;
 
-	private WebsocketUsesrHandler usesrHandler;
+	private WebsocketUsesrHandler usersHandler;
 
 	private Gson gson = new Gson();
 
 	public GameMessageExchangeProtocol(WebSocketSessionHandler sessionHandler,
 			WebsocketUsesrHandler usesrHandler) {
 		this.sessionHandler = sessionHandler;
-		this.usesrHandler = usesrHandler;
+		this.usersHandler = usesrHandler;
 	}
 
 	public void proccessMessage(WebSocketMessage messageObj,
@@ -47,13 +47,13 @@ public class GameMessageExchangeProtocol {
 		} else if (messageType.equals(WebSocketMessageType.CHESS_MOVE)) {
 
 			String fromUsername = messageObj.getSendFrom();
-			WebSocketGameUser fromUser = usesrHandler
+			WebSocketGameUser fromUser = usersHandler
 					.getWebsocketUser(fromUsername);
 
 			if (isUserPlayingWithAnyUser(fromUser)) {
 
 				String toUsername = messageObj.getSendTo();
-				WebSocketGameUser toUser = usesrHandler
+				WebSocketGameUser toUser = usersHandler
 						.getWebsocketUser(toUsername);
 
 				if (toUser.getCommunicationStatus().equals(
@@ -129,7 +129,7 @@ public class GameMessageExchangeProtocol {
 			WebSocketMessage messageObj, String messageJsonString) {
 		log.debug("setUserComStatusIsDuringHandshakeAndRefresh()");
 
-		WebSocketGameUser invitedUser = usesrHandler
+		WebSocketGameUser invitedUser = usersHandler
 				.getWebsocketUser(messageObj.getSendTo());
 
 		if (invitedUser != null
@@ -140,9 +140,9 @@ public class GameMessageExchangeProtocol {
 
 			sendMessageToOneUser(messageObj, messageJsonString);
 
-			usesrHandler
+			usersHandler
 					.setComStatusIsDuringHandshake(messageObj.getSendFrom());
-			usesrHandler.setComStatusIsDuringHandshake(messageObj.getSendTo());
+			usersHandler.setComStatusIsDuringHandshake(messageObj.getSendTo());
 			sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 		} else {
 			log.debug("invited user is already playing, is during handshake or is null");
@@ -160,10 +160,14 @@ public class GameMessageExchangeProtocol {
 		log.debug("setUserComStatusIsPlayingAndRefresh()");
 		printIfNull(message);
 
-		usesrHandler.setComStatusIsPlaying(message.getSendTo(),
+		usersHandler.setComStatusIsPlaying(message.getSendTo(),
 				message.getSendFrom());
-		usesrHandler.setComStatusIsPlaying(message.getSendFrom(),
+		usersHandler.setComStatusIsPlaying(message.getSendFrom(),
 				message.getSendTo());
+
+		usersHandler.setChessPiecesColorForGamers(message.getSendTo(),
+				message.getSendFrom());
+
 		sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 
 	}
@@ -173,8 +177,8 @@ public class GameMessageExchangeProtocol {
 		log.debug("setUserComStatusWaitForNewGameAndRefresh()");
 		printIfNull(message);
 
-		usesrHandler.setComStatusWaitForNewGame(message.getSendFrom());
-		usesrHandler.setComStatusWaitForNewGame(message.getSendTo());
+		usersHandler.setComStatusWaitForNewGame(message.getSendFrom());
+		usersHandler.setComStatusWaitForNewGame(message.getSendTo());
 		sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 	}
 

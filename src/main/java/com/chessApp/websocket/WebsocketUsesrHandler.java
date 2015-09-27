@@ -50,7 +50,6 @@ public class WebsocketUsesrHandler {
 
 	public synchronized void setComStatusIsDuringHandshake(String username) {
 		logger.debug("setComStatusIsPlaying()");
-		printIfNull(username);
 
 		setUserComunicationStatus(username,
 				GameUserCommunicationStatus.IS_DURING_HANDSHAKE);
@@ -67,13 +66,22 @@ public class WebsocketUsesrHandler {
 	public synchronized void setComStatusIsPlaying(String toUsername,
 			String fromUsername) {
 		logger.debug("setComStatusIsPlaying()");
-		printIfNull(toUsername);
-		printIfNull(fromUsername);
 
 		WebSocketGameUser gameUser = gameUsersMap.get(toUsername);
 		gameUser.setCommunicationStatus(GameUserCommunicationStatus.IS_PLAYING);
 		gameUser.setPlayNowWithUser(fromUsername);
-		
+
+	}
+
+	public synchronized void setChessPiecesColorForGamers(String toUsername,
+			String fromUsername) {
+
+		WebSocketGameUser invitingUser = gameUsersMap.get(fromUsername);
+		WebSocketGameUser recievingUser = gameUsersMap.get(fromUsername);
+
+		invitingUser.setChessColor(ChessPieces.WHITE);
+		recievingUser.setChessColor(ChessPieces.BLACK);
+
 	}
 
 	public void printOutUsersList() {
@@ -82,12 +90,6 @@ public class WebsocketUsesrHandler {
 			System.out.println(gameUsersMap.get(key));
 		}
 
-	}
-	
-	private void printIfNull(Object object) {
-		if (object == null) {
-			System.out.println("there was null");
-		}
 	}
 
 }

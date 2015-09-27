@@ -13,6 +13,10 @@ public class WebSocketMessage {
 
 	private String sendFrom;
 
+	private String moveBelongsToColor;
+
+	private WebSocketGameUser messageAuthorObject;
+
 	public WebSocketMessage() {
 
 	}
@@ -23,6 +27,22 @@ public class WebSocketMessage {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getMoveBelongsToColor() {
+		return moveBelongsToColor;
+	}
+
+	public void setMoveBelongsToColor(String moveBelongsToColor) {
+		this.moveBelongsToColor = moveBelongsToColor;
+	}
+
+	public WebSocketGameUser getMessageAuthorObject() {
+		return messageAuthorObject;
+	}
+
+	public void setMessageAuthorObject(WebSocketGameUser messageAuthorObject) {
+		this.messageAuthorObject = messageAuthorObject;
 	}
 
 	public String getSendFrom() {

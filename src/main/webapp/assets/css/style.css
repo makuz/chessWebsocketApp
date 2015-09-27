@@ -113,6 +113,10 @@ div#chess-board-play-with-user div#board {
 	margin-right: 3%;
 }
 
+div#chess-board-play-with-user  {
+	margin-top: 2.5%;
+}
+
 div#chess-board-play-with-user article#aside-board {
 	float: left;
 	margin-right: 1%;
@@ -205,6 +209,13 @@ div#connection-status div.connection-status-msg h2 {
 	width: 70%;
 }
 
+div#play-with-opponent-interface {
+	background-color: #FBFBFB;
+	padding: 2%;
+	height: 9em;
+	border: 1px solid black;
+}
+
 div#chess-board-home {
 	float: left;
 	margin-top: -5%;
@@ -230,6 +241,11 @@ div.game-stats-with-computer {
 	border-radius: 5px;
 	float: left;
 	border: 2px black solid;
+}
+
+span#startPosBtn {
+	padding: 0;
+	margin-left: 1em;
 }
 
 div.game-stats {

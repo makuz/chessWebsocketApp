@@ -18,14 +18,15 @@
 			<security:authorize access="hasRole('ROLE_USER')" var="isLoggedIn" />
 			<security:authorize access="hasRole('ROLE_USER')">
 
-				<h3 class="text-left">Play Chess</h3>
+				<span class="text-left lead">Play Chess</span>
+				<span id="startPosBtn" class="btn btn-danger
+					btn-sm">start
+					new game</span>
 				<script
 					src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>
 				<div id="chess-board-play-with-user">
 					<article id="aside-board">
 						<div id="board"></div>
-						<button id="startPosBtn" class="btn btn-info">start new
-							game</button>
 					</article>
 					<!-- -------------------------- -->
 					<article class="game-actions">
@@ -40,16 +41,29 @@
 						<input hidden="true" type="text" id="fenFromYourMove" />
 						<section id="onlineUsersSection">
 							<div id="connection-status"></div>
-							<div id="game-status"></div>
+							<div id="game-status" data-isPlaying=""></div>
 							<hr />
-							<button class="btn btn-warning" data-gamePartner=""
-								id="quit-game-btn">quit game</button>
+
+							<div id="play-with-opponent-interface">
+								<span id="your-username">you: </span><span
+									id="opponent-username">oppeonent: </span>
+								<div id="move-for">move for:</div>
+
+								<button id="send-move-btn" class="btn btn-info"
+									data-opponentName="">send-move</button>
+								<button class="btn btn-warning pull-right" data-gamePartner=""
+									id="quit-game-btn">quit game</button>
+
+							</div>
+
 							<hr />
 							<button class="btn btn-primary" id="connectToWebSocket">Połącz
 								mnie</button>
 							<button class="btn btn-danger pull-right" id="disconnect">Rozłącz
 								mnie</button>
+
 							<hr />
+
 							<div id="participants">
 								<h3>Participants :</h3>
 								<br />
@@ -102,6 +116,8 @@
 
 		$(function() {
 
+			$('#game-status').data('isPlaying', false);
+
 			$('#connectToWebSocket').click(function(event) {
 				connectToWebSocket();
 			});
@@ -112,6 +128,10 @@
 
 			$('#quit-game-btn').click(function() {
 				quitGame();
+			});
+
+			$('#send-move-btn').click(function() {
+				sendYourMoveByFenNotationToUser_temp();
 			});
 
 		});
