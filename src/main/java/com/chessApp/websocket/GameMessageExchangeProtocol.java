@@ -35,7 +35,6 @@ public class GameMessageExchangeProtocol {
 		} else if (messageType
 				.equals(WebSocketMessageType.GAME_HANDSHAKE_AGREEMENT)) {
 
-			sendMessageToOneUser(messageObj, messageJsonString);
 			setUserComStatusIsPlayingAndRefresh(messageObj);
 
 		} else if (messageType
@@ -138,11 +137,25 @@ public class GameMessageExchangeProtocol {
 				&& !invitedUser.getCommunicationStatus().equals(
 						GameUserCommunicationStatus.IS_PLAYING)) {
 
-			sendMessageToOneUser(messageObj, messageJsonString);
-
 			usersHandler
 					.setComStatusIsDuringHandshake(messageObj.getSendFrom());
 			usersHandler.setComStatusIsDuringHandshake(messageObj.getSendTo());
+
+			usersHandler.setChessPiecesColorForGamers(messageObj.getSendTo(),
+					messageObj.getSendFrom());
+
+			WebSocketGameUser sendToObj = usersHandler
+					.getWebsocketUser(messageObj.getSendTo());
+
+			messageObj.setSendToObj(sendToObj);
+
+			WebSocketGameUser sendFromObj = usersHandler
+					.getWebsocketUser(messageObj.getSendFrom());
+
+			messageObj.setSendFromObj(sendFromObj);
+
+			sendMessageToOneUser(messageObj, gson.toJson(messageObj));
+
 			sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 		} else {
 			log.debug("invited user is already playing, is during handshake or is null");
@@ -156,29 +169,51 @@ public class GameMessageExchangeProtocol {
 
 	}
 
-	private void setUserComStatusIsPlayingAndRefresh(WebSocketMessage message) {
+	private void setUserComStatusIsPlayingAndRefresh(WebSocketMessage messageObj) {
 		log.debug("setUserComStatusIsPlayingAndRefresh()");
-		printIfNull(message);
+		printIfNull(messageObj);
 
-		usersHandler.setComStatusIsPlaying(message.getSendTo(),
-				message.getSendFrom());
-		usersHandler.setComStatusIsPlaying(message.getSendFrom(),
-				message.getSendTo());
+		usersHandler.setComStatusIsPlaying(messageObj.getSendTo(),
+				messageObj.getSendFrom());
+		usersHandler.setComStatusIsPlaying(messageObj.getSendFrom(),
+				messageObj.getSendTo());
 
-		usersHandler.setChessPiecesColorForGamers(message.getSendTo(),
-				message.getSendFrom());
+		// usersHandler.setChessPiecesColorForGamers(messageObj.getSendTo(),
+		// messageObj.getSendFrom());
+
+		WebSocketGameUser sendToObj = usersHandler.getWebsocketUser(messageObj
+				.getSendTo());
+
+		messageObj.setSendToObj(sendToObj);
+
+		WebSocketGameUser sendFromObj = usersHandler
+				.getWebsocketUser(messageObj.getSendFrom());
+
+		messageObj.setSendFromObj(sendFromObj);
+
+		sendMessageToOneUser(messageObj, gson.toJson(messageObj));
+
+		// callbackMessage
+		// messageObj.setSendFrom(messageObj.getSendTo());
+		// messageObj.setSendTo(messageObj.getSendFrom());
+		// messageObj.setSendToObj(sendFromObj);
+		// messageObj.setSendFromObj(sendToObj);
+		// sendMessageToOneUser(messageObj, gson.toJson(messageObj));
 
 		sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 
 	}
 
 	private void setUserComStatusWaitForNewGameAndRefresh(
-			WebSocketMessage message) {
+			WebSocketMessage messageObj) {
 		log.debug("setUserComStatusWaitForNewGameAndRefresh()");
-		printIfNull(message);
+		printIfNull(messageObj);
 
-		usersHandler.setComStatusWaitForNewGame(message.getSendFrom());
-		usersHandler.setComStatusWaitForNewGame(message.getSendTo());
+		usersHandler.setComStatusWaitForNewGame(messageObj.getSendFrom());
+		usersHandler.setComStatusWaitForNewGame(messageObj.getSendTo());
+		usersHandler.setChessPiecesColorForGamers(messageObj.getSendTo(),
+				messageObj.getSendFrom());
+
 		sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 	}
 
@@ -195,5 +230,25 @@ public class GameMessageExchangeProtocol {
 			sessionHandler.sendToSession(toUsername, fromUsername, content);
 		}
 	}
+
+	// private void sendMessageToOBothUsers(WebSocketMessage message,
+	// String content) {
+	// log.debug("sendMessageToOneUser()");
+	// log.debug("typ wiadomosci : " + message.getType());
+	// log.debug("od usera " + message.getSendFrom() + " do usera "
+	// + message.getSendTo());
+	//
+	// String toUsername = message.getSendTo();
+	// String fromUsername = message.getSendFrom();
+	// if (toUsername != null && StringUtils.isNotEmpty(toUsername)) {
+	//
+	// sessionHandler.sendToSession(toUsername, fromUsername, content);
+	// }
+	//
+	// if (fromUsername != null && StringUtils.isNotEmpty(fromUsername)) {
+	//
+	// sessionHandler.sendToSession(fromUsername, toUsername, content);
+	// }
+	// }
 
 }

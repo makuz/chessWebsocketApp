@@ -71,6 +71,20 @@ function connectToWebSocket() {
 
 				showGameHandshakeModalBox(message.sendFrom);
 
+				$('#your-username')
+						.html(
+								"you: <span class=\"text-info\"><b>"
+										+ WEBSOCKET_CLIENT_NAME
+										+ "</b></span> | color: "
+										+ message.sendToObj.chessColor
+										+ " "
+										+ "<span class=\"glyphicon glyphicon-hand-right\"/> ");
+
+				$('#opponent-username').html(
+						"opponent: <span class=\"text-info\"><b>"
+								+ message.sendFrom + "</b></span> | color: "
+								+ message.sendFromObj.chessColor + " ");
+
 			} else if (message.type == "game-handshake-agreement") {
 
 				$('#game-status').data('isPlaying', true);
@@ -79,7 +93,10 @@ function connectToWebSocket() {
 						"game agreement from user: "
 								+ "<span class=\"text-primary\"><b>"
 								+ message.sendFrom + "</b></span>");
-				$('#game-handshake-response-modal').modal('show');
+
+				// if (message.sendTo != WEBSOCKET_CLIENT_NAME) {
+				// $('#game-handshake-response-modal').modal('show');
+				// }
 
 				var alertMessage = "<div class=\"alert alert-info\">"
 						+ "<p>you are playing now with: <span class=\"text-info\"><b>"
@@ -89,16 +106,17 @@ function connectToWebSocket() {
 
 				$('#your-username')
 						.html(
-								"you: <b>"
+								"you: <span class=\"text-info\"><b>"
 										+ WEBSOCKET_CLIENT_NAME
-										+ "</b> | color: "
-										+ WEBSOCKET_CLIENT_NAME.chessColor
+										+ "</b></span> | color: "
+										+ message.sendToObj.chessColor
 										+ " "
 										+ "<span class=\"glyphicon glyphicon-hand-right\"/> ");
 
 				$('#opponent-username').html(
-						"opponent: <b>" + message.sendFrom + "</b> | color: "
-								+ WEBSOCKET_CLIENT_NAME.chessColor + " ");
+						"opponent: <span class=\"text-info\"><b>"
+								+ message.sendFrom + "</b></span> | color: "
+								+ message.sendFromObj.chessColor + " ");
 
 				$('#send-move-btn').data("opponentName", message.sendFrom);
 
@@ -114,7 +132,7 @@ function connectToWebSocket() {
 
 			} else if (message.type == "quit-game"
 					|| message.type == "goodbye-msg") {
-				
+
 				$('#game-status').data('isPlaying', false);
 
 				$('#game-status').html('');
@@ -263,13 +281,16 @@ function agreementToPlay() {
 
 	$('#game-status').html(alertMessage);
 
-	$('#your-username').html(
-			"you: <b>" + WEBSOCKET_CLIENT_NAME + "</b> | color: "
-					+ WEBSOCKET_CLIENT_NAME.chessColor + " ");
-
-	$('#opponent-username').html(
-			"opponent: <b>" + usernameToPlayWith + "</b> | color: "
-					+ usernameToPlayWith.chessColor + " ");
+	// $('#your-username').html(
+	// "you: <span class=\"text-info\"><b>" + WEBSOCKET_CLIENT_NAME
+	// + "</b></span> | color: "
+	// + WEBSOCKET_CLIENT_NAME.chessColor
+	// + "<span class=\"glyphicon glyphicon-hand-right\"/> ");
+	//
+	// $('#opponent-username').html(
+	// "opponent: <span class=\"text-info\"><b>" + usernameToPlayWith
+	// + "</b></span> | color: " + usernameToPlayWith.chessColor
+	// + " ");
 
 	$('#send-move-btn').data("opponentName", usernameToPlayWith);
 
@@ -286,7 +307,7 @@ function quitGame() {
 		sendFrom : WEBSOCKET_CLIENT_NAME,
 		sendTo : $('#quit-game-btn').data("gamePartner")
 	}));
-	
+
 	$('#game-status').data('isPlaying', false);
 
 	$('#game-status').html('');
@@ -315,29 +336,17 @@ function refusedToPlay() {
 		sendTo : usernameNotToPlayWith
 	}));
 
+	$('#your-username').html('');
+
+	$('#opponent-username').html('');
+
 	$('#game-handshake-modal').modal('hide');
 
 }
 
 // --------------------------------------------------------
 
-function sendYourMoveByFenNotationToUser(reciever) {
-	console.log("send-fen : " + fenFromYourMove.value);
-	console.log(" to " + reciever);
-	console.log(" from " + WEBSOCKET_CLIENT_NAME);
-	var fenString = fenFromYourMove.value;
-	webSocket.send(JSON.stringify({
-		type : "chess-move",
-		fen : fenString,
-		sendFrom : WEBSOCKET_CLIENT_NAME,
-		sendTo : reciever
-	}));
-
-};
-
-// --------------------------------------------------------
-
-function sendYourMoveByFenNotationToUser_temp() {
+function sendYourMoveByFenNotationToUser() {
 
 	var reciever = $('#send-move-btn').data('opponentName');
 
@@ -358,7 +367,7 @@ function sendYourMoveByFenNotationToUser_temp() {
 function closeWsConnection() {
 	console.log('closeWsConnection()');
 	$('.connectToUserBtn').css("color", "white");
-	
+
 	$('#game-status').data('isPlaying', false);
 
 	webSocket.close();

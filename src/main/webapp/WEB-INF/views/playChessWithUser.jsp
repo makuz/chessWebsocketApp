@@ -131,7 +131,7 @@
 			});
 
 			$('#send-move-btn').click(function() {
-				sendYourMoveByFenNotationToUser_temp();
+				sendYourMoveByFenNotationToUser();
 			});
 
 		});

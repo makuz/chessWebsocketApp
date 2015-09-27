@@ -16,9 +16,9 @@ public class WebSocketSessionHandler {
 
 	private static final Logger logger = Logger
 			.getLogger(WebSocketSessionHandler.class);
-	
-	private static final Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
-	
+
+	private volatile static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
+
 	private Gson gson = new Gson();
 
 	public synchronized void addSession(String username, Session session) {
@@ -55,7 +55,8 @@ public class WebSocketSessionHandler {
 		}
 	}
 
-	public void sendToSession(String toUsernameName, String fromUsername, String message) {
+	public void sendToSession(String toUsernameName, String fromUsername,
+			String message) {
 		logger.info("sendToSession()");
 
 		Session userSession = sessionsMap.get(toUsernameName);

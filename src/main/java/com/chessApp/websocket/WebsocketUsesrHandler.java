@@ -14,7 +14,7 @@ public class WebsocketUsesrHandler {
 
 	private volatile static long userID = 0;
 
-	protected static final Map<String, WebSocketGameUser> gameUsersMap = new ConcurrentHashMap<>();
+	protected volatile static Map<String, WebSocketGameUser> gameUsersMap = new ConcurrentHashMap<>();
 
 	public synchronized Boolean userListNotContainsUsername(String username) {
 		if (gameUsersMap.containsKey(username)) {
@@ -75,12 +75,25 @@ public class WebsocketUsesrHandler {
 
 	public synchronized void setChessPiecesColorForGamers(String toUsername,
 			String fromUsername) {
+		logger.debug("setChessPiecesColorForGamers()");
 
 		WebSocketGameUser invitingUser = gameUsersMap.get(fromUsername);
-		WebSocketGameUser recievingUser = gameUsersMap.get(fromUsername);
+		WebSocketGameUser recievingUser = gameUsersMap.get(toUsername);
 
 		invitingUser.setChessColor(ChessPieces.WHITE);
 		recievingUser.setChessColor(ChessPieces.BLACK);
+
+	}
+
+	public synchronized void resetChessPiecesColorForGamers(String toUsername,
+			String fromUsername) {
+		logger.debug("setChessPiecesColorForGamers()");
+
+		WebSocketGameUser invitingUser = gameUsersMap.get(fromUsername);
+		WebSocketGameUser recievingUser = gameUsersMap.get(toUsername);
+
+		invitingUser.setChessColor(null);
+		recievingUser.setChessColor(null);
 
 	}
 

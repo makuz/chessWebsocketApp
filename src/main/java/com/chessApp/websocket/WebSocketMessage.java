@@ -13,9 +13,11 @@ public class WebSocketMessage {
 
 	private String sendFrom;
 
-	private String moveBelongsToColor;
+	private String moveStatus;
 
-	private WebSocketGameUser messageAuthorObject;
+	private WebSocketGameUser sendToObj;
+
+	private WebSocketGameUser sendFromObj;
 
 	public WebSocketMessage() {
 
@@ -29,20 +31,28 @@ public class WebSocketMessage {
 		this.type = type;
 	}
 
-	public String getMoveBelongsToColor() {
-		return moveBelongsToColor;
+	public WebSocketGameUser getSendToObj() {
+		return sendToObj;
 	}
 
-	public void setMoveBelongsToColor(String moveBelongsToColor) {
-		this.moveBelongsToColor = moveBelongsToColor;
+	public void setSendToObj(WebSocketGameUser sendToObj) {
+		this.sendToObj = sendToObj;
 	}
 
-	public WebSocketGameUser getMessageAuthorObject() {
-		return messageAuthorObject;
+	public WebSocketGameUser getSendFromObj() {
+		return sendFromObj;
 	}
 
-	public void setMessageAuthorObject(WebSocketGameUser messageAuthorObject) {
-		this.messageAuthorObject = messageAuthorObject;
+	public void setSendFromObj(WebSocketGameUser sendFromObj) {
+		this.sendFromObj = sendFromObj;
+	}
+
+	public String getMoveStatus() {
+		return moveStatus;
+	}
+
+	public void setMoveStatus(String moveStatus) {
+		this.moveStatus = moveStatus;
 	}
 
 	public String getSendFrom() {
@@ -72,7 +82,9 @@ public class WebSocketMessage {
 	@Override
 	public String toString() {
 		return "WebSocketMessage [type=" + type + ", fen=" + fen + ", sendTo="
-				+ sendTo + ", sendFrom=" + sendFrom + "]";
+				+ sendTo + ", sendFrom=" + sendFrom + ", moveStatus="
+				+ moveStatus + ", sendToObj=" + sendToObj + ", sendFromObj="
+				+ sendFromObj + "]";
 	}
 
 }
