@@ -42,22 +42,77 @@ public class GameMessageExchangeProtocol {
 
 		} else if (messageType.equals(WebSocketMessageType.CHESS_MOVE)) {
 
-			sendMessageToOneUser(messageObj, messageJsonString);
+			String fromUsername = messageObj.getSendFrom();
+			WebSocketGameUser fromUser = usesrHandler
+					.getWebsocketUser(fromUsername);
+
+			if (isUserPlayingWithAnyUser(fromUser)) {
+
+				String toUsername = messageObj.getSendTo();
+				WebSocketGameUser toUser = usesrHandler
+						.getWebsocketUser(toUsername);
+
+				if (toUser.getCommunicationStatus().equals(
+						GameUserCommunicationStatus.IS_PLAYING)) {
+
+					if (userONEPlayWithUserTWO(fromUser, toUser)) {
+
+						sessionHandler.sendToSession(toUsername, fromUsername,
+								messageJsonString);
+					} else {
+						log.debug(messageObj.getSendFrom()
+								+ " send message to user which he does not play with , ( to user: "
+								+ toUsername + " )");
+					}
+				}
+			} else {
+				log.debug(messageObj.getSendFrom()
+						+ " send chess-move but he his not playing with anyone");
+			}
 
 		} else if (messageType.equals(WebSocketMessageType.GAME_OVER)
-				|| messageType.equals(WebSocketMessageType.QUIT_GAME)) {
+				|| messageType.equals(WebSocketMessageType.QUIT_GAME)
+				|| messageType.equals(WebSocketMessageType.USER_DISCONNECT)) {
 
 			sendMessageToOneUser(messageObj, messageJsonString);
 			setUserComStatusWaitForNewGameAndRefresh(messageObj);
 
 		} else if (messageType.equals(WebSocketMessageType.USER_CONNECT)) {
 
-			log.info("user " + messageObj.getSendFrom()
+			log.debug("user " + messageObj.getSendFrom()
 					+ " join to participants");
 
 			sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 		}
 
+	}
+
+	private Boolean userONEPlayWithUserTWO(WebSocketGameUser fromUser,
+			WebSocketGameUser toUser) {
+		log.debug("userONEPlayWithUserTWO()");
+
+		if (fromUser != null && toUser != null
+				&& fromUser.getPlayNowWithUser().equals(toUser.getUsername())
+				&& toUser.getPlayNowWithUser().equals(fromUser.getUsername())) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	private Boolean isUserPlayingWithAnyUser(WebSocketGameUser user) {
+		log.debug("isUserPlayingWithAnyUser()");
+
+		if (user != null
+				&& user.getCommunicationStatus().equals(
+						GameUserCommunicationStatus.IS_PLAYING)
+				&& user.getPlayNowWithUser() != null
+				&& !user.getPlayNowWithUser().equals("")) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private void printIfNull(Object object) {

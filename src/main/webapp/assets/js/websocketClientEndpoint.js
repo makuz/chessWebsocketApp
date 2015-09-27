@@ -50,6 +50,9 @@ function connectToWebSocket() {
 		console.log("onmessage: ");
 		console.log(event);
 
+		console.log("data: ");
+		console.log(event.data);
+
 		if (event != null) {
 			var message = JSON.parse(event.data);
 			console.log("message");
@@ -134,10 +137,6 @@ function connectToWebSocket() {
 	// -----------------------------------
 
 	webSocket.onclose = function(event) {
-		webSocket.send(JSON.stringify({
-			type : "goodbye-msg",
-			sendFrom : WEBSOCKET_CLIENT_NAME
-		}));
 
 		$('#connection-status').html(
 				"<div class=\"alert alert-warning connection-status-msg\">"
@@ -277,6 +276,24 @@ function sendYourMoveByFenNotationToUser(reciever) {
 function closeWsConnection() {
 	console.log('closeWsConnection()');
 	$('.connectToUserBtn').css("color", "white");
+
+	var playWitnUserUsername = $('#quit-game-btn').data("gamePartner");
+
+	if (playWitnUserUsername != undefined && playWitnUserUsername != "") {
+		console.log("user " + WEBSOCKET_CLIENT_NAME + " send goodbye-msg");
+
+		webSocket.send(JSON.stringify({
+			type : "goodbye-msg",
+			sendFrom : WEBSOCKET_CLIENT_NAME,
+			sendTo : playWitnUserUsername
+		}));
+	} else {
+		webSocket.send(JSON.stringify({
+			type : "goodbye-msg",
+			sendFrom : WEBSOCKET_CLIENT_NAME
+		}));
+	}
+
 	webSocket.close();
 };
 

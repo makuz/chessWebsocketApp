@@ -74,12 +74,6 @@ public class WebsocketUsesrHandler {
 		gameUser.setCommunicationStatus(GameUserCommunicationStatus.IS_PLAYING);
 		gameUser.setPlayNowWithUser(fromUsername);
 		
-		System.out.println("-------------------------------------");
-		System.out.println("-------------------------------------");
-		System.out.println("-------------------------------------");
-		System.out.println("-------------------------------------");
-		System.out.println("---------------game user--------------");
-		System.out.println(gameUser);
 	}
 
 	public void printOutUsersList() {
