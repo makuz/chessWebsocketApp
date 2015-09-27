@@ -3,6 +3,8 @@
  * 
  * websocket client variable name = WEBSOCKET_CLIENT_NAME
  * 
+ * GAME PIECE COLOR STATUGLOBAL VAR = SENDED_CHESS_MOVE_STATUS
+ * 
  */
 
 // ------CONNECT TO WEBSOCKET FUNCTION, WEBSOCKET EVENTS----------------------
@@ -67,6 +69,11 @@ function connectToWebSocket() {
 					game = new Chess(fenStr);
 					updateStatus();
 				}
+
+				SENDED_CHESS_MOVE_STATUS = message.moveStatus;
+
+				CHESS_MOVE_COUNTER = 0;
+
 			} else if (message.type == "game-handshake-invitation") {
 
 				showGameHandshakeModalBox(message.sendFrom);
@@ -93,10 +100,6 @@ function connectToWebSocket() {
 						"game agreement from user: "
 								+ "<span class=\"text-primary\"><b>"
 								+ message.sendFrom + "</b></span>");
-
-				// if (message.sendTo != WEBSOCKET_CLIENT_NAME) {
-				// $('#game-handshake-response-modal').modal('show');
-				// }
 
 				var alertMessage = "<div class=\"alert alert-info\">"
 						+ "<p>you are playing now with: <span class=\"text-info\"><b>"
@@ -281,17 +284,6 @@ function agreementToPlay() {
 
 	$('#game-status').html(alertMessage);
 
-	// $('#your-username').html(
-	// "you: <span class=\"text-info\"><b>" + WEBSOCKET_CLIENT_NAME
-	// + "</b></span> | color: "
-	// + WEBSOCKET_CLIENT_NAME.chessColor
-	// + "<span class=\"glyphicon glyphicon-hand-right\"/> ");
-	//
-	// $('#opponent-username').html(
-	// "opponent: <span class=\"text-info\"><b>" + usernameToPlayWith
-	// + "</b></span> | color: " + usernameToPlayWith.chessColor
-	// + " ");
-
 	$('#send-move-btn').data("opponentName", usernameToPlayWith);
 
 	$('#quit-game-btn').data("gamePartner", usernameToPlayWith);
@@ -350,6 +342,8 @@ function sendYourMoveByFenNotationToUser() {
 
 	var reciever = $('#send-move-btn').data('opponentName');
 
+	var chessMoveStatus = $('#status').text().trim();
+
 	console.log("send-fen : " + fenFromYourMove.value);
 	console.log(" to " + reciever);
 	console.log(" from " + WEBSOCKET_CLIENT_NAME);
@@ -357,6 +351,7 @@ function sendYourMoveByFenNotationToUser() {
 	webSocket.send(JSON.stringify({
 		type : "chess-move",
 		fen : fenString,
+		moveStatus : chessMoveStatus,
 		sendFrom : WEBSOCKET_CLIENT_NAME,
 		sendTo : reciever
 	}));

@@ -26,9 +26,15 @@ $('#startPosBtn').click(function() {
 // chess script ---------------------------------
 var board, game = new Chess(), statusEl = $('#status'), fenEl = $('#fen'), pgnEl = $('#pgn');
 
-// do not pick up pieces if the game is over
-// only pick up pieces for the side to move
 var onDragStart = function(source, piece, position, orientation) {
+	console.log("onDragStart()");
+	// allow only one move
+	if (CHESS_MOVE_COUNTER > 0) {
+		return false;
+	}
+
+	// do not pick up pieces if the game is over
+	// only pick up pieces for the side to move
 	if (game.game_over() === true
 			|| (game.turn() === 'w' && piece.search(/^b/) !== -1)
 			|| (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
@@ -37,6 +43,7 @@ var onDragStart = function(source, piece, position, orientation) {
 };
 
 var onDrop = function(source, target) {
+	console.log("onDrop()");
 	// see if the move is legal
 	var move = game.move({
 		from : source,
@@ -48,6 +55,8 @@ var onDrop = function(source, target) {
 	// illegal move
 	if (move === null)
 		return 'snapback';
+
+	CHESS_MOVE_COUNTER++;
 
 	updateStatus();
 };
