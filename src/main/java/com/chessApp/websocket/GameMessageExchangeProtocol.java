@@ -3,6 +3,8 @@ package com.chessApp.websocket;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.google.gson.Gson;
+
 public class GameMessageExchangeProtocol {
 
 	private final static Logger log = Logger
@@ -11,6 +13,8 @@ public class GameMessageExchangeProtocol {
 	private WebSocketSessionHandler sessionHandler;
 
 	private WebsocketUsesrHandler usesrHandler;
+
+	private Gson gson = new Gson();
 
 	public GameMessageExchangeProtocol(WebSocketSessionHandler sessionHandler,
 			WebsocketUsesrHandler usesrHandler) {
@@ -25,8 +29,8 @@ public class GameMessageExchangeProtocol {
 
 		if (messageType.equals(WebSocketMessageType.GAME_HANDSHAKE_INVITATION)) {
 
-			sendMessageToOneUser(messageObj, messageJsonString);
-			setUserComStatusIsDuringHandshakeAndRefresh(messageObj);
+			setUserComStatusIsDuringHandshakeSendMsgAndRefresh(messageObj,
+					messageJsonString);
 
 		} else if (messageType
 				.equals(WebSocketMessageType.GAME_HANDSHAKE_AGREEMENT)) {
@@ -121,15 +125,35 @@ public class GameMessageExchangeProtocol {
 		}
 	}
 
-	private void setUserComStatusIsDuringHandshakeAndRefresh(
-			WebSocketMessage message) {
+	private void setUserComStatusIsDuringHandshakeSendMsgAndRefresh(
+			WebSocketMessage messageObj, String messageJsonString) {
 		log.debug("setUserComStatusIsDuringHandshakeAndRefresh()");
 
-		printIfNull(message);
+		WebSocketGameUser invitedUser = usesrHandler
+				.getWebsocketUser(messageObj.getSendTo());
 
-		usesrHandler.setComStatusIsDuringHandshake(message.getSendFrom());
-		usesrHandler.setComStatusIsDuringHandshake(message.getSendTo());
-		sessionHandler.sendToAllConnectedSessionsActualParticipantList();
+		if (invitedUser != null
+				&& !invitedUser.getCommunicationStatus().equals(
+						GameUserCommunicationStatus.IS_DURING_HANDSHAKE)
+				&& !invitedUser.getCommunicationStatus().equals(
+						GameUserCommunicationStatus.IS_PLAYING)) {
+
+			sendMessageToOneUser(messageObj, messageJsonString);
+
+			usesrHandler
+					.setComStatusIsDuringHandshake(messageObj.getSendFrom());
+			usesrHandler.setComStatusIsDuringHandshake(messageObj.getSendTo());
+			sessionHandler.sendToAllConnectedSessionsActualParticipantList();
+		} else {
+			log.debug("invited user is already playing, is during handshake or is null");
+
+			WebSocketMessage tryLaterMsg = new WebSocketMessage();
+			tryLaterMsg.setType(WebSocketMessageType.TRY_LATER);
+
+			sessionHandler.sendToSession(messageObj.getSendFrom(), "server",
+					gson.toJson(tryLaterMsg));
+		}
+
 	}
 
 	private void setUserComStatusIsPlayingAndRefresh(WebSocketMessage message) {

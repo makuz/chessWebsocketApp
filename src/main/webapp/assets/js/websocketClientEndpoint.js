@@ -95,9 +95,14 @@ function connectToWebSocket() {
 								+ message.sendFrom + "</b></span>");
 				$('#game-handshake-response-modal').modal('show');
 
-			} else if (message.type == "quit-game") {
+			} else if (message.type == "quit-game"
+					|| message.type == "goodbye-msg") {
 
 				$('#game-status').html('');
+
+			} else if (message.type == "try-later") {
+
+				alert("user is playing now with someone else, \n or is during handshake with someone else,\n try later.");
 
 			} else {
 				showParticipants(event.data);
@@ -226,6 +231,8 @@ function agreementToPlay() {
 
 }
 
+// --------------------------------------------------------
+
 function quitGame() {
 
 	webSocket.send(JSON.stringify({
@@ -258,6 +265,8 @@ function refusedToPlay() {
 
 }
 
+// --------------------------------------------------------
+
 function sendYourMoveByFenNotationToUser(reciever) {
 	console.log("send-fen : " + fenFromYourMove.value);
 	console.log(" to " + reciever);
@@ -276,23 +285,6 @@ function sendYourMoveByFenNotationToUser(reciever) {
 function closeWsConnection() {
 	console.log('closeWsConnection()');
 	$('.connectToUserBtn').css("color", "white");
-
-	var playWitnUserUsername = $('#quit-game-btn').data("gamePartner");
-
-	if (playWitnUserUsername != undefined && playWitnUserUsername != "") {
-		console.log("user " + WEBSOCKET_CLIENT_NAME + " send goodbye-msg");
-
-		webSocket.send(JSON.stringify({
-			type : "goodbye-msg",
-			sendFrom : WEBSOCKET_CLIENT_NAME,
-			sendTo : playWitnUserUsername
-		}));
-	} else {
-		webSocket.send(JSON.stringify({
-			type : "goodbye-msg",
-			sendFrom : WEBSOCKET_CLIENT_NAME
-		}));
-	}
 
 	webSocket.close();
 };

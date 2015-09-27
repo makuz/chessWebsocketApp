@@ -71,6 +71,28 @@ public class WebSocketServer {
 		log.info("connection closed. Reason: " + closeReason.getReasonPhrase());
 		log.info(sender);
 		synchronized (this) {
+			WebSocketGameUser cloesingConnectionUser = usesrHandler
+					.getWebsocketUser(sender);
+
+			if (cloesingConnectionUser.getPlayNowWithUser() != null
+					&& cloesingConnectionUser.getPlayNowWithUser() != "") {
+
+				WebSocketGameUser cloesingConnectionUserGamePartner = usesrHandler
+						.getWebsocketUser(cloesingConnectionUser
+								.getPlayNowWithUser());
+
+				cloesingConnectionUserGamePartner.setPlayNowWithUser(null);
+				cloesingConnectionUserGamePartner
+						.setCommunicationStatus(GameUserCommunicationStatus.WAIT_FOR_NEW_GAME);
+
+				WebSocketMessage disconnectMsg = new WebSocketMessage();
+				disconnectMsg.setType(WebSocketMessageType.USER_DISCONNECT);
+
+				sessionHandler.sendToSession(
+						cloesingConnectionUserGamePartner.getUsername(),
+						sender, gson.toJson(disconnectMsg));
+			}
+
 			usesrHandler.removeWebsocketUser(sender);
 			sessionHandler.removeSession(sender);
 		}

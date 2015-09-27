@@ -17,5 +17,7 @@ public class WebSocketMessageType {
 	public final static String QUIT_GAME = "quit-game";
 
 	public final static String USER_DISCONNECT = "goodbye-msg";
+	
+	public final static String TRY_LATER = "try-later";
 
 }
