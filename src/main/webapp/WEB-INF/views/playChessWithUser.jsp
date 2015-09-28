@@ -38,8 +38,8 @@
 							</small><br /> <small class="text-warning"> PGN: <span id="pgn"></span>
 							</small>
 						</div>
-						<input type="text" id="fenFromPreviousMove" /> <input type="text"
-							id="fenFromYourMove" />
+						<input type="text" id="fenFromPreviousMove" hidden="true" /> <input
+							type="text" id="fenFromYourMove" hidden="true" />
 						<section id="onlineUsersSection">
 							<div id="connection-status"></div>
 							<div id="game-status" data-isPlaying=""></div>
