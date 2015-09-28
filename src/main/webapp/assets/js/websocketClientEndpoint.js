@@ -63,6 +63,7 @@ function connectToWebSocket() {
 			if (message.type == "chess-move") {
 				var fenStr = message.fen;
 				if (fenStr != null && fenStr != "") {
+					$('#fenFromPreviousMove').val(fenStr);
 					// chessboard board object
 					board.position(fenStr);
 					// chessjs game object
@@ -71,6 +72,8 @@ function connectToWebSocket() {
 				}
 
 				SENDED_CHESS_MOVE_STATUS = message.moveStatus;
+
+				showActualMoveStatus();
 
 				CHESS_MOVE_COUNTER = 0;
 
@@ -94,9 +97,16 @@ function connectToWebSocket() {
 
 			} else if (message.type == "game-handshake-agreement") {
 
+				$('#startPosBtn').attr("disabled", true);
+
 				// set the first move status at start
 
 				SENDED_CHESS_MOVE_STATUS = message.moveStatus;
+
+				// set move info
+				showActualMoveStatus();
+
+				$('#fenFromPreviousMove').val(startFENPosition);
 
 				$('#game-status').data('isPlaying', true);
 
@@ -142,14 +152,11 @@ function connectToWebSocket() {
 			} else if (message.type == "quit-game"
 					|| message.type == "goodbye-msg") {
 
+				$('#startPosBtn').attr("disabled", false);
 				$('#game-status').data('isPlaying', false);
-
 				$('#game-status').html('');
-
 				$('#opponent-username').html('');
-
 				$('#send-move-btn').data("opponentName", '');
-
 				$('#quit-game-btn').data("gamePartner", '');
 
 			} else if (message.type == "try-later") {
@@ -158,47 +165,11 @@ function connectToWebSocket() {
 
 			} else {
 				showParticipants(event.data);
-
-				$('#participants div ul li button.username')
-						.each(
-								function() {
-									if ($(this).text().trim() == WEBSOCKET_CLIENT_NAME) {
-
-										$(this)
-												.parent()
-												.find(
-														'span.participants-action-btns')
-												.remove();
-										$(this).parent().css(
-												'background-color', '#C9C9C9');
-									}
-
-									if ($('#game-status').data('isPlaying') == true) {
-										$(this)
-												.parent()
-												.find(
-														'span.participants-action-btns')
-												.remove();
-									}
-
-								});
+				clearParticipantsListView();
 			}
 		}
 
 	};
-
-	// -----------------------------------
-
-	function showGameHandshakeModalBox(sender) {
-
-		$('#game-handshake-modal-title').html(
-				"Do you want to play with: "
-						+ "<span class=\"text-primary\"><b>" + sender
-						+ "</b></span>");
-		$('#game-handshake-msgTo').val(sender);
-		$('#game-handshake-modal').modal('show');
-
-	}
 
 	// -----------------------------------
 
@@ -222,8 +193,8 @@ function connectToWebSocket() {
 		disconnectBtn.attr("class", "btn btn-default pull-right");
 
 		$('#game-status').html('');
+		$('#participants div ul').html('');
 
-		hideParticipants();
 		console.log(event);
 	};
 
@@ -252,6 +223,36 @@ window.onbeforeunload = function() {
 
 // functions -------------------------------------------
 
+function showGameHandshakeModalBox(sender) {
+
+	$('#game-handshake-modal-title').html(
+			"Do you want to play with: " + "<span class=\"text-primary\"><b>"
+					+ sender + "</b></span>");
+	$('#game-handshake-msgTo').val(sender);
+	$('#game-handshake-modal').modal('show');
+
+}
+
+// -----------------------------------
+
+function clearParticipantsListView() {
+	$('#participants div ul li button.username').each(function() {
+
+		if ($(this).text().trim() == WEBSOCKET_CLIENT_NAME) {
+
+			$(this).parent().find('span.participants-action-btns').remove();
+			$(this).parent().css('background-color', '#C9C9C9');
+		}
+
+		if ($('#game-status').data('isPlaying') == true) {
+			$(this).parent().find('span.participants-action-btns').remove();
+		}
+
+	});
+}
+
+// -----------------------------------
+
 function inviteUserToGame(reciever) {
 	console.log("game-handshake from " + WEBSOCKET_CLIENT_NAME);
 	console.log(" to " + reciever);
@@ -262,6 +263,18 @@ function inviteUserToGame(reciever) {
 		sendFrom : WEBSOCKET_CLIENT_NAME,
 		sendTo : reciever
 	}));
+}
+
+// --------------------------------------------------------
+
+function showActualMoveStatus() {
+
+	if (SENDED_CHESS_MOVE_STATUS == $('#status').text().trim()) {
+		$('#move-for').html('<p class=\"text-success\">Your move</p>');
+	} else {
+		$('#move-for').html('<p class=\"text-danger\">Move for opponent</p>');
+	}
+
 }
 
 // --------------------------------------------------------
@@ -283,16 +296,18 @@ function agreementToPlay() {
 	$('#game-handshake-modal').modal('hide');
 
 	$('#game-status').data('isPlaying', true);
+	$('#startPosBtn').attr("disabled", true);
+	$('#fenFromPreviousMove').val(startFENPosition);
 
 	var alertMessage = "<div class=\"alert alert-info\">"
 			+ "<p>you are playing now with: <span class=\"text-info\"><b>"
 			+ usernameToPlayWith + "</b></span></p>" + "</div>";
 
 	$('#game-status').html(alertMessage);
-
 	$('#send-move-btn').data("opponentName", usernameToPlayWith);
-
 	$('#quit-game-btn').data("gamePartner", usernameToPlayWith);
+
+	showActualMoveStatus();
 
 }
 
@@ -307,13 +322,9 @@ function quitGame() {
 	}));
 
 	$('#game-status').data('isPlaying', false);
-
 	$('#game-status').html('');
-
 	$('#opponent-username').html('');
-
 	$('#send-move-btn').data("opponentName", '');
-
 	$('#quit-game-btn').data("gamePartner", '');
 
 }
@@ -335,9 +346,7 @@ function refusedToPlay() {
 	}));
 
 	$('#your-username').html('');
-
 	$('#opponent-username').html('');
-
 	$('#game-handshake-modal').modal('hide');
 
 }
@@ -368,7 +377,6 @@ function sendYourMoveByFenNotationToUser() {
 function closeWsConnection() {
 	console.log('closeWsConnection()');
 	$('.connectToUserBtn').css("color", "white");
-
 	$('#game-status').data('isPlaying', false);
 
 	webSocket.close();
@@ -425,21 +433,6 @@ function showParticipants(data) {
 					+ 'data-username="' + participantsArr[i].username
 					+ '">invite</button>' + '</span>';
 
-		} else {
-
-			// console.log('participant is playing');
-			// var participantActionBtns = '<span
-			// class="participants-action-btns">'
-			// + '<button class="btn btn-sm btn-info send-to-user-btn"
-			// onclick="sendYourMoveByFenNotationToUser('
-			// + '\''
-			// + participantsArr[i].username
-			// + '\''
-			// + ')"'
-			// + 'data-username="'
-			// + participantsArr[i].username
-			// + '">send-move</button>' + '</span>';
-
 		}
 
 		var liElementClosing = '</li>';
@@ -450,12 +443,6 @@ function showParticipants(data) {
 
 		participantsList.append(participantListElementContent);
 	}
-};
-
-// ----------------------------------------------
-
-function hideParticipants() {
-	$('#participants div ul').html('');
 };
 
 // ----------------------------------------------

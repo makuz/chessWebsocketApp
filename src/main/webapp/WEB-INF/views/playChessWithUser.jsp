@@ -38,16 +38,16 @@
 							</small><br /> <small class="text-warning"> PGN: <span id="pgn"></span>
 							</small>
 						</div>
-						<input hidden="true" type="text" id="fenFromYourMove" />
+						<input type="text" id="fenFromPreviousMove" /> <input type="text"
+							id="fenFromYourMove" />
 						<section id="onlineUsersSection">
 							<div id="connection-status"></div>
 							<div id="game-status" data-isPlaying=""></div>
 							<hr />
 
 							<div id="play-with-opponent-interface">
-								<span id="your-username">you: </span><span
-									id="opponent-username">oppeonent: </span>
-								<div id="move-for">move for:</div>
+								<span id="your-username"></span><span id="opponent-username"></span>
+								<div id="move-for"></div>
 
 								<button id="send-move-btn" class="btn btn-info"
 									data-opponentName="">send-move</button>
@@ -113,9 +113,9 @@
 	<script>
 		// main ------------------------------------------------
 		var WEBSOCKET_CLIENT_NAME = '${sender}';
-		
+
 		var SENDED_CHESS_MOVE_STATUS = "";
-		
+
 		var CHESS_MOVE_COUNTER = 0;
 
 		$(function() {
@@ -135,7 +135,14 @@
 			});
 
 			$('#send-move-btn').click(function() {
+				
+				if (CHESS_MOVE_COUNTER == 0) {
+					alert('You have to make a move before you send it');
+					return;
+				}
+
 				sendYourMoveByFenNotationToUser();
+				showActualMoveStatus();
 			});
 
 		});
