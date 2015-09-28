@@ -28,6 +28,16 @@ var board, game = new Chess(), statusEl = $('#status'), fenEl = $('#fen'), pgnEl
 
 var onDragStart = function(source, piece, position, orientation) {
 	console.log("onDragStart()");
+	console.log('SENDED_CHESS_MOVE_STATUS: ' + SENDED_CHESS_MOVE_STATUS);
+
+	// if move does not belong to you
+	// pieces are blocked
+	// inviting user at start have "white piece"
+	// at start status is "White to move"
+	if (statusEl.text().trim() != SENDED_CHESS_MOVE_STATUS) {
+		return false;
+	}
+
 	// allow only one move
 	if (CHESS_MOVE_COUNTER > 0) {
 		return false;

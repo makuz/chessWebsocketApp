@@ -178,9 +178,6 @@ public class GameMessageExchangeProtocol {
 		usersHandler.setComStatusIsPlaying(messageObj.getSendFrom(),
 				messageObj.getSendTo());
 
-		// usersHandler.setChessPiecesColorForGamers(messageObj.getSendTo(),
-		// messageObj.getSendFrom());
-
 		WebSocketGameUser sendToObj = usersHandler.getWebsocketUser(messageObj
 				.getSendTo());
 
@@ -191,14 +188,9 @@ public class GameMessageExchangeProtocol {
 
 		messageObj.setSendFromObj(sendFromObj);
 
-		sendMessageToOneUser(messageObj, gson.toJson(messageObj));
+		messageObj.setMoveStatus(ChessMoveStatus.WHITE_TO_MOVE);
 
-		// callbackMessage
-		// messageObj.setSendFrom(messageObj.getSendTo());
-		// messageObj.setSendTo(messageObj.getSendFrom());
-		// messageObj.setSendToObj(sendFromObj);
-		// messageObj.setSendFromObj(sendToObj);
-		// sendMessageToOneUser(messageObj, gson.toJson(messageObj));
+		sendMessageToOneUser(messageObj, gson.toJson(messageObj));
 
 		sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 
@@ -230,25 +222,5 @@ public class GameMessageExchangeProtocol {
 			sessionHandler.sendToSession(toUsername, fromUsername, content);
 		}
 	}
-
-	// private void sendMessageToOBothUsers(WebSocketMessage message,
-	// String content) {
-	// log.debug("sendMessageToOneUser()");
-	// log.debug("typ wiadomosci : " + message.getType());
-	// log.debug("od usera " + message.getSendFrom() + " do usera "
-	// + message.getSendTo());
-	//
-	// String toUsername = message.getSendTo();
-	// String fromUsername = message.getSendFrom();
-	// if (toUsername != null && StringUtils.isNotEmpty(toUsername)) {
-	//
-	// sessionHandler.sendToSession(toUsername, fromUsername, content);
-	// }
-	//
-	// if (fromUsername != null && StringUtils.isNotEmpty(fromUsername)) {
-	//
-	// sessionHandler.sendToSession(fromUsername, toUsername, content);
-	// }
-	// }
 
 }

@@ -94,6 +94,10 @@ function connectToWebSocket() {
 
 			} else if (message.type == "game-handshake-agreement") {
 
+				// set the first move status at start
+
+				SENDED_CHESS_MOVE_STATUS = message.moveStatus;
+
 				$('#game-status').data('isPlaying', true);
 
 				$('#game-handshake-response-modal-title').html(
@@ -126,6 +130,8 @@ function connectToWebSocket() {
 				$('#quit-game-btn').data("gamePartner", message.sendFrom);
 
 			} else if (message.type == "game-handshake-refuse") {
+
+				SENDED_CHESS_MOVE_STATUS = "";
 
 				$('#game-handshake-response-modal-title').html(
 						"game refused from user: "
