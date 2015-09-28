@@ -22,6 +22,8 @@ function connectToWebSocket() {
 		console.log("Server connected \n");
 		console.log(event.data);
 
+		$('#disconnect').attr("disabled", false);
+
 		webSocket.send(JSON.stringify({
 			type : "welcome-msg",
 			sendFrom : WEBSOCKET_CLIENT_NAME
@@ -97,6 +99,8 @@ function connectToWebSocket() {
 
 			} else if (message.type == "game-handshake-agreement") {
 
+				$('#play-with-opponent-interface').attr("hidden", false);
+
 				$('#startPosBtn').attr("disabled", true);
 
 				// set the first move status at start
@@ -114,6 +118,8 @@ function connectToWebSocket() {
 						"game agreement from user: "
 								+ "<span class=\"text-primary\"><b>"
 								+ message.sendFrom + "</b></span>");
+
+				$('#game-handshake-response-modal').modal('show');
 
 				var alertMessage = "<div class=\"alert alert-info\">"
 						+ "<p>you are playing now with: <span class=\"text-info\"><b>"
@@ -147,6 +153,7 @@ function connectToWebSocket() {
 						"game refused from user: "
 								+ "<span class=\"text-primary\"><b>"
 								+ message.sendFrom + "</b></span>");
+
 				$('#game-handshake-response-modal').modal('show');
 
 			} else if (message.type == "quit-game"
@@ -154,6 +161,7 @@ function connectToWebSocket() {
 
 				$('#startPosBtn').attr("disabled", false);
 				$('#game-status').data('isPlaying', false);
+				$('#play-with-opponent-interface').attr("hidden", true);
 				$('#game-status').html('');
 				$('#opponent-username').html('');
 				$('#send-move-btn').data("opponentName", '');
@@ -195,6 +203,9 @@ function connectToWebSocket() {
 		$('#game-status').html('');
 		$('#participants div ul').html('');
 
+		$('#disconnect').attr("disabled", true);
+		$('#play-with-opponent-interface').attr("hidden", true);
+
 		console.log(event);
 	};
 
@@ -205,6 +216,8 @@ function connectToWebSocket() {
 		console.log("Server disconnected \n");
 		console.log(event);
 		webSocket.close();
+		$('#disconnect').attr("disabled", true);
+		$('#play-with-opponent-interface').attr("hidden", true);
 	};
 
 };
@@ -299,6 +312,8 @@ function agreementToPlay() {
 	$('#startPosBtn').attr("disabled", true);
 	$('#fenFromPreviousMove').val(startFENPosition);
 
+	$('#play-with-opponent-interface').attr("hidden", false);
+
 	var alertMessage = "<div class=\"alert alert-info\">"
 			+ "<p>you are playing now with: <span class=\"text-info\"><b>"
 			+ usernameToPlayWith + "</b></span></p>" + "</div>";
@@ -322,6 +337,8 @@ function quitGame() {
 	}));
 
 	$('#game-status').data('isPlaying', false);
+	$('#startPosBtn').attr("disabled", false);
+	$('#play-with-opponent-interface').attr("hidden", true);
 	$('#game-status').html('');
 	$('#opponent-username').html('');
 	$('#send-move-btn').data("opponentName", '');

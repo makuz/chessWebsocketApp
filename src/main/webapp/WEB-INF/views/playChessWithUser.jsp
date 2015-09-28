@@ -45,7 +45,7 @@
 							<div id="game-status" data-isPlaying=""></div>
 							<hr />
 
-							<div id="play-with-opponent-interface">
+							<div id="play-with-opponent-interface" hidden="true">
 								<span id="your-username"></span><span id="opponent-username"></span>
 								<div id="move-for"></div>
 
@@ -126,6 +126,8 @@
 				connectToWebSocket();
 			});
 
+			$('#disconnect').attr("disabled", true);
+
 			$('#disconnect').click(function() {
 				closeWsConnection();
 			});
@@ -135,7 +137,7 @@
 			});
 
 			$('#send-move-btn').click(function() {
-				
+
 				if (CHESS_MOVE_COUNTER == 0) {
 					alert('You have to make a move before you send it');
 					return;
