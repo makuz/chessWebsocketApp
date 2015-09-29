@@ -18,7 +18,7 @@ public class PlayChessSitesController {
 	public ModelAndView playChessWithComputer() {
 		logger.info("playChessWithComputer()");
 
-		ModelAndView playChessWithCompPageModel = new ModelAndView("playChess");
+		ModelAndView playChessWithCompPageModel = new ModelAndView("playChessWithComputer");
 		addBasicObjectsToModelAndView(playChessWithCompPageModel);
 
 		return playChessWithCompPageModel;

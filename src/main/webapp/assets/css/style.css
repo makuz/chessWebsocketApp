@@ -68,10 +68,11 @@ div#participants-user-names {
 }
 
 div.user-profile-form {
+	margin: 5% auto 0 auto;
+	padding: 2%;
 	background-color: #C9C9C9;
-	padding-top: 2%;
-	padding-bottom: 2%;
 	border-radius: 5px;
+	width: 80%;
 }
 
 div.user-profile-form label {
@@ -107,21 +108,6 @@ input#fenToSet, input#fenFromYourMove, input#moveInput, input#moveOutput
 	width: 100%;
 }
 
-div#chess-board-play-with-user div#board {
-	width: 550px;
-	padding: 1%;
-	margin-right: 3%;
-}
-
-div#chess-board-play-with-user  {
-	margin-top: 2.5%;
-}
-
-div#chess-board-play-with-user article#aside-board {
-	float: left;
-	margin-right: 1%;
-}
-
 div#game-handshake-modal, div#game-handshake-response-modal {
 	margin-top: 13%;
 }
@@ -146,12 +132,35 @@ div#participants button.username {
 	font-size: 90%;
 }
 
+div#chess-board-play-with-user div#board {
+	padding-top: 1em;
+	width: 40em;
+}
+
+div.main-wrapper {
+	margin: 2.5% auto 0 auto;
+	min-height: 750px;
+	width: 95%;
+	background-color: #ddd;
+	padding: 1% 2.5% 1% 2.5%;
+	border-radius: 5px;
+}
+
+div#chess-board-play-with-user article#aside-board {
+	float: left;
+	margin-right: 1.5%;
+}
+
+div#play-chess-with-user-title {
+	width: 100%;
+}
+
 div#chess-board-play-with-user article.game-actions {
+	margin-top: 1em;
 	padding: 0.9%;
-	width: 490px;
+	width: 35em;
 	float: left;
 	border: 2px black solid;
-	margin-top: 0.5%;
 }
 
 div#chess-board-play-with-user article.game-actions div.stats {
@@ -214,6 +223,7 @@ div#play-with-opponent-interface {
 	padding: 2%;
 	height: 9em;
 	border: 1px solid black;
+	margin-bottom: 1em;
 }
 
 div#chess-board-home {
@@ -222,12 +232,11 @@ div#chess-board-home {
 }
 
 div#chess-board-home div#board {
-	width: 500px;
+	width: 35em;
 }
 
 div#chess-board-play-with-computer div#board {
-	width: 550px;
-	margin-left: 2%;
+	width: 40em;
 	padding: 1%;
 	float: left;
 	margin-right: 5%;
@@ -248,13 +257,14 @@ span#startPosBtn {
 	margin-left: 1em;
 }
 
-div.game-stats {
+div.game-stats-home {
 	background-color: #FBFBFB;
 	word-wrap: break word;
 	padding: 0.8%;
 	width: 500px;
 	border-radius: 5px;
 	text-align: center;
+	border: 2px black solid;
 }
 
 h4.logged-user-name {
@@ -263,13 +273,17 @@ h4.logged-user-name {
 }
 
 div#usersTable {
-	width: 110%;
+	width: 100%;
 	margin-left: -0.9%;
-	margin-top: 1%;
+	margin-top: 5%;
 	border: 2px solid #3B5998;
 	border-radius: 5px;
 	padding: 1%;
 	background-color: #C9C9C9;
+}
+
+div#usersTable td, div#usersTable tr {
+	padding: 0.4em;
 }
 
 div#usersTableForDataTableJS_filter {
@@ -295,52 +309,9 @@ body {
 	border-radius: 5px;
 }
 
-.selectBoxesInTrackTermsForm {
-	border: 2px #ddd solid;
-	padding: 6px;
-	border-radius: 5px;
-}
-
-pre.hintInTrackTerms {
-	border: none;
-}
-
-.userUrl {
-	word-wrap: break-word;
-	width: 150px;
-}
-
-.specificField {
-	background-color: #3b5998;
-	color: #fff;
-	padding: 1px;
-	margin-bottom: 0;
-	padding-bottom: 0;
-}
-
-.specificField2 {
-	background-color: #3b5998;
-	color: #fff;
-	padding: 1px;
-	padding-left: 0.5em;
-	margin-bottom: 0;
-	padding-bottom: 0;
-}
-
 .facebookBlue {
 	background-color: #3b5998;
 	color: #fff;
-}
-
-pre.tweetMsg {
-	width: 150px;
-	margin-left: 1em;
-	-webkit-hyphens: auto;
-	-moz-hyphens: auto;
-	-ms-word-break: break-all;
-	word-break: break-all;
-	-ms-hyphens: auto;
-	hyphens: auto;
 }
 
 a.paginate_button.current {
@@ -366,16 +337,6 @@ p.sanitizeListViewText {
 .sanitizeListViewUl {
 	margin-bottom: 0 !important;
 	padding-bottom: 10px !important;
-}
-
-td.tweetLang {
-	width: 1px;
-}
-
-.tweetId {
-	width: 50px;
-	word-wrap: break-word;
-	padding: 0px;
 }
 
 .form-actions {

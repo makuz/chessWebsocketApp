@@ -10,8 +10,9 @@
 <ul id="navButtons" class="nav nav-tabs navView">
 	<li><a href="<%=contextURL%>/">home</a></li>
 	<li><a href="<%=contextURL%>/play-chess-with-computer">play
-			chess with computer</a></li>
-	<li><a href="<%=contextURL%>/play-chess-with-user">play chess</a></li>
+			with computer</a></li>
+	<li><a href="<%=contextURL%>/play-chess-with-user">play with
+			users</a></li>
 
 	<security:authorize access="hasRole('ROLE_ADMIN')">
 		<li><a href="<%=contextURL%>/admin/users">Accounts</a></li>

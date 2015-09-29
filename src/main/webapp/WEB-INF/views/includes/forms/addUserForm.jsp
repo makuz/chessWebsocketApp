@@ -6,9 +6,6 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1 class="text-center">add user</h1>
-
-
 <form method="POST"
 	action="<%=contextURL%>/admin/users/addUser#addUserForm"
 	class="form-horizontal">

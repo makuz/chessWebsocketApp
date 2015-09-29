@@ -9,6 +9,8 @@
 
 <form method="POST" action="<%=contextURL%>/admin/users/editUser"
 	class="form-horizontal">
+	
+	<h1 class="text-center">Your Account data</h1>
 
 	<div class="form-group col-sm-12">
 		<c:choose>

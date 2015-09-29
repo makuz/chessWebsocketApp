@@ -1,10 +1,9 @@
 <jsp:include page="includes/header.jsp" />
 <div class="container-fluid">
 <jsp:include page="includes/menu.jsp"></jsp:include>
-	<div class="col-md-10 col-md-offset-1 ">
 
 		<br />
-		<div class="row contentWrapper">
+		<div class="main-wrapper">
 			<div class="sign-login-form">
 
 				<h1 class="text-center">Chess application</h1>
@@ -17,7 +16,6 @@
 
 				<hr />
 			</div>
-		</div>
 	</div>
 </div>
 <jsp:include page="includes/footer.jsp" />

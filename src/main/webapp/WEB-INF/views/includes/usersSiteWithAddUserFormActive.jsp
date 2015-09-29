@@ -10,15 +10,14 @@
 	<li class="active"><a href="#addUserForm" data-toggle="tab">add
 			user</a></li>
 </ul>
-<div class="col-sm-11">
-	<div class="tab-content">
-		<div id="usersTable" class="tab-pane fade">
-			<h1 class="text-center">Users</h1>
-			<jsp:include page="tables/usersTable.jsp"></jsp:include>
-		</div>
+<div class="tab-content">
+	<div id="usersTable" class="tab-pane fade">
+		<h1 class="text-center">Users</h1>
+		<jsp:include page="tables/usersTable.jsp"></jsp:include>
+	</div>
 
-		<div id="addUserForm" class="tab-pane fade in active">
-			<jsp:include page="forms/addUserForm.jsp"></jsp:include>
-		</div>
+	<div id="addUserForm" class="tab-pane fade in active user-profile-form">
+		<h1 class="text-center">add user</h1>
+		<jsp:include page="forms/addUserForm.jsp"></jsp:include>
 	</div>
 </div>

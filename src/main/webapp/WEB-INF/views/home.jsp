@@ -6,9 +6,7 @@
 
 <div class="container-fluid">
 	<jsp:include page="includes/menu.jsp" />
-	<div class="col-md-10 col-md-offset-1 ">
-		<br />
-		<div class="row contentWrapper">
+		<div class="main-wrapper">
 			<h3 class="text-left">Play Chess with us</h3>
 			<br />
 			<script
@@ -18,7 +16,7 @@
 				src="<c:url value="${pageContext.request.contextPath}/resources/images/chess2.jpg" />" />
 
 			<div id="chess-board-home">
-				<div class="game-stats">
+				<div class="game-stats-home">
 					<p class="text-danger">
 						Status: <span id="status"></span>
 					</p>
@@ -29,7 +27,6 @@
 				<div id="board"></div>
 			</div>
 		</div>
-	</div>
 </div>
 <!-- IMPORT CHESS SCRIPT -->
 <script type="text/javascript"
