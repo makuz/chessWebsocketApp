@@ -7,6 +7,10 @@
  * 
  */
 
+var TIMEOUT_FOR_HANDSHAKE = 15;
+
+var TIMEOUT_FOR_HANDSHAKE_START_COUNTER = 0;
+
 // ------CONNECT TO WEBSOCKET FUNCTION, WEBSOCKET EVENTS----------------------
 function connectToWebSocket() {
 	console.log('connectToWebSocket()');
@@ -82,6 +86,7 @@ function connectToWebSocket() {
 			} else if (message.type == "game-handshake-invitation") {
 
 				showGameHandshakeModalBox(message.sendFrom);
+				startTimeoutForHandshake();
 
 				$('#your-username')
 						.html(
@@ -162,7 +167,7 @@ function connectToWebSocket() {
 				if (message.type == "quit-game") {
 					alert("user quit game");
 				}
-				
+
 				clearParticipantsListView();
 
 				$('#startPosBtn').attr("disabled", false);
@@ -255,7 +260,7 @@ function undoMove() {
 
 }
 
-//-----------------------------------------------------
+// -----------------------------------------------------
 
 function showGameHandshakeModalBox(sender) {
 
@@ -267,24 +272,41 @@ function showGameHandshakeModalBox(sender) {
 
 }
 
+function startTimeoutForHandshake() {
+
+	if (TIMEOUT_FOR_HANDSHAKE == 0) {
+
+		refusedToPlay();
+	}
+	TIMEOUT_FOR_HANDSHAKE--;
+	$('#game-handshake-timer').html(TIMEOUT_FOR_HANDSHAKE);
+
+	setTimeout('startTimeoutForHandshake()', 1000);
+
+}
+
 // -----------------------------------
 
 function clearParticipantsListView() {
-	$('#participants div ul li button.username').each(function() {
+	$('#participants div ul li button.username').each(
+			function() {
 
-		if ($(this).text().trim() == WEBSOCKET_CLIENT_NAME) {
+				if ($(this).text().trim() == WEBSOCKET_CLIENT_NAME) {
 
-			$(this).parent().find('span.participants-action-btns').remove();
-			$(this).parent().css('background-color', '#C9C9C9');
-		}
+					$(this).parent().find('span.participants-action-btns')
+							.remove();
+					$(this).parent().css('background-color', '#C9C9C9');
+				}
 
-		if ($('#game-status').data('isPlaying') == true) {
-			$(this).parent().find('span.participants-action-btns').attr('hidden', true);
-		} else {
-			$(this).parent().find('span.participants-action-btns').attr('hidden', false);
-		}
+				if ($('#game-status').data('isPlaying') == true) {
+					$(this).parent().find('span.participants-action-btns')
+							.attr('hidden', true);
+				} else {
+					$(this).parent().find('span.participants-action-btns')
+							.attr('hidden', false);
+				}
 
-	});
+			});
 }
 
 // -----------------------------------

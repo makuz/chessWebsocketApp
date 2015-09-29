@@ -10,12 +10,14 @@
 			<div class="modal-body text-center">
 				<input id="game-handshake-msgTo" type="hidden" />
 
-				<p class="text-center">
+				<div class="text-center">
+					<div id="game-handshake-timer"></div>
+					<br />
 					<button type="button" onclick="agreementToPlay()"
 						class="btn btn-danger">Yes</button>
 					<button type="button" onclick="refusedToPlay()"
 						class="btn btn-default">No</button>
-				</p>
+				</div>
 
 			</div>
 		</div>
