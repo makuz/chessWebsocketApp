@@ -2,15 +2,23 @@
 
 @import url("dataTable.css");
 
-#home-img {
+img#home-img {
 	width: 50%;
 	float: left;
 	margin-right: 3%;
-	border-radius: 5px;
+	margin-bottom: 3%;
+}
+
+article#home-img-article {
+	margin-bottom: 3%;
 }
 
 article, section {
 	display: block;
+}
+
+* {
+	box-sizing: 0 !important;
 }
 
 .user-create-msg {
@@ -21,6 +29,12 @@ article, section {
 .btn {
 	margin-top: 0.5%;
 	margin-bottom: 0.5%;
+}
+
+.navView {
+	background-color: #ddd;
+	padding: 1% 1% 0 1%;
+	width: 100%;
 }
 
 li.list-group-item {
@@ -77,6 +91,11 @@ div.user-profile-form {
 
 div.user-profile-form label {
 	color: #3B5998 !important;
+}
+
+div.welcome-user-line {
+	width: 100%;
+	height: 2em;
 }
 
 div#participants .game-user span.glyphicon-user {
@@ -138,12 +157,17 @@ div#chess-board-play-with-user div#board {
 }
 
 div.main-wrapper {
-	margin: 2.5% auto 0 auto;
-	min-height: 750px;
-	width: 95%;
+	margin: 0 auto 0 auto;
+	min-height: 800px;
+	width: 100%;
 	background-color: #ddd;
-	padding: 1% 2.5% 1% 2.5%;
-	border-radius: 5px;
+	padding: 1% 2.5% 1% 3.5%;
+}
+
+@media ( min-width : 768px) and (max-width: 991px) {
+	div.main-wrapper {
+		min-height: 1150px;
+	}
 }
 
 div#chess-board-play-with-user article#aside-board {
@@ -151,7 +175,7 @@ div#chess-board-play-with-user article#aside-board {
 	margin-right: 1.5%;
 }
 
-div#play-chess-with-user-title {
+div.site-title {
 	width: 100%;
 }
 
@@ -161,6 +185,7 @@ div#chess-board-play-with-user article.game-actions {
 	width: 35em;
 	float: left;
 	border: 2px black solid;
+	background-color: #DDD;
 }
 
 div#chess-board-play-with-user article.game-actions div.stats {
@@ -226,30 +251,30 @@ div#play-with-opponent-interface {
 	margin-bottom: 1em;
 }
 
-div#chess-board-home {
+article#chess-board-home {
 	float: left;
-	margin-top: -5%;
 }
 
-div#chess-board-home div#board {
+article#chess-board-home div#board {
 	width: 35em;
 }
 
-div#chess-board-play-with-computer div#board {
+article#chess-board-play-with-computer div#board {
 	width: 40em;
 	padding: 1%;
 	float: left;
 	margin-right: 5%;
+	margin-bottom: 3%;
 }
 
-div.game-stats-with-computer {
+article.game-stats-with-computer {
 	background-color: #FBFBFB;
 	word-wrap: break word;
-	padding: 0.9%;
+	padding: 0.8%;
 	width: 450px;
-	border-radius: 5px;
 	float: left;
 	border: 2px black solid;
+	margin-top: -0.9%;
 }
 
 span#startPosBtn {
@@ -262,7 +287,6 @@ div.game-stats-home {
 	word-wrap: break word;
 	padding: 0.8%;
 	width: 500px;
-	border-radius: 5px;
 	text-align: center;
 	border: 2px black solid;
 }
@@ -293,20 +317,19 @@ div#usersTableForDataTableJS_filter {
 body {
 	background-color: #f5f5f5;
 	font-size: 15px;
-	padding-top: 10px;
-	position: relative;
 }
 
 .container-fluid {
 	background-color: #FFFFFF;
+	padding: 0 !important;
+	margin: 0 auto !important;
 }
 
 .footer {
 	background-color: #ddd;
 	padding: 2%;
-	width: 98%;
+	width: 100%;
 	margin: 0 auto;
-	border-radius: 5px;
 }
 
 .facebookBlue {

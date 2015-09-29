@@ -7,21 +7,23 @@
 <div class="container-fluid">
 	<jsp:include page="includes/menu.jsp" />
 	<div class="main-wrapper">
-		<h3 class="text-left">Play Chess</h3>
+		<div class="site-title">
+			<h3 class="text-left">Play Chess</h3>
+		</div>
 		<script
 			src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>
-		<div id="chess-board-play-with-computer">
+		<article id="chess-board-play-with-computer">
 			<div id="board"></div>
 			<br />
-		</div>
-		<div class="game-stats-with-computer">
+		</article>
+		<article class="game-stats-with-computer">
 			<p class="text-danger">
 				Status: <span id="status"></span>
 			</p>
 			<small class="text-info"> FEN: <br /> <span id="fen"></span>
 			</small> <br /> <small class="text-warning"> PGN: <span id="pgn"></span>
 			</small>
-		</div>
+		</article>
 	</div>
 </div>
 <!-- IMPORT CHESS SCRIPT -->

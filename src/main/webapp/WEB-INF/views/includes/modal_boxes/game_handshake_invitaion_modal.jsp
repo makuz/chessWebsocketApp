@@ -5,7 +5,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<p class="text-center">
-				<h4 class="modal-title" id="game-handshake-modal-title"></h4>
+				<h4 class="modal-title text-center" id="game-handshake-modal-title"></h4>
 			</div>
 			<div class="modal-body text-center">
 				<input id="game-handshake-msgTo" type="hidden" />

@@ -1,8 +1,6 @@
 <jsp:include page="includes/header.jsp" />
 <div class="container-fluid">
 <jsp:include page="includes/menu.jsp"></jsp:include>
-
-		<br />
 		<div class="main-wrapper">
 			<div class="sign-login-form">
 

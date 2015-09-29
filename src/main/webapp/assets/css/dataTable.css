@@ -90,13 +90,6 @@ table.table-accounts tbody td .btn {
 	vertical-align: middle;
 }
 
-.navView {
-	background-color: #ddd;
-	border-radius: 5px;
-}
-
-
-
 .dataTables_paginate a {
 	background: none repeat scroll 0 0 #FFFFFF !important;
 	border: 1px solid #CCCCCC !important;

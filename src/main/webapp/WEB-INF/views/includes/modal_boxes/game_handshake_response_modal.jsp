@@ -9,7 +9,7 @@
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-				<h4 class="modal-title" id="game-handshake-response-modal-title"></h4>
+				<h4 class="modal-title text-center" id="game-handshake-response-modal-title"></h4>
 			</div>
 			<div class="modal-body text-center">
 				<p class="text-center">

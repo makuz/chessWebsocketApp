@@ -159,6 +159,12 @@ function connectToWebSocket() {
 			} else if (message.type == "quit-game"
 					|| message.type == "goodbye-msg") {
 
+				if (message.type == "quit-game") {
+					alert("user quit game");
+				}
+				
+				clearParticipantsListView();
+
 				$('#startPosBtn').attr("disabled", false);
 				$('#game-status').data('isPlaying', false);
 				$('#play-with-opponent-interface').attr("hidden", true);
@@ -230,11 +236,26 @@ window.onbeforeunload = function() {
 		console.log("Server disconnected \n");
 	}; // disable onclose handler first
 	webSocket.close();
+	$('#connectToWebSocket').attr("disabled", false);
+
 	window.location.reload(false);
 
 };
 
 // functions -------------------------------------------
+
+function undoMove() {
+	console.log('undoMove()');
+
+	CHESS_MOVE_COUNTER = 0;
+	var prevoiusPos = fenFromPreviousMove.value;
+	board.position(prevoiusPos);
+	game = new Chess(prevoiusPos);
+	updateStatus();
+
+}
+
+//-----------------------------------------------------
 
 function showGameHandshakeModalBox(sender) {
 
@@ -258,7 +279,9 @@ function clearParticipantsListView() {
 		}
 
 		if ($('#game-status').data('isPlaying') == true) {
-			$(this).parent().find('span.participants-action-btns').remove();
+			$(this).parent().find('span.participants-action-btns').attr('hidden', true);
+		} else {
+			$(this).parent().find('span.participants-action-btns').attr('hidden', false);
 		}
 
 	});

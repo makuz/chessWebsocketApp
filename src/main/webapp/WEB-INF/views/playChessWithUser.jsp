@@ -19,7 +19,7 @@
 				src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>
 
 
-			<div id="play-chess-with-user-title">
+			<div class="site-title">
 				<span class="text-left lead">Play Chess</span> <span
 					id="startPosBtn" class="btn btn-danger
 					btn-sm">start
@@ -50,18 +50,14 @@
 
 						<button id="send-move-btn" class="btn btn-info"
 							data-opponentName="">send-move</button>
+						<button id="undo-move-btn" class="btn btn-default">undo-move</button>
 						<button class="btn btn-warning pull-right" data-gamePartner=""
 							id="quit-game-btn">quit game</button>
-
 					</div>
 
-					<button class="btn btn-primary" id="connectToWebSocket">Połącz
-						mnie</button>
-					<button class="btn btn-danger pull-right" id="disconnect">Rozłącz
-						mnie</button>
-
+					<button class="btn btn-primary" id="connectToWebSocket">connect</button>
+					<button class="btn btn-danger pull-right" id="disconnect">disconnect</button>
 					<hr />
-
 					<div id="participants">
 						<h3>Participants :</h3>
 						<br />
@@ -128,6 +124,10 @@
 
 			$('#quit-game-btn').click(function() {
 				quitGame();
+			});
+			
+			$('#undo-move-btn').click(function() {
+				undoMove();
 			});
 
 			$('#send-move-btn').click(function() {

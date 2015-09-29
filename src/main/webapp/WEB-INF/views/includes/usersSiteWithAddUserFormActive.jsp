@@ -5,7 +5,7 @@
 %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<ul class="nav nav-pills pull-right">
+<ul class="nav nav-pills pull-right responsive">
 	<li><a href="/admin/users">users</a></li>
 	<li class="active"><a href="#addUserForm" data-toggle="tab">add
 			user</a></li>
