@@ -107,6 +107,8 @@
 		var SENDED_CHESS_MOVE_STATUS = "";
 
 		var CHESS_MOVE_COUNTER = 0;
+		
+		var CHESS_GAME_BEGIN_DATE;
 
 		$(function() {
 

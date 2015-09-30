@@ -6,10 +6,8 @@
  * GAME PIECE COLOR STATUGLOBAL VAR = SENDED_CHESS_MOVE_STATUS
  * 
  */
-
+var CLICK_REFUSED_FLAG = false;
 var TIMEOUT_FOR_HANDSHAKE = 15;
-
-var TIMEOUT_FOR_HANDSHAKE_START_COUNTER = 0;
 
 // ------CONNECT TO WEBSOCKET FUNCTION, WEBSOCKET EVENTS----------------------
 function connectToWebSocket() {
@@ -104,6 +102,8 @@ function connectToWebSocket() {
 
 			} else if (message.type == "game-handshake-agreement") {
 
+				CHESS_GAME_BEGIN_DATE = new Date();
+
 				$('#play-with-opponent-interface').attr("hidden", false);
 
 				$('#startPosBtn').attr("disabled", true);
@@ -152,7 +152,9 @@ function connectToWebSocket() {
 
 			} else if (message.type == "game-handshake-refuse") {
 
+				CLICK_REFUSED_FLAG = true;
 				SENDED_CHESS_MOVE_STATUS = "";
+				$('#game-status').html('');
 
 				$('#game-handshake-response-modal-title').html(
 						"game refused from user: "
@@ -272,15 +274,42 @@ function showGameHandshakeModalBox(sender) {
 
 }
 
+function showTimerForInviter(recieverName) {
+	console.log('showTimerForInviter()');
+
+	if (TIMEOUT_FOR_HANDSHAKE == 0 || CLICK_REFUSED_FLAG == true) {
+		TIMEOUT_FOR_HANDSHAKE == 15;
+		$('#game-status').html('');
+		return;
+	} else {
+		TIMEOUT_FOR_HANDSHAKE--;
+		$('#game-status')
+				.html(
+						'<span class="text-info"><strong>' + recieverName
+								+ '</strong></span> think... -'
+								+ TIMEOUT_FOR_HANDSHAKE);
+	}
+	setTimeout(function() {
+		showTimerForInviter(recieverName)
+	}, 1000);
+
+}
+
 function startTimeoutForHandshake() {
 
-	if (TIMEOUT_FOR_HANDSHAKE == 0) {
-
-		refusedToPlay();
+	if (CLICK_REFUSED_FLAG == true) {
+		TIMEOUT_FOR_HANDSHAKE == 15;
+		return;
 	}
-	TIMEOUT_FOR_HANDSHAKE--;
-	$('#game-handshake-timer').html(TIMEOUT_FOR_HANDSHAKE);
 
+	if (TIMEOUT_FOR_HANDSHAKE == 0) {
+		TIMEOUT_FOR_HANDSHAKE == 15;
+		refusedToPlay();
+		return;
+	} else {
+		TIMEOUT_FOR_HANDSHAKE--;
+		$('#game-handshake-timer').html(TIMEOUT_FOR_HANDSHAKE);
+	}
 	setTimeout('startTimeoutForHandshake()', 1000);
 
 }
@@ -321,6 +350,9 @@ function inviteUserToGame(reciever) {
 		sendFrom : WEBSOCKET_CLIENT_NAME,
 		sendTo : reciever
 	}));
+
+	showTimerForInviter(reciever);
+
 }
 
 // --------------------------------------------------------
@@ -395,6 +427,8 @@ function quitGame() {
 
 function refusedToPlay() {
 
+	CLICK_REFUSED_FLAG = true;
+	$('#game-status').html('');
 	var usernameNotToPlayWith = $('#game-handshake-msgTo').val();
 	var myUserName = WEBSOCKET_CLIENT_NAME;
 	console.log("game-handshake-refuse from");
@@ -410,7 +444,6 @@ function refusedToPlay() {
 	$('#your-username').html('');
 	$('#opponent-username').html('');
 	$('#game-handshake-modal').modal('hide');
-
 }
 
 // --------------------------------------------------------
@@ -466,7 +499,8 @@ function showParticipants(data) {
 					+ '<span class="glyphicon glyphicon-user text-danger" />'
 					+ '&nbsp;' + participantsArr[i].username + '</button>'
 					+ '<span class="small"> ' + '&nbsp;'
-					+ participantsArr[i].communicationStatus + '</span>';
+					+ participantsArr[i].communicationStatus + ' </span>'
+					+ '<span class="participant-timer"></span>';
 		} else {
 			participantData = '<button class="username btn"'
 					+ 'onclick="showUSerInfoByAjax(' + '\''
@@ -474,7 +508,8 @@ function showParticipants(data) {
 					+ '<span class="glyphicon glyphicon-user text-success" />'
 					+ '&nbsp;' + participantsArr[i].username + '</button>'
 					+ '<span class="small"> ' + '&nbsp;'
-					+ participantsArr[i].communicationStatus + '</span>';
+					+ participantsArr[i].communicationStatus + ' </span>'
+					+ '<span class="participant-timer"></span>';
 		}
 
 		var participantPlayWithUserInfo = "";
