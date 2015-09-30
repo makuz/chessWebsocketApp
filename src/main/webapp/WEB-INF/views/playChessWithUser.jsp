@@ -108,8 +108,10 @@
 
 		var CHESS_MOVE_COUNTER = 0;
 		
-		var CHESS_GAME_BEGIN_DATE;
-
+		var WHITE_COLOR_USERNAME = "";
+		
+		var BLACK_COLOR_USERNAME = "";
+		
 		$(function() {
 
 			$('#game-status').data('isPlaying', false);

@@ -27,8 +27,10 @@ public class WebSocketServer {
 
 	private final WebsocketUsesrHandler usesrHandler = new WebsocketUsesrHandler();
 
+	private final LiveChessTournamentsHandler chessGamesHandler = new LiveChessTournamentsHandler();
+
 	private GameMessageExchangeProtocol gameMessageProtocol = new GameMessageExchangeProtocol(
-			sessionHandler, usesrHandler);
+			sessionHandler, usesrHandler, chessGamesHandler);
 
 	private Gson gson = new Gson();
 

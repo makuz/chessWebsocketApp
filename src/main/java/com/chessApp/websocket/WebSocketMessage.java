@@ -19,6 +19,8 @@ public class WebSocketMessage {
 
 	private WebSocketGameUser sendFromObj;
 
+	private Boolean checkMate;
+
 	public WebSocketMessage() {
 
 	}
@@ -45,6 +47,14 @@ public class WebSocketMessage {
 
 	public void setSendFromObj(WebSocketGameUser sendFromObj) {
 		this.sendFromObj = sendFromObj;
+	}
+
+	public Boolean getCheckMate() {
+		return checkMate;
+	}
+
+	public void setCheckMate(Boolean checkMate) {
+		this.checkMate = checkMate;
 	}
 
 	public String getMoveStatus() {
@@ -84,7 +94,7 @@ public class WebSocketMessage {
 		return "WebSocketMessage [type=" + type + ", fen=" + fen + ", sendTo="
 				+ sendTo + ", sendFrom=" + sendFrom + ", moveStatus="
 				+ moveStatus + ", sendToObj=" + sendToObj + ", sendFromObj="
-				+ sendFromObj + "]";
+				+ sendFromObj + ", checkMate=" + checkMate + "]";
 	}
 
 }

@@ -84,7 +84,9 @@ function connectToWebSocket() {
 			} else if (message.type == "game-handshake-invitation") {
 
 				showGameHandshakeModalBox(message.sendFrom);
-				startTimeoutForHandshake();
+				// startTimeoutForHandshake();
+				
+				setChessColorGlobalVars(message);
 
 				$('#your-username')
 						.html(
@@ -102,8 +104,6 @@ function connectToWebSocket() {
 
 			} else if (message.type == "game-handshake-agreement") {
 
-				CHESS_GAME_BEGIN_DATE = new Date();
-
 				$('#play-with-opponent-interface').attr("hidden", false);
 
 				$('#startPosBtn').attr("disabled", true);
@@ -111,6 +111,8 @@ function connectToWebSocket() {
 				// set the first move status at start
 
 				SENDED_CHESS_MOVE_STATUS = message.moveStatus;
+				
+				setChessColorGlobalVars(message)
 
 				// set move info
 				showActualMoveStatus();
@@ -264,6 +266,20 @@ function undoMove() {
 
 // -----------------------------------------------------
 
+function setChessColorGlobalVars(msgObj) {
+	
+	if(msgObj.sendToObj.chessColor == 'white') {
+		WHITE_COLOR_USERNAME = msgObj.sendToObj.username;
+		BLACK_COLOR_USERNAME = msgObj.sendFromObj.username;
+	} else {
+		WHITE_COLOR_USERNAME = msgObj.sendFromObj.username;
+		BLACK_COLOR_USERNAME = msgObj.sendToObj.username;
+	}
+	
+}
+
+//-----------------------------------------------------
+
 function showGameHandshakeModalBox(sender) {
 
 	$('#game-handshake-modal-title').html(
@@ -297,20 +313,22 @@ function showTimerForInviter(recieverName) {
 
 function startTimeoutForHandshake() {
 
-	if (CLICK_REFUSED_FLAG == true) {
-		TIMEOUT_FOR_HANDSHAKE == 15;
-		return;
-	}
+	setTimeout(function() {
+		if (CLICK_REFUSED_FLAG == true) {
+			TIMEOUT_FOR_HANDSHAKE == 15;
+			return;
+		}
 
-	if (TIMEOUT_FOR_HANDSHAKE == 0) {
-		TIMEOUT_FOR_HANDSHAKE == 15;
-		refusedToPlay();
-		return;
-	} else {
-		TIMEOUT_FOR_HANDSHAKE--;
-		$('#game-handshake-timer').html(TIMEOUT_FOR_HANDSHAKE);
-	}
-	setTimeout('startTimeoutForHandshake()', 1000);
+		if (TIMEOUT_FOR_HANDSHAKE == 0) {
+			TIMEOUT_FOR_HANDSHAKE == 15;
+			refusedToPlay();
+			return;
+		} else {
+			TIMEOUT_FOR_HANDSHAKE--;
+			$('#game-handshake-timer').html(TIMEOUT_FOR_HANDSHAKE);
+		}
+
+	}, 1000);
 
 }
 
@@ -351,7 +369,7 @@ function inviteUserToGame(reciever) {
 		sendTo : reciever
 	}));
 
-	showTimerForInviter(reciever);
+	// showTimerForInviter(reciever);
 
 }
 
@@ -407,9 +425,14 @@ function agreementToPlay() {
 
 function quitGame() {
 
+	var endFen = fenFromYourMove.value;
+
 	webSocket.send(JSON.stringify({
 		type : "quit-game",
 		sendFrom : WEBSOCKET_CLIENT_NAME,
+		whiteColUsername : WHITE_COLOR_USERNAME,
+		blackColUsername : BLACK_COLOR_USERNAME,
+		fen : endFen,
 		sendTo : $('#quit-game-btn').data("gamePartner")
 	}));
 

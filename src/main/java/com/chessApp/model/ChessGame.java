@@ -10,14 +10,20 @@ public class ChessGame {
 
 	@Id
 	private String id;
+	private long chessGameId;
 	private Date beginDate;
 	private Date endDate;
+	private long gameDurationMillis;
+	private String formattedGameDurationStr;
 	private String endingGameFENString;
-	private long chessGameId;
 	private String winnerUsername;
 	private String loserUsername;
 	private String winnerColor;
 	private int numberOfMoves;
+	private String uniqueGameHash;
+	private String whiteColUsername;
+	private String blackColUsername;
+	private Boolean checkMate;
 
 	public Date getBeginDate() {
 		return beginDate;
@@ -63,6 +69,54 @@ public class ChessGame {
 		return winnerColor;
 	}
 
+	public Boolean getCheckMate() {
+		return checkMate;
+	}
+
+	public void setCheckMate(Boolean checkMate) {
+		this.checkMate = checkMate;
+	}
+
+	public String getWhiteColUsername() {
+		return whiteColUsername;
+	}
+
+	public void setWhiteColUsername(String whiteColUsername) {
+		this.whiteColUsername = whiteColUsername;
+	}
+
+	public String getBlackColUsername() {
+		return blackColUsername;
+	}
+
+	public void setBlackColUsername(String blackColUsername) {
+		this.blackColUsername = blackColUsername;
+	}
+
+	public long getGameDurationMillis() {
+		return gameDurationMillis;
+	}
+
+	public void setGameDurationMillis(long gameDurationMillis) {
+		this.gameDurationMillis = gameDurationMillis;
+	}
+
+	public String getFormattedGameDurationStr() {
+		return formattedGameDurationStr;
+	}
+
+	public void setFormattedGameDurationStr(String formattedGameDurationStr) {
+		this.formattedGameDurationStr = formattedGameDurationStr;
+	}
+
+	public String getUniqueGameHash() {
+		return uniqueGameHash;
+	}
+
+	public void setUniqueGameHash(String uniqueGameHash) {
+		this.uniqueGameHash = uniqueGameHash;
+	}
+
 	public void setWinnerColor(String winnerColor) {
 		this.winnerColor = winnerColor;
 	}
@@ -81,6 +135,21 @@ public class ChessGame {
 
 	public void setLoserUsername(String loserUsername) {
 		this.loserUsername = loserUsername;
+	}
+
+	@Override
+	public String toString() {
+		return "ChessGame [id=" + id + ", chessGameId=" + chessGameId
+				+ ", beginDate=" + beginDate + ", endDate=" + endDate
+				+ ", gameDurationMillis=" + gameDurationMillis
+				+ ", formattedGameDurationStr=" + formattedGameDurationStr
+				+ ", endingGameFENString=" + endingGameFENString
+				+ ", winnerUsername=" + winnerUsername + ", loserUsername="
+				+ loserUsername + ", winnerColor=" + winnerColor
+				+ ", numberOfMoves=" + numberOfMoves + ", uniqueGameHash="
+				+ uniqueGameHash + ", whiteColUsername=" + whiteColUsername
+				+ ", blackColUsername=" + blackColUsername + ", checkMate="
+				+ checkMate + "]";
 	}
 
 }

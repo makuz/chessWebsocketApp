@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class WebsocketUsesrHandler {
 
-	private static final Logger logger = Logger
-			.getLogger(WebsocketUsesrHandler.class);
-
+	private final Logger logger;
 	private volatile static long userID = 0;
 
 	protected volatile static Map<String, WebSocketGameUser> gameUsersMap = new ConcurrentHashMap<>();
+
+	public WebsocketUsesrHandler() {
+		logger = Logger.getLogger(WebsocketUsesrHandler.class);
+	}
 
 	public synchronized Boolean userListNotContainsUsername(String username) {
 		if (gameUsersMap.containsKey(username)) {
@@ -80,8 +82,8 @@ public class WebsocketUsesrHandler {
 		WebSocketGameUser invitingUser = gameUsersMap.get(fromUsername);
 		WebSocketGameUser recievingUser = gameUsersMap.get(toUsername);
 
-		invitingUser.setChessColor(ChessPieces.WHITE);
-		recievingUser.setChessColor(ChessPieces.BLACK);
+		invitingUser.setChessColor(ChessColor.WHITE);
+		recievingUser.setChessColor(ChessColor.BLACK);
 
 	}
 

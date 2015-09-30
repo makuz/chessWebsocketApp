@@ -1,8 +1,12 @@
 package com.chessApp.websocket;
 
+import java.util.Date;
+import java.util.UUID;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.chessApp.model.ChessGame;
 import com.google.gson.Gson;
 
 public class GameMessageExchangeProtocol {
@@ -14,15 +18,20 @@ public class GameMessageExchangeProtocol {
 
 	private WebsocketUsesrHandler usersHandler;
 
-	private Gson gson = new Gson();
+	private LiveChessTournamentsHandler chessGamesHandler;
+
+	private Gson gson;
 
 	public GameMessageExchangeProtocol(WebSocketSessionHandler sessionHandler,
-			WebsocketUsesrHandler usesrHandler) {
+			WebsocketUsesrHandler usesrHandler,
+			LiveChessTournamentsHandler chessGamesHandler) {
 		this.sessionHandler = sessionHandler;
 		this.usersHandler = usesrHandler;
+		this.chessGamesHandler = chessGamesHandler;
+		gson = new Gson();
 	}
 
-	public void proccessMessage(WebSocketMessage messageObj,
+	public synchronized void proccessMessage(WebSocketMessage messageObj,
 			String messageJsonString) {
 
 		String messageType = messageObj.getType();
@@ -60,6 +69,9 @@ public class GameMessageExchangeProtocol {
 
 					if (userONEPlayWithUserTWO(fromUser, toUser)) {
 
+						chessGamesHandler.incrementNumberOfMoves(toUser
+								.getUniqueActualGameHash());
+
 						sessionHandler.sendToSession(toUsername, fromUsername,
 								messageJsonString);
 					} else {
@@ -77,6 +89,38 @@ public class GameMessageExchangeProtocol {
 				|| messageType.equals(WebSocketMessageType.QUIT_GAME)
 				|| messageType.equals(WebSocketMessageType.USER_DISCONNECT)) {
 
+			if (messageType.equals(WebSocketMessageType.QUIT_GAME)
+					|| messageType.equals(WebSocketMessageType.GAME_OVER)) {
+
+				WebSocketGameUser gUser = usersHandler
+						.getWebsocketUser(messageObj.getSendFrom());
+				ChessGame game = chessGamesHandler.getGameByUniqueHashId(gUser
+						.getUniqueActualGameHash());
+				game.setEndDate(new Date());
+				game.setEndingGameFENString(messageObj.getFen());
+				LiveChessTournamentsHandler
+						.calculateAndSetTimeDurationBeetwenGameBeginAndEnd(game);
+
+				if (messageObj.getCheckMate() != null
+						&& messageObj.getCheckMate() == true) {
+					game.setCheckMate(true);
+				} else {
+					game.setCheckMate(false);
+				}
+
+				System.out
+						.println("------------------------------------------");
+				System.out
+						.println("------------------------------------------");
+				System.out.println("--------CHESS GAME TO SAVE--------");
+				System.out
+						.println("------------------------------------------");
+
+				System.out.println(game);
+				// save game to db
+
+			}
+
 			sendMessageToOneUser(messageObj, messageJsonString);
 			setUserComStatusWaitForNewGameAndRefresh(messageObj);
 
@@ -90,8 +134,8 @@ public class GameMessageExchangeProtocol {
 
 	}
 
-	private Boolean userONEPlayWithUserTWO(WebSocketGameUser fromUser,
-			WebSocketGameUser toUser) {
+	private synchronized Boolean userONEPlayWithUserTWO(
+			WebSocketGameUser fromUser, WebSocketGameUser toUser) {
 		log.debug("userONEPlayWithUserTWO()");
 
 		if (fromUser != null && toUser != null
@@ -104,7 +148,7 @@ public class GameMessageExchangeProtocol {
 
 	}
 
-	private Boolean isUserPlayingWithAnyUser(WebSocketGameUser user) {
+	private synchronized Boolean isUserPlayingWithAnyUser(WebSocketGameUser user) {
 		log.debug("isUserPlayingWithAnyUser()");
 
 		if (user != null
@@ -118,13 +162,7 @@ public class GameMessageExchangeProtocol {
 		}
 	}
 
-	private void printIfNull(Object object) {
-		if (object == null) {
-			System.out.println("there was null");
-		}
-	}
-
-	private void setUserComStatusIsDuringHandshakeSendMsgAndRefresh(
+	private synchronized void setUserComStatusIsDuringHandshakeSendMsgAndRefresh(
 			WebSocketMessage messageObj, String messageJsonString) {
 		log.debug("setUserComStatusIsDuringHandshakeAndRefresh()");
 
@@ -169,9 +207,11 @@ public class GameMessageExchangeProtocol {
 
 	}
 
-	private void setUserComStatusIsPlayingAndRefresh(WebSocketMessage messageObj) {
+	private synchronized void setUserComStatusIsPlayingAndRefresh(
+			WebSocketMessage messageObj) {
 		log.debug("setUserComStatusIsPlayingAndRefresh()");
-		printIfNull(messageObj);
+
+		String actualChessGameUUID = UUID.randomUUID().toString();
 
 		usersHandler.setComStatusIsPlaying(messageObj.getSendTo(),
 				messageObj.getSendFrom());
@@ -181,14 +221,20 @@ public class GameMessageExchangeProtocol {
 		WebSocketGameUser sendToObj = usersHandler.getWebsocketUser(messageObj
 				.getSendTo());
 
+		sendToObj.setUniqueActualGameHash(actualChessGameUUID);
 		messageObj.setSendToObj(sendToObj);
 
 		WebSocketGameUser sendFromObj = usersHandler
 				.getWebsocketUser(messageObj.getSendFrom());
 
+		sendFromObj.setUniqueActualGameHash(actualChessGameUUID);
 		messageObj.setSendFromObj(sendFromObj);
-
 		messageObj.setMoveStatus(ChessMoveStatus.WHITE_TO_MOVE);
+
+		ChessGame chessGame = prepareAndReturnChessGameObjectAtGameStart(
+				actualChessGameUUID, sendToObj, sendFromObj, messageObj);
+
+		chessGamesHandler.addNewGame(chessGame);
 
 		sendMessageToOneUser(messageObj, gson.toJson(messageObj));
 
@@ -196,10 +242,32 @@ public class GameMessageExchangeProtocol {
 
 	}
 
-	private void setUserComStatusWaitForNewGameAndRefresh(
+	private synchronized ChessGame prepareAndReturnChessGameObjectAtGameStart(
+			String actualChessGameUUID, WebSocketGameUser sendToObj,
+			WebSocketGameUser sendFromObj, WebSocketMessage messageObj) {
+		log.debug("prepareAndReturnChessGameObjectAtGameStart()");
+
+		ChessGame chessGame = new ChessGame();
+		chessGame.setUniqueGameHash(actualChessGameUUID);
+		chessGame.setBeginDate(new Date());
+		chessGame.setNumberOfMoves(0);
+
+		if (sendToObj.getChessColor().equals("white")) {
+			chessGame.setWhiteColUsername(sendToObj.getUsername());
+			chessGame.setBlackColUsername(sendFromObj.getUsername());
+		} else {
+			chessGame.setWhiteColUsername(sendFromObj.getUsername());
+			chessGame.setBlackColUsername(sendToObj.getUsername());
+		}
+
+		chessGame.setEndingGameFENString(messageObj.getFen());
+
+		return chessGame;
+	}
+
+	private synchronized void setUserComStatusWaitForNewGameAndRefresh(
 			WebSocketMessage messageObj) {
 		log.debug("setUserComStatusWaitForNewGameAndRefresh()");
-		printIfNull(messageObj);
 
 		usersHandler.setComStatusWaitForNewGame(messageObj.getSendFrom());
 		usersHandler.setComStatusWaitForNewGame(messageObj.getSendTo());
@@ -209,7 +277,8 @@ public class GameMessageExchangeProtocol {
 		sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 	}
 
-	private void sendMessageToOneUser(WebSocketMessage message, String content) {
+	private synchronized void sendMessageToOneUser(WebSocketMessage message,
+			String content) {
 		log.debug("sendMessageToOneUser()");
 		log.debug("typ wiadomosci : " + message.getType());
 		log.debug("od usera " + message.getSendFrom() + " do usera "

@@ -14,12 +14,16 @@ import com.google.gson.Gson;
 @Service
 public class WebSocketSessionHandler {
 
-	private static final Logger logger = Logger
-			.getLogger(WebSocketSessionHandler.class);
+	private final Logger logger;
 
 	private volatile static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 
-	private Gson gson = new Gson();
+	private Gson gson;
+
+	public WebSocketSessionHandler() {
+		gson = new Gson();
+		logger = Logger.getLogger(WebSocketSessionHandler.class);
+	}
 
 	public synchronized void addSession(String username, Session session) {
 		sessionsMap.put(username, session);

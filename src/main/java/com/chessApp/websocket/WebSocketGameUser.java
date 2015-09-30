@@ -11,6 +11,7 @@ public class WebSocketGameUser {
 	private long numberOfScores;
 	private String chessColor;
 	private String communicationStatus;
+	private String uniqueActualGameHash;
 
 	public WebSocketGameUser() {
 	}
@@ -41,6 +42,14 @@ public class WebSocketGameUser {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getUniqueActualGameHash() {
+		return uniqueActualGameHash;
+	}
+
+	public void setUniqueActualGameHash(String uniqueActualGameHash) {
+		this.uniqueActualGameHash = uniqueActualGameHash;
 	}
 
 	public String getUsername() {

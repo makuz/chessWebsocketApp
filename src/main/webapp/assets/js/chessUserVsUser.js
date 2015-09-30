@@ -88,6 +88,32 @@ var updateStatus = function() {
 	// checkmate?
 	if (game.in_checkmate() === true) {
 		status = 'Game over, ' + moveColor + ' is in checkmate.';
+
+		var winnerColor = "";
+		var looserColor = "";
+		if (moveColor == 'White') {
+			winnerColor = 'black';
+			winnerUsername = BLACK_COLOR_USERNAME;
+			loserUsername = WHITE_COLOR_USERNAME;
+		} else {
+			winnerColor = 'white';
+			winnerUsername = WHITE_COLOR_USERNAME;
+			loserUsername = BLACK_COLOR_USERNAME;
+		}
+
+		// only winner send message, to prevent duplicates
+		if (WEBSOCKET_CLIENT_NAME == winnerUsername) {
+			var fenString = fenFromYourMove.value;
+			webSocket.send(JSON.stringify({
+				type : "game-over",
+				fen : fenString,
+				winnerColor : winnerColor,
+				winnerUsername : winnerUsername,
+				checkMate : true,
+				loserUsername : loserUsername
+			}));
+		}
+
 	}
 
 	// draw?

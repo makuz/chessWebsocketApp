@@ -20,6 +20,7 @@ public class UserAccount implements Comparable<UserAccount> {
 	private String registrationHashString;
 	private Boolean isRegistrationConfirmed;
 	private Date registrationDate;
+	private long numberOfWonChessGames;
 
 	public UserAccount() {
 
@@ -108,6 +109,14 @@ public class UserAccount implements Comparable<UserAccount> {
 		return password;
 	}
 
+	public long getNumberOfWonChessGames() {
+		return numberOfWonChessGames;
+	}
+
+	public void setNumberOfWonChessGames(long numberOfWonChessGames) {
+		this.numberOfWonChessGames = numberOfWonChessGames;
+	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -122,11 +131,13 @@ public class UserAccount implements Comparable<UserAccount> {
 
 	@Override
 	public String toString() {
-		return "UserAccount [userId=" + userId + ", username=" + username
-				+ ", password=" + password + ", name=" + name + ", lastname="
-				+ lastname + ", role=" + role + ", email=" + email
-				+ ", registrationHashString=" + registrationHashString
-				+ ", isRegistrationConfirmed=" + isRegistrationConfirmed + "]";
+		return "UserAccount [id=" + id + ", userId=" + userId + ", username="
+				+ username + ", password=" + password + ", name=" + name
+				+ ", lastname=" + lastname + ", role=" + role + ", email="
+				+ email + ", registrationHashString=" + registrationHashString
+				+ ", isRegistrationConfirmed=" + isRegistrationConfirmed
+				+ ", registrationDate=" + registrationDate
+				+ ", numberOfWonChessGames=" + numberOfWonChessGames + "]";
 	}
 
 	@Override

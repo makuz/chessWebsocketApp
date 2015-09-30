@@ -1,6 +1,6 @@
 package com.chessApp.websocket;
 
-public class ChessPieces {
+public class ChessColor {
 	
 	public final static String WHITE = "white";
 	
