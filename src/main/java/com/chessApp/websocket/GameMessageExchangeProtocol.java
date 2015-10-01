@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import com.chessApp.daoimpl.ChessGamesRepositoryImpl;
+import com.chessApp.dao.ChessGamesRepository;
 import com.chessApp.model.ChessGame;
 import com.google.gson.Gson;
 
@@ -26,13 +26,9 @@ public class GameMessageExchangeProtocol {
 	private LiveChessTournamentsHandler chessGamesHandler;
 
 	private Gson gson;
-	
+
 	@Autowired
-	private ChessGamesRepositoryImpl chessGamesRepositoryImpl;
-
-	public GameMessageExchangeProtocol() {
-
-	}
+	private ChessGamesRepository chessGamesRepository;
 
 	public GameMessageExchangeProtocol(WebSocketSessionHandler sessionHandler,
 			WebsocketUsesrHandler usesrHandler,
@@ -41,7 +37,12 @@ public class GameMessageExchangeProtocol {
 		this.usersHandler = usesrHandler;
 		this.chessGamesHandler = chessGamesHandler;
 		gson = new Gson();
+
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+	}
+
+	public GameMessageExchangeProtocol() {
+
 	}
 
 	public synchronized void proccessMessage(WebSocketMessage messageObj,
@@ -120,22 +121,9 @@ public class GameMessageExchangeProtocol {
 				} else {
 					game.setCheckMate(false);
 				}
-
-				System.out
-						.println("------------------------------------------");
-				System.out
-						.println("------------------------------------------");
-				System.out.println("--------CHESS GAME TO SAVE--------");
-				System.out
-						.println("------------------------------------------");
-
-				System.out.println(game);
-
-				System.out.println("chessGamesRepository:");
-				System.out.println(chessGamesRepositoryImpl);
-
-				chessGamesRepositoryImpl.saveGame(game);
-				// save game to db
+				
+				// save to DB
+				chessGamesRepository.saveGame(game);
 
 			}
 

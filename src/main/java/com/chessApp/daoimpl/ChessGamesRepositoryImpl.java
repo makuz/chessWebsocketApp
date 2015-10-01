@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.chessApp.dao.ChessGamesRepository;
 import com.chessApp.model.ChessGame;
 import com.chessApp.model.UserAccount;
+import com.mongodb.WriteResult;
 
 @Repository
 public class ChessGamesRepositoryImpl implements ChessGamesRepository {
@@ -70,14 +71,29 @@ public class ChessGamesRepositoryImpl implements ChessGamesRepository {
 
 	@Override
 	public String removeGame(ChessGame game) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.debug("removeGame()");
+
+		WriteResult wResult = mongoTemplate.remove(game, COLLECTION_NAME);
+		wResult.getN();
+
+		if (wResult.getN() == 1) {
+			return "ok";
+		} else {
+			return "fail";
+		}
 	}
 
 	@Override
 	public List<ChessGame> getUserChessGames(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.debug("getUserChessGames()");
+
+		Query query = new Query();
+		query.addCriteria(Criteria.where("whiteColUsername").is(username)
+				.orOperator(Criteria.where("blackColUsername").is(username)));
+		List<ChessGame> userChessGames = mongoTemplate.find(query,
+				ChessGame.class, COLLECTION_NAME);
+
+		return userChessGames;
 	}
 
 	@Override
@@ -88,8 +104,13 @@ public class ChessGamesRepositoryImpl implements ChessGamesRepository {
 
 	@Override
 	public ChessGame getBychessGameId(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.debug("getBychessGameId()");
+		
+		Query query = new Query();
+		query.addCriteria(Criteria.where("chessGameId").is(id));
+		ChessGame fondedGame = mongoTemplate.findOne(query, ChessGame.class,
+				COLLECTION_NAME);
+		return fondedGame;
 	}
 
 	@Override

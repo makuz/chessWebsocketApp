@@ -14,7 +14,6 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.google.gson.Gson;
 
@@ -34,10 +33,6 @@ public class WebSocketServer {
 			sessionHandler, usesrHandler, chessGamesHandler);
 
 	private Gson gson = new Gson();
-
-	public WebSocketServer() {
-		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-	}
 
 	@OnMessage
 	public void onMessage(String msg, Session wsSession,
