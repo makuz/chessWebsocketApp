@@ -21,6 +21,7 @@ public class UserAccount implements Comparable<UserAccount> {
 	private Boolean isRegistrationConfirmed;
 	private Date registrationDate;
 	private long numberOfWonChessGames;
+	private long numberOfGamesPlayed;
 
 	public UserAccount() {
 
@@ -99,6 +100,14 @@ public class UserAccount implements Comparable<UserAccount> {
 
 	public String getUsername() {
 		return username;
+	}
+
+	public long getNumberOfGamesPlayed() {
+		return numberOfGamesPlayed;
+	}
+
+	public void setNumberOfGamesPlayed(long numberOfGamesPlayed) {
+		this.numberOfGamesPlayed = numberOfGamesPlayed;
 	}
 
 	public void setUsername(String username) {

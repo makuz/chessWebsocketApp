@@ -22,6 +22,16 @@ public class HomeController {
 
 		return homePageModel;
 	}
+	
+	@RequestMapping(value = "/home/best-players", method = RequestMethod.GET)
+	public ModelAndView bestPlayersSite() {
+		logger.info("bestPlayersSite()");
+
+		ModelAndView bestPlayers = new ModelAndView("bestPlayers");
+		addBasicObjectsToModelAndView(bestPlayers);
+
+		return bestPlayers;
+	}
 
 	private void addBasicObjectsToModelAndView(ModelAndView modelAndView) {
 

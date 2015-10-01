@@ -30,6 +30,7 @@
 	<security:authorize access="hasRole('ROLE_USER')">
 		<li><a href="<%=contextURL%>/user/your-chessgames">your-games-history</a></li>
 	</security:authorize>
+	<li><a href="<%=contextURL%>/home/best-players">best-players</a></li>
 
 	<li class="pull-right text-uppercase"><a
 		href="<%=contextURL%>/logout">log out</a></li>

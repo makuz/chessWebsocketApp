@@ -10,15 +10,16 @@
 		class="table table-condensed table-striped table-bordered table-accounts">
 		<thead>
 			<tr>
-				<td style="width: 15px !important">id</td>
-				<td>begin date</td>
-				<td>end date</td>
-				<td>game duration</td>
-				<td style="width: 5px !important">white color</td>
-				<td>black color</td>
-				<td>check mate</td>
-				<td>winner</td>
-				<td>end position</td>
+				<td class="text-center" style="width: 15px !important">id</td>
+				<td class="text-center">begin date</td>
+				<td class="text-center">end date</td>
+				<td class="text-center">game duration</td>
+				<td class="text-center" style="width: 10px !important">number of moves</td>
+				<td class="text-center" style="width: 5px !important">white color</td>
+				<td class="text-center">black color</td>
+				<td class="text-center">check mate</td>
+				<td class="text-center">winner</td>
+				<td class="text-center">end position</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,6 +33,7 @@
 					<td class=" text-center"><fmt:formatDate pattern="dd-MM-yyyy"
 							value="${chessGame.endDate}" /></td>
 					<td class="text-center">${chessGame.formattedGameDurationStr}</td>
+					<td class=" text-center">${chessGame.numberOfMoves}</td>
 					<td class=" text-center">${chessGame.whiteColUsername}</td>
 					<td class=" text-center">${chessGame.blackColUsername}</td>
 					<td class=" text-center"><c:choose>
