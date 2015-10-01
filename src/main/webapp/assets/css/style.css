@@ -306,6 +306,16 @@ div#usersTable {
 	background-color: #C9C9C9;
 }
 
+div#gamesTable {
+	width: 100%;
+	margin-left: -0.9%;
+	margin-top: 5%;
+	border: 2px solid #3B5998;
+	border-radius: 5px;
+	padding: 1%;
+	background-color: #C9C9C9;
+}
+
 div#usersTable td, div#usersTable tr {
 	padding: 0.4em;
 }
