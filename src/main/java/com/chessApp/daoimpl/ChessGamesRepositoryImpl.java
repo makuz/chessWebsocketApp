@@ -88,12 +88,11 @@ public class ChessGamesRepositoryImpl implements ChessGamesRepository {
 		logger.debug("getUserChessGames()");
 
 		Query query = new Query();
-		query.addCriteria(Criteria.where("whiteColUsername").is(username)
-				.orOperator(Criteria.where("blackColUsername").is(username)));
-		List<ChessGame> userChessGames = mongoTemplate.find(query,
-				ChessGame.class, COLLECTION_NAME);
-
-		return userChessGames;
+		Criteria criteria = new Criteria();
+		criteria.orOperator(Criteria.where("blackColUsername").is(username),
+				Criteria.where("whiteColUsername").is(username));
+		query.addCriteria(criteria);
+		return mongoTemplate.find(query, ChessGame.class, COLLECTION_NAME);
 	}
 
 	@Override
@@ -105,7 +104,7 @@ public class ChessGamesRepositoryImpl implements ChessGamesRepository {
 	@Override
 	public ChessGame getBychessGameId(long id) {
 		logger.debug("getBychessGameId()");
-		
+
 		Query query = new Query();
 		query.addCriteria(Criteria.where("chessGameId").is(id));
 		ChessGame fondedGame = mongoTemplate.findOne(query, ChessGame.class,

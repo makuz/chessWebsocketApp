@@ -1,5 +1,6 @@
 package com.chessApp.controllers;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.chessApp.dao.ChessGamesRepository;
 import com.chessApp.dao.UsersRepository;
+import com.chessApp.model.ChessGame;
 import com.chessApp.model.UserAccount;
 import com.chessApp.security.PasswordEncryptor;
 
@@ -22,6 +25,9 @@ public class UserPanelController {
 	@Autowired
 	private UsersRepository usersRepository;
 
+	@Autowired
+	private ChessGamesRepository chessGamesRepository;
+
 	private PasswordEncryptor passwordEncrypter = new PasswordEncryptor();
 
 	private static final Logger logger = Logger
@@ -30,7 +36,7 @@ public class UserPanelController {
 	@RequestMapping("/user/your-account")
 	public ModelAndView getLoggedInUserDetails(String msg) {
 
-		logger.info("getLoggedInUserDetails()");
+		logger.debug("getLoggedInUserDetails()");
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		String currentUserLogin = auth.getName();
@@ -48,7 +54,7 @@ public class UserPanelController {
 	@RequestMapping(value = "/user/your-account", method = RequestMethod.POST)
 	public ModelAndView sendEditUserDataForUserAccount(
 			@RequestParam Map<String, String> userDataMap) {
-		logger.info("sendEditUserDataForUserAccount()");
+		logger.debug("sendEditUserDataForUserAccount()");
 
 		String userLogin = userDataMap.get("j_username");
 		String name = userDataMap.get("j_name");
@@ -56,8 +62,8 @@ public class UserPanelController {
 		String adminFlagSendedByForm = userDataMap.get("j_adminFlag");
 		String email = userDataMap.get("j_email");
 
-		logger.info("adminFlag");
-		logger.info(adminFlagSendedByForm);
+		logger.debug("adminFlagSendedByForm");
+		logger.debug(adminFlagSendedByForm);
 
 		UserAccount user = usersRepository.getUserByUsername(userLogin);
 		user.setName(name);
@@ -93,6 +99,24 @@ public class UserPanelController {
 		usersRepository.updateUser(user);
 
 		return getLoggedInUserDetails(null);
+	}
+
+	@RequestMapping(value = "/user/your-chessgames", method = RequestMethod.GET)
+	public ModelAndView userGamesSite() {
+		logger.debug("userGamesSite()");
+
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		String userLogin = auth.getName();
+
+		ModelAndView userGamesSite = new ModelAndView("userGames");
+		addBasicObjectsToModelAndView(userGamesSite);
+		List<ChessGame> userChessGames = chessGamesRepository
+				.getUserChessGames(userLogin);
+
+		userGamesSite.addObject("userChessGames", userChessGames);
+
+		return userGamesSite;
 	}
 
 	private void addBasicObjectsToModelAndView(ModelAndView modelAndView) {
