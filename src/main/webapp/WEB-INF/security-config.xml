@@ -16,8 +16,8 @@
 		<form-login login-page="/" authentication-failure-url="/fail/"
 			default-target-url="/" />
 		<logout logout-success-url="/" />
-		<form-login login-page="/login"/>
-		<logout logout-url="/j_spring_security_logout"/>
+		<form-login login-page="/login" />
+		<logout logout-url="/j_spring_security_logout" />
 		<session-management>
 			<concurrency-control max-sessions="1"
 				session-registry-alias="sessionRegistry" />
@@ -29,10 +29,11 @@
 
 	<!-- import resources/ beans from servlet config file -->
 	<beans:import resource="./mvc-config.xml" />
-	
+
 	<beans:import resource="./application-context.xml" />
 
-	<beans:bean id="authenticationProvider" class="com.chessApp.security.LocalAuthenticationProvider"></beans:bean>
+	<beans:bean id="authenticationProvider"
+		class="com.chessApp.security.LocalAuthenticationProvider"></beans:bean>
 
 	<beans:bean id="usersRepositoryImpl" class="com.chessApp.daoimpl.UsersRepositoryImpl"></beans:bean>
 

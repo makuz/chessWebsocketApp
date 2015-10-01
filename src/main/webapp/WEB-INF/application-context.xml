@@ -13,5 +13,13 @@
 
 	<beans:bean id="mailService" class="com.chessApp.mailService.MailService" />
 
+	<beans:bean id="gameMessageExchangeProtocol"
+		class="com.chessApp.websocket.GameMessageExchangeProtocol" />
+
+	<beans:bean id="chessGamesRepositoryImpl"
+		class="com.chessApp.daoimpl.ChessGamesRepositoryImpl" />
+
+	<beans:bean id="chessGameModel" class="com.chessApp.model.ChessGame" />
+
 
 </beans:beans>

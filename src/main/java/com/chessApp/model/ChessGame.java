@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "chessGames")
-public class ChessGame {
+public class ChessGame implements Comparable<ChessGame> {
 
 	@Id
 	private String id;
@@ -150,6 +150,14 @@ public class ChessGame {
 				+ uniqueGameHash + ", whiteColUsername=" + whiteColUsername
 				+ ", blackColUsername=" + blackColUsername + ", checkMate="
 				+ checkMate + "]";
+	}
+
+	@Override
+	public int compareTo(ChessGame game) {
+		
+		long compareChessGameId = game.getChessGameId();
+		
+		return (int) (this.chessGameId - compareChessGameId);
 	}
 
 }

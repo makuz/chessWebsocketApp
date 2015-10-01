@@ -5,10 +5,15 @@ import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import com.chessApp.daoimpl.ChessGamesRepositoryImpl;
 import com.chessApp.model.ChessGame;
 import com.google.gson.Gson;
 
+@Service
 public class GameMessageExchangeProtocol {
 
 	private final static Logger log = Logger
@@ -21,6 +26,13 @@ public class GameMessageExchangeProtocol {
 	private LiveChessTournamentsHandler chessGamesHandler;
 
 	private Gson gson;
+	
+	@Autowired
+	private ChessGamesRepositoryImpl chessGamesRepositoryImpl;
+
+	public GameMessageExchangeProtocol() {
+
+	}
 
 	public GameMessageExchangeProtocol(WebSocketSessionHandler sessionHandler,
 			WebsocketUsesrHandler usesrHandler,
@@ -29,6 +41,7 @@ public class GameMessageExchangeProtocol {
 		this.usersHandler = usesrHandler;
 		this.chessGamesHandler = chessGamesHandler;
 		gson = new Gson();
+		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
 
 	public synchronized void proccessMessage(WebSocketMessage messageObj,
@@ -117,6 +130,11 @@ public class GameMessageExchangeProtocol {
 						.println("------------------------------------------");
 
 				System.out.println(game);
+
+				System.out.println("chessGamesRepository:");
+				System.out.println(chessGamesRepositoryImpl);
+
+				chessGamesRepositoryImpl.saveGame(game);
 				// save game to db
 
 			}
