@@ -67,7 +67,8 @@ var onDrop = function(source, target) {
 		return 'snapback';
 
 	CHESS_MOVE_COUNTER++;
-
+	CURRENT_CHESS_MOVE = move;
+	
 	updateStatus();
 };
 

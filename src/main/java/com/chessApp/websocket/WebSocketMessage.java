@@ -2,6 +2,8 @@ package com.chessApp.websocket;
 
 import org.springframework.stereotype.Component;
 
+import com.chessApp.model.ChessMove;
+
 @Component
 public class WebSocketMessage {
 
@@ -20,6 +22,8 @@ public class WebSocketMessage {
 	private WebSocketGameUser sendFromObj;
 
 	private Boolean checkMate;
+
+	private ChessMove chessMove;
 
 	public WebSocketMessage() {
 
@@ -89,12 +93,21 @@ public class WebSocketMessage {
 		this.fen = fen;
 	}
 
+	public ChessMove getChessMove() {
+		return chessMove;
+	}
+
+	public void setChessMove(ChessMove chessMove) {
+		this.chessMove = chessMove;
+	}
+
 	@Override
 	public String toString() {
 		return "WebSocketMessage [type=" + type + ", fen=" + fen + ", sendTo="
 				+ sendTo + ", sendFrom=" + sendFrom + ", moveStatus="
 				+ moveStatus + ", sendToObj=" + sendToObj + ", sendFromObj="
-				+ sendFromObj + ", checkMate=" + checkMate + "]";
+				+ sendFromObj + ", checkMate=" + checkMate + ", chessMove="
+				+ chessMove + "]";
 	}
 
 }

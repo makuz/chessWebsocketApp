@@ -11,6 +11,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.chessApp.dao.ChessGamesRepository;
 import com.chessApp.model.ChessGame;
+import com.chessApp.model.ChessMove;
 import com.google.gson.Gson;
 
 @Service
@@ -29,7 +30,7 @@ public class GameMessageExchangeProtocol {
 
 	@Autowired
 	private ChessGamesRepository chessGamesRepository;
-
+	
 	public GameMessageExchangeProtocol(WebSocketSessionHandler sessionHandler,
 			WebsocketUsesrHandler usesrHandler,
 			LiveChessTournamentsHandler chessGamesHandler) {
@@ -83,6 +84,23 @@ public class GameMessageExchangeProtocol {
 
 					if (userONEPlayWithUserTWO(fromUser, toUser)) {
 
+						ChessMove currentMove = messageObj.getChessMove();
+						
+						System.out.println("------------------------------------");
+						System.out.println("------------------------------------");
+						System.out.println("------------------------------------");
+						System.out.println("-----currentMove---------");
+						System.out.println(currentMove);
+						
+						System.out.println("------------------------------------");
+						System.out.println("------------------------------------");
+						System.out.println("------------------------------------");
+						System.out.println("-----messageObj---------");
+						System.out.println(messageObj);
+
+						chessGamesHandler.addActualMoveToThisGameObject(
+								toUser.getUniqueActualGameHash(), currentMove);
+
 						chessGamesHandler.incrementNumberOfMoves(toUser
 								.getUniqueActualGameHash());
 
@@ -121,7 +139,7 @@ public class GameMessageExchangeProtocol {
 				} else {
 					game.setCheckMate(false);
 				}
-				
+
 				// save to DB
 				chessGamesRepository.saveGame(game);
 

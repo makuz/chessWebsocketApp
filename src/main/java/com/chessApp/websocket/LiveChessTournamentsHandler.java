@@ -14,6 +14,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Seconds;
 
 import com.chessApp.model.ChessGame;
+import com.chessApp.model.ChessMove;
 
 public class LiveChessTournamentsHandler {
 
@@ -66,6 +67,15 @@ public class LiveChessTournamentsHandler {
 		return values;
 	}
 
+	public synchronized void addActualMoveToThisGameObject(
+			String uniqueGameHash, ChessMove currentMove) {
+		logger.debug("addNewGame()");
+
+		ChessGame game = chessGamesMap.get(uniqueGameHash);
+		game.getListOfMoves().add(currentMove);
+
+	}
+
 	public synchronized static void calculateAndSetTimeDurationBeetwenGameBeginAndEnd(
 			ChessGame game) {
 
@@ -76,7 +86,7 @@ public class LiveChessTournamentsHandler {
 			Seconds secondsDuration = Seconds
 					.secondsBetween(beginDate, endDate);
 			Long duration = secondsDuration.toStandardDuration().getMillis();
-			DateFormat dateFormat = new SimpleDateFormat("HH:mm : ss");
+			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 			dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 			Date time = new Date(duration);
 			String formattedTime = dateFormat.format(time);

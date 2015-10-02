@@ -1,6 +1,8 @@
 package com.chessApp.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -24,6 +26,11 @@ public class ChessGame implements Comparable<ChessGame> {
 	private String whiteColUsername;
 	private String blackColUsername;
 	private Boolean checkMate;
+	private List<ChessMove> listOfMoves;
+
+	public ChessGame() {
+		listOfMoves = new ArrayList<>();
+	}
 
 	public Date getBeginDate() {
 		return beginDate;
@@ -137,6 +144,14 @@ public class ChessGame implements Comparable<ChessGame> {
 		this.loserUsername = loserUsername;
 	}
 
+	public List<ChessMove> getListOfMoves() {
+		return listOfMoves;
+	}
+
+	public void setListOfMoves(List<ChessMove> listOfMoves) {
+		this.listOfMoves = listOfMoves;
+	}
+
 	@Override
 	public String toString() {
 		return "ChessGame [id=" + id + ", chessGameId=" + chessGameId
@@ -149,14 +164,14 @@ public class ChessGame implements Comparable<ChessGame> {
 				+ ", numberOfMoves=" + numberOfMoves + ", uniqueGameHash="
 				+ uniqueGameHash + ", whiteColUsername=" + whiteColUsername
 				+ ", blackColUsername=" + blackColUsername + ", checkMate="
-				+ checkMate + "]";
+				+ checkMate + ", listOfMoves=" + listOfMoves + "]";
 	}
 
 	@Override
 	public int compareTo(ChessGame game) {
-		
+
 		long compareChessGameId = game.getChessGameId();
-		
+
 		return (int) (this.chessGameId - compareChessGameId);
 	}
 

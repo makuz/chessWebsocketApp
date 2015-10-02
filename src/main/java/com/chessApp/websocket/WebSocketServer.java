@@ -41,7 +41,14 @@ public class WebSocketServer {
 		log.info("wiadomość odebrana przez server: ");
 
 		WebSocketMessage message = gson.fromJson(msg, WebSocketMessage.class);
-
+		
+		System.out.println("---------------------------------");
+		System.out.println("---------------------------------");
+		System.out.println("---------------------------------");
+		System.out.println("--------message----------");
+		System.out.println(msg);
+		
+		
 		gameMessageProtocol.proccessMessage(message, msg);
 
 	}

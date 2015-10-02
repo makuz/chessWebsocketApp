@@ -472,6 +472,9 @@ function refusedToPlay() {
 // --------------------------------------------------------
 
 function sendYourMoveByFenNotationToUser() {
+	console.log("sendYourMoveByFenNotationToUser()");
+	console.log("current chess move");
+	console.log(CURRENT_CHESS_MOVE);
 
 	var reciever = $('#send-move-btn').data('opponentName');
 
@@ -485,6 +488,7 @@ function sendYourMoveByFenNotationToUser() {
 		type : "chess-move",
 		fen : fenString,
 		moveStatus : chessMoveStatus,
+		chessMove : CURRENT_CHESS_MOVE,
 		sendFrom : WEBSOCKET_CLIENT_NAME,
 		sendTo : reciever
 	}));

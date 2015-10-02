@@ -105,6 +105,8 @@
 		var WEBSOCKET_CLIENT_NAME = '${sender}';
 
 		var SENDED_CHESS_MOVE_STATUS = "";
+		
+		var CURRENT_CHESS_MOVE = "";
 
 		var CHESS_MOVE_COUNTER = 0;
 		
