@@ -13,7 +13,7 @@
 		<script
 			src="<c:url value="${pageContext.request.contextPath}/resources/js/main.js" />"></script>
 		<div id="bestPlayersTable">
-			<h1 class="text-center">Best 20 players</h1>
+			<h1 class="text-center">Best 10 players</h1>
 			<jsp:include page="includes/tables/bestPlayersTable.jsp"></jsp:include>
 		</div>
 	</div>

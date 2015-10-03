@@ -6,8 +6,9 @@
  * GAME PIECE COLOR STATUGLOBAL VAR = SENDED_CHESS_MOVE_STATUS
  * 
  */
-var CLICK_REFUSED_FLAG = false;
 var TIMEOUT_FOR_HANDSHAKE = 15;
+var CLICK_REFUSED_FLAG = false;
+var CLICK_AGREEMENT_FLAG = false;
 
 // ------CONNECT TO WEBSOCKET FUNCTION, WEBSOCKET EVENTS----------------------
 function connectToWebSocket() {
@@ -85,7 +86,7 @@ function connectToWebSocket() {
 			} else if (message.type == "game-handshake-invitation") {
 
 				showGameHandshakeModalBox(message.sendFrom);
-				// startTimeoutForHandshake();
+				startTimeoutForHandshake();
 
 				setChessColorGlobalVars(message);
 
@@ -105,11 +106,15 @@ function connectToWebSocket() {
 
 			} else if (message.type == "game-handshake-agreement") {
 
+				CLICK_AGREEMENT_FLAG = true;
+
 				startNewGame();
+				// reset po porzednich grach
 				SEND_MOVE_CLICK_COUNTER = 0;
 
 				$('#play-with-opponent-interface').attr("hidden", false);
-				$('#play-with-opponent-interface-actions').attr("hidden", false);
+				$('#play-with-opponent-interface-actions')
+						.attr("hidden", false);
 				$('#startPosBtn').hide();
 
 				// set the first move status at start
@@ -215,15 +220,16 @@ function connectToWebSocket() {
 					$('#move-for').html(
 							"<h1 class=\"text-danger\">YOU LOOSE !</h1>");
 					alert("check mate, you loose! with " + OPPONENT_USERNAME);
-					
+
 					$('#startPosBtn').show();
 					$('#game-status').data('isPlaying', false);
 					$('#game-status').html('');
 					$('#send-move-btn').data("opponentName", '');
 					$('#quit-game-btn').data("gamePartner", '');
-					$('#play-with-opponent-interface-actions').attr("hidden", true);
+					$('#play-with-opponent-interface-actions').attr("hidden",
+							true);
 					OPPONENT_USERNAME = "";
-					
+
 				}
 
 				clearParticipantsListView();
@@ -264,6 +270,8 @@ function connectToWebSocket() {
 
 		$('#disconnect').attr("disabled", true);
 		$('#play-with-opponent-interface').attr("hidden", true);
+		$('#startPosBtn').show();
+
 		OPPONENT_USERNAME = "";
 
 		console.log(event);
@@ -276,6 +284,7 @@ function connectToWebSocket() {
 		console.log("Server disconnected \n");
 		console.log(event);
 		webSocket.close();
+		$('#startPosBtn').show();
 		$('#disconnect').attr("disabled", true);
 		$('#play-with-opponent-interface').attr("hidden", true);
 		OPPONENT_USERNAME = "";
@@ -349,19 +358,23 @@ function showGameHandshakeModalBox(sender) {
 function showTimerForInviter(recieverName) {
 	console.log('showTimerForInviter()');
 
-	if (TIMEOUT_FOR_HANDSHAKE == 0 || CLICK_REFUSED_FLAG == true) {
-		TIMEOUT_FOR_HANDSHAKE == 15;
+	if (TIMEOUT_FOR_HANDSHAKE == 0 || CLICK_REFUSED_FLAG == true
+			|| CLICK_AGREEMENT_FLAG == true) {
+		TIMEOUT_FOR_HANDSHAKE = 15;
+		CLICK_REFUSED_FLAG = false;
+		CLICK_AGREEMENT_FLAG == false
 		$('#game-status').html('');
+		clearTimeout(inviterTimer);
 		return;
 	} else {
 		TIMEOUT_FOR_HANDSHAKE--;
-		$('#game-status')
-				.html(
-						'<span class="text-info"><strong>' + recieverName
-								+ '</strong></span> think... -'
-								+ TIMEOUT_FOR_HANDSHAKE);
+		$('#game-status').html(
+				'<span class="text-info"><strong>' + recieverName
+						+ '</strong></span> considering... '
+						+ TIMEOUT_FOR_HANDSHAKE);
 	}
-	setTimeout(function() {
+
+	var inviterTimer = setTimeout(function() {
 		showTimerForInviter(recieverName)
 	}, 1000);
 
@@ -369,21 +382,27 @@ function showTimerForInviter(recieverName) {
 
 function startTimeoutForHandshake() {
 
-	setTimeout(function() {
-		if (CLICK_REFUSED_FLAG == true) {
-			TIMEOUT_FOR_HANDSHAKE == 15;
-			return;
-		}
+	if (CLICK_REFUSED_FLAG == true || CLICK_AGREEMENT_FLAG == true) {
+		TIMEOUT_FOR_HANDSHAKE = 15;
+		CLICK_REFUSED_FLAG = false;
+		CLICK_AGREEMENT_FLAG = false;
+		clearTimeout(reciverTimer);
+		return;
+	}
 
-		if (TIMEOUT_FOR_HANDSHAKE == 0) {
-			TIMEOUT_FOR_HANDSHAKE == 15;
-			refusedToPlay();
-			return;
-		} else {
-			TIMEOUT_FOR_HANDSHAKE--;
-			$('#game-handshake-timer').html(TIMEOUT_FOR_HANDSHAKE);
-		}
+	if (TIMEOUT_FOR_HANDSHAKE == 0) {
+		TIMEOUT_FOR_HANDSHAKE = 15;
+		CLICK_REFUSED_FLAG = false;
+		refusedToPlay();
+		clearTimeout(reciverTimer);
+		return;
+	} else {
+		TIMEOUT_FOR_HANDSHAKE--;
+		$('#game-handshake-timer').html(TIMEOUT_FOR_HANDSHAKE);
+	}
 
+	var reciverTimer = setTimeout(function() {
+		startTimeoutForHandshake()
 	}, 1000);
 
 }
@@ -427,7 +446,7 @@ function inviteUserToGame(reciever) {
 		sendTo : reciever
 	}));
 
-	// showTimerForInviter(reciever);
+	showTimerForInviter(reciever);
 
 }
 
@@ -447,6 +466,7 @@ function showActualMoveStatus() {
 
 function agreementToPlay() {
 
+	CLICK_AGREEMENT_FLAG = true;
 	var usernameToPlayWith = $('#game-handshake-msgTo').val();
 	OPPONENT_USERNAME = usernameToPlayWith;
 	var myUserName = WEBSOCKET_CLIENT_NAME;
@@ -535,7 +555,7 @@ function refusedToPlay() {
 // --------------------------------------------------------
 
 function sendYourMoveByFenNotationToUser() {
-	
+
 	SEND_MOVE_CLICK_COUNTER = 1;
 	console.log("sendYourMoveByFenNotationToUser()");
 	console.log("current chess move");

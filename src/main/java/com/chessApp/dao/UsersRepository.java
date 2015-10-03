@@ -21,4 +21,6 @@ public interface UsersRepository {
 
 	public void updateUser(UserAccount user);
 
+	public List<UserAccount> getBestPlaying10Users();
+
 }

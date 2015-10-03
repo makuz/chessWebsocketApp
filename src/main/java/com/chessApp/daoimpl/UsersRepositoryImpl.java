@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -74,8 +75,22 @@ public class UsersRepositoryImpl implements UsersRepository {
 	public List<UserAccount> getUsersList() {
 
 		logger.debug("getUsersList()");
+		Query query = new Query();
+		query.with(new Sort(Sort.Direction.DESC, "userId"));
 
-		return mongoTemplate.findAll(UserAccount.class, COLLECTION_NAME);
+		return mongoTemplate.find(query, UserAccount.class, COLLECTION_NAME);
+	}
+
+	public List<UserAccount> getBestPlaying10Users() {
+
+		logger.debug("getBestPlaying10Users()");
+		Query query = new Query();
+		query.addCriteria(Criteria.where("numberOfWonChessGames").ne(null)
+				.gt(0));
+		query.with(new Sort(Sort.Direction.DESC, "numberOfWonChessGames"));
+		query.limit(10);
+
+		return mongoTemplate.find(query, UserAccount.class, COLLECTION_NAME);
 	}
 
 	public UserAccount getUserByUsername(String username) {
