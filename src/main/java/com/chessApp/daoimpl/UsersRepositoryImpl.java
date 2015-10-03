@@ -140,6 +140,10 @@ public class UsersRepositoryImpl implements UsersRepository {
 			updateUserData.set("numberOfWonChessGames",
 					user.getNumberOfWonChessGames());
 		}
+		if (user.getNumberOfLostChessGames() != null) {
+			updateUserData.set("numberOfLostChessGames",
+					user.getNumberOfLostChessGames());
+		}
 
 		if (user.getPassword() != null
 				&& !user.getPassword().equalsIgnoreCase("")) {

@@ -80,6 +80,7 @@ function connectToWebSocket() {
 				showActualMoveStatus();
 
 				CHESS_MOVE_COUNTER = 0;
+				SEND_MOVE_CLICK_COUNTER = 0;
 
 			} else if (message.type == "game-handshake-invitation") {
 
@@ -104,9 +105,12 @@ function connectToWebSocket() {
 
 			} else if (message.type == "game-handshake-agreement") {
 
-				$('#play-with-opponent-interface').attr("hidden", false);
+				startNewGame();
+				SEND_MOVE_CLICK_COUNTER = 0;
 
-				$('#startPosBtn').attr("disabled", true);
+				$('#play-with-opponent-interface').attr("hidden", false);
+				$('#play-with-opponent-interface-actions').attr("hidden", false);
+				$('#startPosBtn').hide();
 
 				// set the first move status at start
 
@@ -131,6 +135,8 @@ function connectToWebSocket() {
 				var alertMessage = "<div class=\"alert alert-info\">"
 						+ "<p>you are playing now with: <span class=\"text-info\"><b>"
 						+ message.sendFrom + "</b></span></p>" + "</div>";
+
+				OPPONENT_USERNAME = message.sendFrom;
 
 				$('#game-status').html(alertMessage);
 
@@ -168,6 +174,8 @@ function connectToWebSocket() {
 			} else if (message.type == "quit-game"
 					|| message.type == "goodbye-msg") {
 
+				OPPONENT_USERNAME = "";
+
 				if (message.type == "quit-game") {
 					alert("user quit game");
 					CHESS_MOVE_COUNTER = 0;
@@ -175,7 +183,7 @@ function connectToWebSocket() {
 
 				clearParticipantsListView();
 
-				$('#startPosBtn').attr("disabled", false);
+				$('#startPosBtn').show();
 				$('#game-status').data('isPlaying', false);
 				$('#play-with-opponent-interface').attr("hidden", true);
 				$('#game-status').html('');
@@ -204,17 +212,23 @@ function connectToWebSocket() {
 				showActualMoveStatus();
 
 				if (message.checkMate == true) {
-					alert("check mate!");
+					$('#move-for').html(
+							"<h1 class=\"text-danger\">YOU LOOSE !</h1>");
+					alert("check mate, you loose! with " + OPPONENT_USERNAME);
+					
+					$('#startPosBtn').show();
+					$('#game-status').data('isPlaying', false);
+					$('#game-status').html('');
+					$('#send-move-btn').data("opponentName", '');
+					$('#quit-game-btn').data("gamePartner", '');
+					$('#play-with-opponent-interface-actions').attr("hidden", true);
+					OPPONENT_USERNAME = "";
+					
 				}
+
 				clearParticipantsListView();
 
-				$('#startPosBtn').attr("disabled", false);
-				$('#game-status').data('isPlaying', false);
-				$('#play-with-opponent-interface').attr("hidden", true);
-				$('#game-status').html('');
-				$('#opponent-username').html('');
-				$('#send-move-btn').data("opponentName", '');
-				$('#quit-game-btn').data("gamePartner", '');
+				OPPONENT_USERNAME = "";
 
 			} else {
 				showParticipants(event.data);
@@ -250,6 +264,7 @@ function connectToWebSocket() {
 
 		$('#disconnect').attr("disabled", true);
 		$('#play-with-opponent-interface').attr("hidden", true);
+		OPPONENT_USERNAME = "";
 
 		console.log(event);
 	};
@@ -263,6 +278,7 @@ function connectToWebSocket() {
 		webSocket.close();
 		$('#disconnect').attr("disabled", true);
 		$('#play-with-opponent-interface').attr("hidden", true);
+		OPPONENT_USERNAME = "";
 	};
 
 };
@@ -276,6 +292,7 @@ window.onbeforeunload = function() {
 	}; // disable onclose handler first
 	webSocket.close();
 	$('#connectToWebSocket').attr("disabled", false);
+	OPPONENT_USERNAME = "";
 
 	window.location.reload(false);
 
@@ -288,7 +305,6 @@ function testCheckMateSaveToDb() {
 	fenFromYourMove.value = checkMatePos;
 	board.position(checkMatePos);
 	game = new Chess(checkMatePos);
-	updateStatus();
 
 }
 // -------------------------------------------------------
@@ -432,6 +448,7 @@ function showActualMoveStatus() {
 function agreementToPlay() {
 
 	var usernameToPlayWith = $('#game-handshake-msgTo').val();
+	OPPONENT_USERNAME = usernameToPlayWith;
 	var myUserName = WEBSOCKET_CLIENT_NAME;
 	console.log("game-handshake-agreement from");
 	console.log(myUserName + " with " + usernameToPlayWith);
@@ -446,10 +463,11 @@ function agreementToPlay() {
 	$('#game-handshake-modal').modal('hide');
 
 	$('#game-status').data('isPlaying', true);
-	$('#startPosBtn').attr("disabled", true);
+	$('#startPosBtn').hide();
 	$('#fenFromPreviousMove').val(startFENPosition);
 
 	$('#play-with-opponent-interface').attr("hidden", false);
+	$('#play-with-opponent-interface-actions').attr("hidden", false);
 
 	var alertMessage = "<div class=\"alert alert-info\">"
 			+ "<p>you are playing now with: <span class=\"text-info\"><b>"
@@ -460,6 +478,7 @@ function agreementToPlay() {
 	$('#quit-game-btn').data("gamePartner", usernameToPlayWith);
 
 	showActualMoveStatus();
+	startNewGame();
 
 }
 
@@ -480,12 +499,13 @@ function quitGame() {
 	}));
 
 	$('#game-status').data('isPlaying', false);
-	$('#startPosBtn').attr("disabled", false);
+	$('#startPosBtn').show();
 	$('#play-with-opponent-interface').attr("hidden", true);
 	$('#game-status').html('');
 	$('#opponent-username').html('');
 	$('#send-move-btn').data("opponentName", '');
 	$('#quit-game-btn').data("gamePartner", '');
+	OPPONENT_USERNAME = "";
 
 }
 
@@ -515,6 +535,8 @@ function refusedToPlay() {
 // --------------------------------------------------------
 
 function sendYourMoveByFenNotationToUser() {
+	
+	SEND_MOVE_CLICK_COUNTER = 1;
 	console.log("sendYourMoveByFenNotationToUser()");
 	console.log("current chess move");
 	console.log(CURRENT_CHESS_MOVE);
@@ -543,7 +565,7 @@ function closeWsConnection() {
 	console.log('closeWsConnection()');
 	$('.connectToUserBtn').css("color", "white");
 	$('#game-status').data('isPlaying', false);
-
+	OPPONENT_USERNAME = "";
 	webSocket.close();
 };
 

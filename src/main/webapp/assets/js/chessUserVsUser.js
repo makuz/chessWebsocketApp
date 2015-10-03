@@ -7,21 +7,25 @@
 var startFENPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 // load game object with fen
-$('#setFenBtn').click(function() {
-	var fenStr = $('#fenToSet').val().trim();
-	console.log("fenStr " + fenStr);
-	board.position(fenStr);
-	game = new Chess(fenStr);
-	updateStatus();
-
-});
+// $('#setFenBtn').click(function() {
+// var fenStr = $('#fenToSet').val().trim();
+// console.log("fenStr " + fenStr);
+// board.position(fenStr);
+// game = new Chess(fenStr);
+// updateStatus();
+//
+// });
 
 // start new game
 $('#startPosBtn').click(function() {
+	startNewGame();
+});
+
+function startNewGame() {
 	board.position(startFENPosition);
 	game = new Chess(startFENPosition);
 	updateStatus();
-});
+}
 
 // chess script ---------------------------------
 var board, game = new Chess(), statusEl = $('#status'), fenEl = $('#fen'), pgnEl = $('#pgn');
@@ -68,7 +72,7 @@ var onDrop = function(source, target) {
 
 	CHESS_MOVE_COUNTER++;
 	CURRENT_CHESS_MOVE = move;
-	
+
 	updateStatus();
 };
 
@@ -118,6 +122,18 @@ var updateStatus = function() {
 				sendTo : $('#quit-game-btn').data("gamePartner")
 			}));
 		}
+
+		$('#move-for').html("<h1 class=\"text-success\">YOU WIN !</h1>");
+		alert("check mate, you Win with " + OPPONENT_USERNAME + " !");
+
+		$('#startPosBtn').show();
+		$('#game-status').data('isPlaying', false);
+		$('#game-status').html('');
+		$('#send-move-btn').data("opponentName", '');
+		$('#quit-game-btn').data("gamePartner", '');
+		$('#play-with-opponent-interface-actions').attr("hidden", true);
+		OPPONENT_USERNAME = "";
+		clearParticipantsListView();
 
 	}
 

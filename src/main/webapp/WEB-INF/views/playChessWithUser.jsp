@@ -43,11 +43,13 @@
 						<span id="your-username"></span><span id="opponent-username"></span>
 						<div id="move-for"></div>
 
-						<button id="send-move-btn" class="btn btn-info"
-							data-opponentName="">send-move</button>
-						<button id="undo-move-btn" class="btn btn-default">undo-move</button>
-						<button class="btn btn-warning pull-right" data-gamePartner=""
-							id="quit-game-btn">quit game</button>
+						<div id="play-with-opponent-interface-actions">
+							<button id="send-move-btn" class="btn btn-info"
+								data-opponentName="">send-move</button>
+							<button id="undo-move-btn" class="btn btn-default">undo-move</button>
+							<button class="btn btn-warning pull-right" data-gamePartner=""
+								id="quit-game-btn">quit game</button>
+						</div>
 					</div>
 
 					<button class="btn btn-primary" id="connectToWebSocket">connect</button>
@@ -88,62 +90,19 @@
 <jsp:include page="includes/modal_boxes/user_info_modal.jsp" />
 
 <!-- JAVASCRIPTS -->
-<!-- tylko zalogowany uzytkownik ma wlaczony poniższy javascript -->
+<!-- tylko zalogowany uzytkownik ma zalaczone pliki javascript dotyczace gry w sieci -->
 <security:authorize access="hasRole('ROLE_USER')">
 
 	<!-- set variable websocket username for js -->
 	<c:set var="sender" value="${currentUserName}" />
-
-	<!-- WebSocket -->
 	<script>
-		// main ------------------------------------------------
 		var WEBSOCKET_CLIENT_NAME = '${sender}';
-
-		var SENDED_CHESS_MOVE_STATUS = "";
-
-		var CURRENT_CHESS_MOVE = "";
-
-		var CHESS_MOVE_COUNTER = 0;
-
-		var WHITE_COLOR_USERNAME = "";
-
-		var BLACK_COLOR_USERNAME = "";
-
-		$(function() {
-
-			$('#game-status').data('isPlaying', false);
-
-			$('#connectToWebSocket').click(function(event) {
-				connectToWebSocket();
-			});
-
-			$('#disconnect').attr("disabled", true);
-
-			$('#disconnect').click(function() {
-				closeWsConnection();
-			});
-
-			$('#quit-game-btn').click(function() {
-				quitGame();
-			});
-
-			$('#undo-move-btn').click(function() {
-				undoMove();
-			});
-
-			$('#send-move-btn').click(function() {
-
-				if (CHESS_MOVE_COUNTER == 0) {
-					alert('You have to make a move before you send it');
-					return;
-				}
-
-				sendYourMoveByFenNotationToUser();
-				showActualMoveStatus();
-			});
-
-		});
 	</script>
+
+	<!-- Main -->
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/playChessWithUserMain.js"></script>
+
 	<!-- IMPORT WEBSOCKET CLIENT ENDPOINT SCRIPT -->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/websocketClientEndpoint.js">
