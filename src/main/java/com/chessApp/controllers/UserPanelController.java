@@ -114,7 +114,10 @@ public class UserPanelController {
 		List<ChessGame> userChessGames = chessGamesRepository
 				.getUserChessGames(userLogin);
 
+		UserAccount userInfo = usersRepository.getUserByUsername(userLogin);
+
 		userGamesSite.addObject("userChessGames", userChessGames);
+		userGamesSite.addObject("user", userInfo);
 
 		return userGamesSite;
 	}

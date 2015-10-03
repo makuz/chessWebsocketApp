@@ -22,6 +22,7 @@ public class UserAccount implements Comparable<UserAccount> {
 	private Date registrationDate;
 	private Long numberOfGamesPlayed;
 	private Long numberOfWonChessGames;
+	private Long numberOfLostChessGames;
 
 	public UserAccount() {
 
@@ -146,7 +147,17 @@ public class UserAccount implements Comparable<UserAccount> {
 				+ email + ", registrationHashString=" + registrationHashString
 				+ ", isRegistrationConfirmed=" + isRegistrationConfirmed
 				+ ", registrationDate=" + registrationDate
-				+ ", numberOfWonChessGames=" + numberOfWonChessGames + "]";
+				+ ", numberOfGamesPlayed=" + numberOfGamesPlayed
+				+ ", numberOfWonChessGames=" + numberOfWonChessGames
+				+ ", numberOfLostChessGames=" + numberOfLostChessGames + "]";
+	}
+
+	public Long getNumberOfLostChessGames() {
+		return numberOfLostChessGames;
+	}
+
+	public void setNumberOfLostChessGames(Long numberOfLostChessGames) {
+		this.numberOfLostChessGames = numberOfLostChessGames;
 	}
 
 	@Override

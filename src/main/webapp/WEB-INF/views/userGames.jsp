@@ -11,13 +11,36 @@
 					.getProperty("app.contextpath");
 		%>
 		<script
-			src="<c:url value="${pageContext.request.contextPath}/resources/js/main.js" />"></script>
+			src="<c:url value="${pageContext.request.contextPath}/resources/js/userGamesHistory.js" />"></script>
+
+		<div id="user-games-stats">
+			<c:if test="${user.numberOfGamesPlayed ne null}">
+				<div>
+					<span class="text-info">number of games palyed: </span>
+					${user.numberOfGamesPlayed}
+				</div>
+			</c:if>
+			<c:if test="${user.numberOfWonChessGames ne null}">
+				<div>
+					<span class="text-success">number of won games: </span>
+					${user.numberOfWonChessGames}
+				</div>
+			</c:if>
+			<c:if test="${user.numberOfLostChessGames ne null}">
+				<div>
+					<span class="text-danger">number of lost games: </span>
+					${user.numberOfLostChessGames}
+				</div>
+			</c:if>
+		</div>
+
 		<div id="gamesTable">
 			<h1 class="text-center">Your chess games</h1>
 			<jsp:include page="includes/tables/userGamesTable.jsp"></jsp:include>
 		</div>
 	</div>
 </div>
-<jsp:include page="includes/modal_boxes/user_end_chess_game_pos_modal.jsp" />
+<jsp:include
+	page="includes/modal_boxes/user_end_chess_game_pos_modal.jsp" />
 
 <jsp:include page="includes/footer.jsp" />

@@ -136,7 +136,7 @@ public class GameMessageExchangeProtocol {
 
 	private synchronized void saveStatisticsDataToDbIfQuitGameOrIfCheckMate(
 			WebSocketMessage messageObj) {
-		
+
 		WebSocketGameUser webSocketUserObj = usersHandler
 				.getWebsocketUser(messageObj.getSendFrom());
 		ChessGame game = chessGamesHandler
@@ -189,20 +189,36 @@ public class GameMessageExchangeProtocol {
 			game.setWinnerUsername(messageObj.getSendFrom());
 			game.setLoserUsername(messageObj.getSendTo());
 
+			// winner -----------------------------------
 			UserAccount winner = usersRepository.getUserByUsername(game
 					.getWinnerUsername());
 
-			Long userNumberOfWonGames = winner.getNumberOfWonChessGames();
+			Long winnerNumberOfWonGames = winner.getNumberOfWonChessGames();
 
-			if (userNumberOfWonGames == null) {
+			if (winnerNumberOfWonGames == null) {
 				winner.setNumberOfWonChessGames(new Long(1));
 			} else {
-				userNumberOfWonGames++;
-				winner.setNumberOfWonChessGames(userNumberOfWonGames);
+				winnerNumberOfWonGames++;
+				winner.setNumberOfWonChessGames(winnerNumberOfWonGames);
 			}
 
 			usersRepository.updateUser(winner);
 
+			// looser ----------------------------------
+
+			UserAccount looser = usersRepository.getUserByUsername(game
+					.getLoserUsername());
+
+			Long looserNumberOfLostGames = looser.getNumberOfLostChessGames();
+
+			if (looserNumberOfLostGames == null) {
+				looser.setNumberOfLostChessGames(new Long(1));
+			} else {
+				looserNumberOfLostGames++;
+				looser.setNumberOfWonChessGames(looserNumberOfLostGames);
+			}
+
+			usersRepository.updateUser(looser);
 			// sessionHandler.sendToSession(game.getLoserUsername(),
 			// game.getWinnerUsername(), gson.toJson(messageObj));
 

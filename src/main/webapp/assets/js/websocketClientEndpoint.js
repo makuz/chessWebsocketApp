@@ -285,6 +285,7 @@ window.onbeforeunload = function() {
 function testCheckMateSaveToDb() {
 
 	var checkMatePos = "4kb2/1pp1ppp1/5n2/r4K1b/3q4/PPP5/R2P1PP1/2B1r3 w - - 7 20";
+	fenFromYourMove.value = checkMatePos;
 	board.position(checkMatePos);
 	game = new Chess(checkMatePos);
 	updateStatus();

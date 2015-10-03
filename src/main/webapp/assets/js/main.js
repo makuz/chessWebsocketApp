@@ -1,23 +1,40 @@
 /**
- * 
+ * main js
  */
+$(document).ready(
+		function() {
 
-$(document).ready(function() {
-	$('button.showEndPsoBtn').click(function() {
+			// menu active btn
+			$('#navButtons li:eq( 0 )').addClass('active')
 
-		var fen = $(this).data('fen');
-		showChessGameEndingPos(fen);
-	});
-});
+			var url = window.location.href;
+			$("#navButtons a").each(function() {
 
-function showChessGameEndingPos(pos) {
-	
-	var cfg = {
-			pieceTheme : '/resources/images/chesspieces/wikipedia/{piece}.png',
-			position : pos
-		};
-	
-	var boardInModal = ChessBoard('boardInModal', cfg);
+				if (url.match(this.href)) {
+					$('#navButtons li:eq( 0 )').removeClass('active')
+					$(this).closest("li").addClass("active");
+				}
+			});
 
-	$('#chess-end-pos-modal').modal('show');
-}
+			// datatable
+			if (window.location.href == "http://" + window.location.host
+					+ "/user/your-chessgames"
+					|| window.location.href == "https://"
+							+ window.location.host + "/user/your-chessgames") {
+				$('#gamesTableForDataTableJS').dataTable();
+				$('.paginate_button.current').attr('style',
+						'color: white !important');
+
+			}
+
+			if (window.location.href == "http://" + window.location.host
+					+ "/admin/users"
+					|| window.location.href == "https://"
+							+ window.location.host + "/admin/users") {
+				$('#usersTableForDataTableJS').DataTable();
+				$('.paginate_button.current').attr('style',
+						'color: white !important');
+
+			}
+
+		});

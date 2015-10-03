@@ -6,7 +6,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="table-responsive">
-	<table
+	<table id="gamesTableForDataTableJS"
 		class="table table-condensed table-striped table-bordered table-accounts">
 		<thead>
 			<tr>
@@ -49,8 +49,7 @@
 					</td>
 					<td class=" text-center">
 						<button class="btn btn-success showEndPsoBtn"
-							data-fen="${chessGame.endingGameFENString}">show end
-							position</button>
+							data-fen="${chessGame.endingGameFENString}">show</button>
 					</td>
 
 				</tr>
