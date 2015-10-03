@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.chessApp.dao.ChessGamesRepository;
+import com.chessApp.dao.UsersRepository;
 import com.chessApp.model.ChessGame;
 import com.chessApp.model.ChessMove;
+import com.chessApp.model.UserAccount;
 import com.google.gson.Gson;
 
 @Service
@@ -30,7 +32,10 @@ public class GameMessageExchangeProtocol {
 
 	@Autowired
 	private ChessGamesRepository chessGamesRepository;
-	
+
+	@Autowired
+	private UsersRepository usersRepository;
+
 	public GameMessageExchangeProtocol(WebSocketSessionHandler sessionHandler,
 			WebsocketUsesrHandler usesrHandler,
 			LiveChessTournamentsHandler chessGamesHandler) {
@@ -85,18 +90,6 @@ public class GameMessageExchangeProtocol {
 					if (userONEPlayWithUserTWO(fromUser, toUser)) {
 
 						ChessMove currentMove = messageObj.getChessMove();
-						
-						System.out.println("------------------------------------");
-						System.out.println("------------------------------------");
-						System.out.println("------------------------------------");
-						System.out.println("-----currentMove---------");
-						System.out.println(currentMove);
-						
-						System.out.println("------------------------------------");
-						System.out.println("------------------------------------");
-						System.out.println("------------------------------------");
-						System.out.println("-----messageObj---------");
-						System.out.println(messageObj);
 
 						chessGamesHandler.addActualMoveToThisGameObject(
 								toUser.getUniqueActualGameHash(), currentMove);
@@ -124,24 +117,7 @@ public class GameMessageExchangeProtocol {
 			if (messageType.equals(WebSocketMessageType.QUIT_GAME)
 					|| messageType.equals(WebSocketMessageType.GAME_OVER)) {
 
-				WebSocketGameUser gUser = usersHandler
-						.getWebsocketUser(messageObj.getSendFrom());
-				ChessGame game = chessGamesHandler.getGameByUniqueHashId(gUser
-						.getUniqueActualGameHash());
-				game.setEndDate(new Date());
-				game.setEndingGameFENString(messageObj.getFen());
-				LiveChessTournamentsHandler
-						.calculateAndSetTimeDurationBeetwenGameBeginAndEnd(game);
-
-				if (messageObj.getCheckMate() != null
-						&& messageObj.getCheckMate() == true) {
-					game.setCheckMate(true);
-				} else {
-					game.setCheckMate(false);
-				}
-
-				// save to DB
-				chessGamesRepository.saveGame(game);
+				saveStatisticsDataToDbIfQuitGameOrIfCheckMate(messageObj);
 
 			}
 
@@ -156,6 +132,83 @@ public class GameMessageExchangeProtocol {
 			sessionHandler.sendToAllConnectedSessionsActualParticipantList();
 		}
 
+	}
+
+	private synchronized void saveStatisticsDataToDbIfQuitGameOrIfCheckMate(
+			WebSocketMessage messageObj) {
+		
+		WebSocketGameUser webSocketUserObj = usersHandler
+				.getWebsocketUser(messageObj.getSendFrom());
+		ChessGame game = chessGamesHandler
+				.getGameByUniqueHashId(webSocketUserObj
+						.getUniqueActualGameHash());
+		game.setEndDate(new Date());
+		game.setEndingGameFENString(messageObj.getFen());
+		LiveChessTournamentsHandler
+				.calculateAndSetTimeDurationBeetwenGameBeginAndEnd(game);
+
+		if (messageObj.getCheckMate() != null
+				&& messageObj.getCheckMate() == true) {
+			game.setCheckMate(true);
+		} else {
+			game.setCheckMate(false);
+		}
+
+		UserAccount user1 = usersRepository.getUserByUsername(messageObj
+				.getSendFrom());
+
+		Long user1NumberOfGamesPlayed = user1.getNumberOfGamesPlayed();
+
+		if (user1NumberOfGamesPlayed == null) {
+			user1.setNumberOfGamesPlayed(new Long(1));
+		} else {
+			user1NumberOfGamesPlayed++;
+			user1.setNumberOfGamesPlayed(user1NumberOfGamesPlayed);
+		}
+
+		// save to DB
+		usersRepository.updateUser(user1);
+
+		UserAccount user2 = usersRepository.getUserByUsername(messageObj
+				.getSendTo());
+
+		Long user2NumberOfGamesPlayed = user2.getNumberOfGamesPlayed();
+
+		if (user2NumberOfGamesPlayed == null) {
+			user2.setNumberOfGamesPlayed(new Long(1));
+		} else {
+			user2NumberOfGamesPlayed++;
+			user2.setNumberOfGamesPlayed(user2NumberOfGamesPlayed);
+		}
+
+		// save to DB
+		usersRepository.updateUser(user2);
+
+		if (game.getCheckMate() == true) {
+
+			game.setWinnerUsername(messageObj.getSendFrom());
+			game.setLoserUsername(messageObj.getSendTo());
+
+			UserAccount winner = usersRepository.getUserByUsername(game
+					.getWinnerUsername());
+
+			Long userNumberOfWonGames = winner.getNumberOfWonChessGames();
+
+			if (userNumberOfWonGames == null) {
+				winner.setNumberOfWonChessGames(new Long(1));
+			} else {
+				userNumberOfWonGames++;
+				winner.setNumberOfWonChessGames(userNumberOfWonGames);
+			}
+
+			usersRepository.updateUser(winner);
+
+			// sessionHandler.sendToSession(game.getLoserUsername(),
+			// game.getWinnerUsername(), gson.toJson(messageObj));
+
+		}
+
+		chessGamesRepository.saveGame(game);
 	}
 
 	private synchronized Boolean userONEPlayWithUserTWO(

@@ -54,7 +54,8 @@ public class ChessGamesRepositoryImpl implements ChessGamesRepository {
 		logger.debug("incrementChessGameId()");
 
 		Query query = new Query();
-		ChessGame game = mongoTemplate.findOne(query, ChessGame.class);
+		ChessGame game = mongoTemplate.findOne(query, ChessGame.class,
+				COLLECTION_NAME);
 		if (game == null) {
 			gameToUpdate.setChessGameId(0);
 		} else {

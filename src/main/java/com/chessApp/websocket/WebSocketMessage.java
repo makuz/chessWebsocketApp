@@ -25,6 +25,10 @@ public class WebSocketMessage {
 
 	private ChessMove chessMove;
 
+	private String whiteColUsername;
+
+	private String blackColUsername;
+
 	public WebSocketMessage() {
 
 	}
@@ -101,13 +105,30 @@ public class WebSocketMessage {
 		this.chessMove = chessMove;
 	}
 
+	public String getWhiteColUsername() {
+		return whiteColUsername;
+	}
+
+	public void setWhiteColUsername(String whiteColUsername) {
+		this.whiteColUsername = whiteColUsername;
+	}
+
+	public String getBlackColUsername() {
+		return blackColUsername;
+	}
+
+	public void setBlackColUsername(String blackColUsername) {
+		this.blackColUsername = blackColUsername;
+	}
+
 	@Override
 	public String toString() {
 		return "WebSocketMessage [type=" + type + ", fen=" + fen + ", sendTo="
 				+ sendTo + ", sendFrom=" + sendFrom + ", moveStatus="
 				+ moveStatus + ", sendToObj=" + sendToObj + ", sendFromObj="
 				+ sendFromObj + ", checkMate=" + checkMate + ", chessMove="
-				+ chessMove + "]";
+				+ chessMove + ", whiteColUsername=" + whiteColUsername
+				+ ", blackColUsername=" + blackColUsername + "]";
 	}
 
 }

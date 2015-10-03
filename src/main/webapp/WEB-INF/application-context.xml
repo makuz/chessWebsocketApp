@@ -21,5 +21,7 @@
 
 	<beans:bean id="chessGameModel" class="com.chessApp.model.ChessGame" />
 
+	<beans:bean id="chessMove" class="com.chessApp.model.ChessMove" />
+
 
 </beans:beans>

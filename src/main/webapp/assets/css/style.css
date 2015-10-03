@@ -192,7 +192,7 @@ div#chess-board-play-with-user article.game-actions div.stats {
 	background-color: #FBFBFB;
 	word-wrap: break word;
 	padding: 0.8%;
-	border: 1px solid black;
+	margin-bottom: 1%;
 }
 
 span.author {

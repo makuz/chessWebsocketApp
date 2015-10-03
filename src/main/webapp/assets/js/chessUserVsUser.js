@@ -103,6 +103,8 @@ var updateStatus = function() {
 		}
 
 		// only winner send message, to prevent duplicates
+		// browser client that create game.in_checkmate() is winner
+		// by default
 		if (WEBSOCKET_CLIENT_NAME == winnerUsername) {
 			var fenString = fenFromYourMove.value;
 			webSocket.send(JSON.stringify({
@@ -111,7 +113,9 @@ var updateStatus = function() {
 				winnerColor : winnerColor,
 				winnerUsername : winnerUsername,
 				checkMate : true,
-				loserUsername : loserUsername
+				loserUsername : loserUsername,
+				sendFrom : WEBSOCKET_CLIENT_NAME,
+				sendTo : $('#quit-game-btn').data("gamePartner")
 			}));
 		}
 

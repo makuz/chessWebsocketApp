@@ -20,8 +20,8 @@ public class UserAccount implements Comparable<UserAccount> {
 	private String registrationHashString;
 	private Boolean isRegistrationConfirmed;
 	private Date registrationDate;
-	private long numberOfWonChessGames;
-	private long numberOfGamesPlayed;
+	private Long numberOfGamesPlayed;
+	private Long numberOfWonChessGames;
 
 	public UserAccount() {
 
@@ -102,28 +102,28 @@ public class UserAccount implements Comparable<UserAccount> {
 		return username;
 	}
 
-	public long getNumberOfGamesPlayed() {
-		return numberOfGamesPlayed;
-	}
-
-	public void setNumberOfGamesPlayed(long numberOfGamesPlayed) {
-		this.numberOfGamesPlayed = numberOfGamesPlayed;
-	}
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
+	public Long getNumberOfGamesPlayed() {
+		return numberOfGamesPlayed;
 	}
 
-	public long getNumberOfWonChessGames() {
+	public void setNumberOfGamesPlayed(Long numberOfGamesPlayed) {
+		this.numberOfGamesPlayed = numberOfGamesPlayed;
+	}
+
+	public Long getNumberOfWonChessGames() {
 		return numberOfWonChessGames;
 	}
 
-	public void setNumberOfWonChessGames(long numberOfWonChessGames) {
+	public void setNumberOfWonChessGames(Long numberOfWonChessGames) {
 		this.numberOfWonChessGames = numberOfWonChessGames;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 
 	public void setPassword(String password) {

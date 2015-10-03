@@ -1,10 +1,12 @@
 package com.chessApp.model;
 
+import org.springframework.stereotype.Component;
+
 /*
  * Java representation of Move object
  * in chess.js 
  */
-
+@Component
 public class ChessMove {
 
 	private String color;

@@ -30,13 +30,8 @@
 			</article>
 			<!-- -------------------------- -->
 			<article class="game-actions">
-				<div class="stats" hidden="true">
-					<p class="text-danger">
-						Status: <span id="status"></span>
-					</p>
-					<small class="text-info"> FEN: <br /> <span id="fen"></span>
-					</small><br /> <small class="text-warning"> PGN: <span id="pgn"></span>
-					</small>
+				<div class="stats">
+					Game status: <span class=" text-info" id="status"></span>
 				</div>
 				<input type="text" id="fenFromPreviousMove" hidden="true" /> <input
 					type="text" id="fenFromYourMove" hidden="true" />
@@ -105,15 +100,15 @@
 		var WEBSOCKET_CLIENT_NAME = '${sender}';
 
 		var SENDED_CHESS_MOVE_STATUS = "";
-		
+
 		var CURRENT_CHESS_MOVE = "";
 
 		var CHESS_MOVE_COUNTER = 0;
-		
+
 		var WHITE_COLOR_USERNAME = "";
-		
+
 		var BLACK_COLOR_USERNAME = "";
-		
+
 		$(function() {
 
 			$('#game-status').data('isPlaying', false);
@@ -131,7 +126,7 @@
 			$('#quit-game-btn').click(function() {
 				quitGame();
 			});
-			
+
 			$('#undo-move-btn').click(function() {
 				undoMove();
 			});

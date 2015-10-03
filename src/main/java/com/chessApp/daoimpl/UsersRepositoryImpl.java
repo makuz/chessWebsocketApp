@@ -49,7 +49,8 @@ public class UsersRepositoryImpl implements UsersRepository {
 		logger.debug("incrementUserId()");
 
 		Query query = new Query();
-		UserAccount user = mongoTemplate.findOne(query, UserAccount.class);
+		UserAccount user = mongoTemplate.findOne(query, UserAccount.class,
+				COLLECTION_NAME);
 		if (user == null) {
 			usertoUpdate.setUserId(0);
 		} else {
@@ -131,6 +132,14 @@ public class UsersRepositoryImpl implements UsersRepository {
 		updateUserData.set("registrationDate", user.getRegistrationDate());
 		updateUserData.set("registrationHashString",
 				user.getRegistrationHashString());
+		if (user.getNumberOfGamesPlayed() != null) {
+			updateUserData.set("numberOfGamesPlayed",
+					user.getNumberOfGamesPlayed());
+		}
+		if (user.getNumberOfWonChessGames() != null) {
+			updateUserData.set("numberOfWonChessGames",
+					user.getNumberOfWonChessGames());
+		}
 
 		if (user.getPassword() != null
 				&& !user.getPassword().equalsIgnoreCase("")) {

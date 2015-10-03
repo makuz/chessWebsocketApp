@@ -14,8 +14,10 @@
 				<td class="text-center">begin date</td>
 				<td class="text-center">end date</td>
 				<td class="text-center">game duration</td>
-				<td class="text-center" style="width: 10px !important">number of moves</td>
-				<td class="text-center" style="width: 5px !important">white color</td>
+				<td class="text-center" style="width: 10px !important">number
+					of moves</td>
+				<td class="text-center" style="width: 5px !important">white
+					color</td>
 				<td class="text-center">black color</td>
 				<td class="text-center">check mate</td>
 				<td class="text-center">winner</td>
@@ -25,9 +27,8 @@
 		<tbody>
 			<c:forEach var="chessGame" items="${userChessGames}">
 				<tr>
-					<td class="facebookBlue text-center"><c:out
-							value="${chessGame.chessGameId}" /></td>
-
+					<td class="facebookBlue text-center"><span
+						class="glyphicon glyphicon-info-sign"></span></td>
 					<td class=" text-center"><fmt:formatDate pattern="dd-MM-yyyy"
 							value="${chessGame.beginDate}" /></td>
 					<td class=" text-center"><fmt:formatDate pattern="dd-MM-yyyy"

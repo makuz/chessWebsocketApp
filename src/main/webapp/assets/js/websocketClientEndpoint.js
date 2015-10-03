@@ -85,7 +85,7 @@ function connectToWebSocket() {
 
 				showGameHandshakeModalBox(message.sendFrom);
 				// startTimeoutForHandshake();
-				
+
 				setChessColorGlobalVars(message);
 
 				$('#your-username')
@@ -111,7 +111,7 @@ function connectToWebSocket() {
 				// set the first move status at start
 
 				SENDED_CHESS_MOVE_STATUS = message.moveStatus;
-				
+
 				setChessColorGlobalVars(message)
 
 				// set move info
@@ -170,6 +170,7 @@ function connectToWebSocket() {
 
 				if (message.type == "quit-game") {
 					alert("user quit game");
+					CHESS_MOVE_COUNTER = 0;
 				}
 
 				clearParticipantsListView();
@@ -185,6 +186,35 @@ function connectToWebSocket() {
 			} else if (message.type == "try-later") {
 
 				alert("user is playing now with someone else, \n or is during handshake with someone else,\n try later.");
+
+			} else if (message.type == "game-over") {
+
+				var fenStr = message.fen;
+				if (fenStr != null && fenStr != "") {
+					$('#fenFromPreviousMove').val(fenStr);
+					// chessboard board object
+					board.position(fenStr);
+					// chessjs game object
+					game = new Chess(fenStr);
+					updateStatus();
+				}
+
+				SENDED_CHESS_MOVE_STATUS = message.moveStatus;
+
+				showActualMoveStatus();
+
+				if (message.checkMate == true) {
+					alert("check mate!");
+				}
+				clearParticipantsListView();
+
+				$('#startPosBtn').attr("disabled", false);
+				$('#game-status').data('isPlaying', false);
+				$('#play-with-opponent-interface').attr("hidden", true);
+				$('#game-status').html('');
+				$('#opponent-username').html('');
+				$('#send-move-btn').data("opponentName", '');
+				$('#quit-game-btn').data("gamePartner", '');
 
 			} else {
 				showParticipants(event.data);
@@ -252,6 +282,15 @@ window.onbeforeunload = function() {
 };
 
 // functions -------------------------------------------
+function testCheckMateSaveToDb() {
+
+	var checkMatePos = "4kb2/1pp1ppp1/5n2/r4K1b/3q4/PPP5/R2P1PP1/2B1r3 w - - 7 20";
+	board.position(checkMatePos);
+	game = new Chess(checkMatePos);
+	updateStatus();
+
+}
+// -------------------------------------------------------
 
 function undoMove() {
 	console.log('undoMove()');
@@ -267,18 +306,18 @@ function undoMove() {
 // -----------------------------------------------------
 
 function setChessColorGlobalVars(msgObj) {
-	
-	if(msgObj.sendToObj.chessColor == 'white') {
+
+	if (msgObj.sendToObj.chessColor == 'white') {
 		WHITE_COLOR_USERNAME = msgObj.sendToObj.username;
 		BLACK_COLOR_USERNAME = msgObj.sendFromObj.username;
 	} else {
 		WHITE_COLOR_USERNAME = msgObj.sendFromObj.username;
 		BLACK_COLOR_USERNAME = msgObj.sendToObj.username;
 	}
-	
+
 }
 
-//-----------------------------------------------------
+// -----------------------------------------------------
 
 function showGameHandshakeModalBox(sender) {
 
@@ -361,6 +400,8 @@ function clearParticipantsListView() {
 function inviteUserToGame(reciever) {
 	console.log("game-handshake from " + WEBSOCKET_CLIENT_NAME);
 	console.log(" to " + reciever);
+
+	CHESS_MOVE_COUNTER = 0;
 	var msg = "invitation";
 	webSocket.send(JSON.stringify({
 		type : "game-handshake-invitation",
@@ -426,13 +467,14 @@ function agreementToPlay() {
 function quitGame() {
 
 	var endFen = fenFromYourMove.value;
+	CHESS_MOVE_COUNTER = 0;
 
 	webSocket.send(JSON.stringify({
 		type : "quit-game",
-		sendFrom : WEBSOCKET_CLIENT_NAME,
 		whiteColUsername : WHITE_COLOR_USERNAME,
 		blackColUsername : BLACK_COLOR_USERNAME,
 		fen : endFen,
+		sendFrom : WEBSOCKET_CLIENT_NAME,
 		sendTo : $('#quit-game-btn').data("gamePartner")
 	}));
 
@@ -534,7 +576,7 @@ function showParticipants(data) {
 					+ participantsArr[i].username + '\'' + ')"' + '>'
 					+ '<span class="glyphicon glyphicon-user text-success" />'
 					+ '&nbsp;' + participantsArr[i].username + '</button>'
-					+ '<span class="small"> ' + '&nbsp;'
+					+ '<span class="small text-info"> ' + '&nbsp;'
 					+ participantsArr[i].communicationStatus + ' </span>'
 					+ '<span class="participant-timer"></span>';
 		}
