@@ -109,6 +109,12 @@
 		
 	</script>
 
+	<!-- IMPORT WEBSOCKET CLIENT MESSAGE PROTOCOL -->
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/wsClientMessageExchangeProtocol.js">
+		
+	</script>
+
 	<!-- IMPORT WEBSOCKET CLIENT ENDPOINT FUNCTIONS -->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/wsClientEndpointFunctions.js">
