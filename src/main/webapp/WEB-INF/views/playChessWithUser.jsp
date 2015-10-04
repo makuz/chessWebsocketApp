@@ -109,7 +109,13 @@
 		
 	</script>
 
-	<!-- IMPORT CHESS SCRIPT -->
+	<!-- IMPORT WEBSOCKET CLIENT ENDPOINT FUNCTIONS -->
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/wsClientEndpointFunctions.js">
+		
+	</script>
+
+	<!-- IMPORT CHESS LOGIC SCRIPT -->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/chessUserVsUser.js">
 		
