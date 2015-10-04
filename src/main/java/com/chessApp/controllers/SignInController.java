@@ -49,14 +49,14 @@ public class SignInController {
 
 	@RequestMapping("/signin/account/creation")
 	public ModelAndView getSiteAccountCreationInfo(String userCreationMsg,
-			boolean created, String userLogin, String userPassword) {
+			boolean created, String userMail, String userPassword) {
 
 		ModelAndView accountCreationInfo = new ModelAndView(
 				"creatAccountMessage");
 		accountCreationInfo.addObject("msg", userCreationMsg);
 		accountCreationInfo.addObject("created", created);
 		if (created) {
-			accountCreationInfo.addObject("userMail", userLogin);
+			accountCreationInfo.addObject("userMail", userMail);
 		}
 		addBasicObjectsToModelAndView(accountCreationInfo);
 
@@ -108,7 +108,7 @@ public class SignInController {
 		mailService.sendRegistrationMail(userEmail, randomHashString);
 
 		return getSiteAccountCreationInfo("user created successfull", true,
-				userLogin, userPassword);
+				userEmail, userPassword);
 
 	}
 

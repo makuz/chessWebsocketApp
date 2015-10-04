@@ -23,7 +23,7 @@
 
 						<h3 class="text-center">Dziękujemy za rejestrację</h3>
 						<p class="text-center">
-							na adres: <b>${userMail}</b>
+							na adres: <span class="text-info"><b>${userMail}</b></span>
 						</p>
 						<p class="text-center">Został wysłany link aktywacyjny</p>
 						<p class="text-center">Aby aktywować konto należy kliknąć w

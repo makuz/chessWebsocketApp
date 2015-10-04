@@ -39,7 +39,7 @@ public class RegistrationConfirmationController {
 
 		ModelAndView confirmRegistrationMsg = new ModelAndView(
 				"confirmRegistrationMessage");
-		confirmRegistrationMsg.addObject("userEmail", user.getEmail());
+		confirmRegistrationMsg.addObject("username", user.getUsername());
 		return confirmRegistrationMsg;
 	}
 

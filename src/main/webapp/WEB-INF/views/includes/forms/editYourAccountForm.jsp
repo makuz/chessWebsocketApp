@@ -24,7 +24,7 @@
 		<label class="control-label col-sm-2">login</label>
 		<div class="col-sm-8">
 			<input type="text" class="form-control" name="j_username"
-				value="${user.username}" readonly />
+				value="${user.username}" readonly/>
 		</div>
 	</div>
 

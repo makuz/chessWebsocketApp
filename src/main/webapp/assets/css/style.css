@@ -271,6 +271,17 @@ div#connection-status div.connection-status-msg h2 {
 	width: 70%;
 }
 
+input[readonly] {
+	background-color: #C9C9C9 !important;
+}
+
+input[readonly]:focus {
+	outline: 0;
+	border-color: none;
+	box-shadow: none;
+	border:  1px solid #CCC;
+}
+
 div#play-with-opponent-interface {
 	background-color: #FBFBFB;
 	padding: 2%;

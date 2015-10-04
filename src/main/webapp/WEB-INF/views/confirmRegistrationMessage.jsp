@@ -17,7 +17,7 @@
 			<div class="row">
 
 				<h2 class="alert alert-success text-center user-create-msg">
-					Twoje Konto <b>${userEmail}</b> zostało potwierdzone
+					<b>${username}</b> Twoje Konto zostało potwierdzone
 				</h2>
 
 				<p class="text-center">Teraz wystarczy się zalogować</p>
