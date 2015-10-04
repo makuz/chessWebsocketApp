@@ -8,7 +8,7 @@
 	<jsp:include page="includes/menu.jsp" />
 	<div class="main-wrapper">
 		<div class="site-title">
-			<h3 class="text-left">Play Chess</h3>
+			<h3 class="text-left">Play chess with computer</h3>
 		</div>
 		<script
 			src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>

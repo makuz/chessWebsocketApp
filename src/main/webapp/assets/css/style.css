@@ -102,6 +102,10 @@ div#user-games-stats {
 	margin-top: 1%;
 }
 
+div#bestChessGamersChart {
+	margin-top: 3%;
+}
+
 div#gamesTableForDataTableJS_filter {
 	display: none !important;
 }
@@ -268,10 +272,8 @@ article#chess-board-home div#board {
 }
 
 article#chess-board-play-with-computer div#board {
-	width: 40em;
-	padding: 1%;
-	float: left;
-	margin-right: 5%;
+	width: 45em;
+	padding: 0;
 	margin-bottom: 3%;
 }
 
@@ -279,8 +281,7 @@ article.game-stats-with-computer {
 	background-color: #FBFBFB;
 	word-wrap: break word;
 	padding: 0.8%;
-	width: 450px;
-	float: left;
+	width: 45em;
 	border: 2px black solid;
 	margin-top: -0.9%;
 }

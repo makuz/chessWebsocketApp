@@ -20,7 +20,7 @@
 
 
 			<div class="site-title">
-				<span class="text-left lead">Play Chess</span> <span
+				<span class="text-left lead">Play chess with others</span> <span
 					id="startPosBtn" class="btn btn-danger
 					btn-sm">start
 					new game</span>

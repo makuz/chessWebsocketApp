@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.chessApp.dao.UsersRepository;
 import com.chessApp.model.UserAccount;
+import com.google.gson.Gson;
 
 @Controller
 public class HomeController {
@@ -39,7 +40,8 @@ public class HomeController {
 		ModelAndView bestPlayers = new ModelAndView("bestPlayers");
 		addBasicObjectsToModelAndView(bestPlayers);
 		List<UserAccount> bestPlayingUsers = repository.getBestPlaying10Users();
-		bestPlayers.addObject("bestPlayingUsers", bestPlayingUsers);
+		Gson gson = new Gson();
+		bestPlayers.addObject("bestPlayersJson", gson.toJson(bestPlayingUsers));
 
 		return bestPlayers;
 	}
