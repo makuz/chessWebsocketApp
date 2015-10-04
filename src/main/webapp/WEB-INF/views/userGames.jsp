@@ -16,19 +16,19 @@
 		<div id="user-games-stats">
 			<c:if test="${user.numberOfGamesPlayed ne null}">
 				<div>
-					<span class="text-info">number of games palyed: </span>
+					<span class="text-info text-uppercase">number of games palyed : </span>
 					${user.numberOfGamesPlayed}
 				</div>
 			</c:if>
 			<c:if test="${user.numberOfWonChessGames ne null}">
 				<div>
-					<span class="text-success">number of won games: </span>
+					<span class="text-success text-uppercase">number of won games : </span>
 					${user.numberOfWonChessGames}
 				</div>
 			</c:if>
 			<c:if test="${user.numberOfLostChessGames ne null}">
 				<div>
-					<span class="text-danger">number of lost games: </span>
+					<span class="text-danger text-uppercase">number of lost games : </span>
 					${user.numberOfLostChessGames}
 				</div>
 			</c:if>

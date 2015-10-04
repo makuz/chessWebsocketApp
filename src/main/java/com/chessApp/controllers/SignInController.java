@@ -68,6 +68,7 @@ public class SignInController {
 	public ModelAndView addUserAction(@RequestParam Map<String, String> reqMap) {
 
 		String userLogin = reqMap.get("j_username");
+		String userEmail = reqMap.get("j_email");
 		String userPassword = reqMap.get("j_password");
 		String confirmPassword = reqMap.get("j_confirm_password");
 
@@ -88,7 +89,7 @@ public class SignInController {
 		newUser.setUsername(userLogin);
 		newUser.setPassword(hashPassword);
 		newUser.setRole(UserRoles.USER.geNumericValue());
-		newUser.setEmail(userLogin);
+		newUser.setEmail(userEmail);
 
 		String randomHashString = UUID.randomUUID().toString();
 
@@ -104,7 +105,7 @@ public class SignInController {
 
 		}
 
-		mailService.sendRegistrationMail(userLogin, randomHashString);
+		mailService.sendRegistrationMail(userEmail, randomHashString);
 
 		return getSiteAccountCreationInfo("user created successfull", true,
 				userLogin, userPassword);

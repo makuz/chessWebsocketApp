@@ -32,8 +32,16 @@ article, section {
 
 .navView {
 	background-color: #ddd;
-	padding: 1% 1% 0 1%;
+	padding: 1% 0 0 1%;
 	width: 100%;
+}
+
+.logOutBtn {
+	background-color: #CECECE;
+}
+
+.logInBtn {
+	background-color: #E4E4E4;
 }
 
 li.list-group-item {
@@ -163,6 +171,11 @@ div#participants button.username {
 	font-size: 90%;
 }
 
+div#navPilsDivWrapper {
+	width: 100%;
+	min-height: 1em;
+}
+
 div#chess-board-play-with-user div#board {
 	padding-top: 1em;
 	width: 40em;
@@ -179,6 +192,9 @@ div.main-wrapper {
 @media ( min-width : 768px) and (max-width: 991px) {
 	div.main-wrapper {
 		min-height: 1150px;
+	}
+	div.wrapperForKeepCenterPosition {
+		margin-left: 5%;
 	}
 }
 
@@ -292,10 +308,12 @@ span#startPosBtn {
 }
 
 div.game-stats-home {
+	margin-top: 2%;
+	clear: both;
 	background-color: #FBFBFB;
 	word-wrap: break word;
 	padding: 0.8%;
-	width: 500px;
+	width: 100%;
 	text-align: center;
 	border: 2px black solid;
 }

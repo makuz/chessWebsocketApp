@@ -7,7 +7,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 
-<ul id="navButtons" class="nav nav-tabs responsive navView">
+<ul id="navButtons" class="nav nav-tabs navView">
 	<li><a href="<%=contextURL%>/">home</a></li>
 	<li><a href="<%=contextURL%>/play-chess-with-computer">play-with-computer</a></li>
 	<li><a href="<%=contextURL%>/play-chess-with-user">play-with-others</a></li>
@@ -32,9 +32,9 @@
 	</security:authorize>
 	<li><a href="<%=contextURL%>/home/best-players">best-players</a></li>
 
-	<li class="pull-right text-uppercase"><a
+	<li class="pull-right logOutBtn text-capitalize"><a
 		href="<%=contextURL%>/logout">log out</a></li>
-	<li class="pull-right text-uppercase"><a
+	<li class="pull-right logInBtn text-capitalize"><a
 		href="<%=contextURL%>/login">log in</a></li>
 </ul>
 <div class="welcome-user-line">

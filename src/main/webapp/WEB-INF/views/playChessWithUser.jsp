@@ -11,75 +11,80 @@
 <div class="container-fluid">
 	<jsp:include page="includes/menu.jsp" />
 	<div id="chess-board-play-with-user" class="main-wrapper">
-		<br />
-		<!-- DECLARE VARIABLE isLoggedIn -->
-		<security:authorize access="hasRole('ROLE_USER')" var="isLoggedIn" />
-		<security:authorize access="hasRole('ROLE_USER')">
-			<script
-				src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>
+
+		<div class="wrapperForKeepCenterPosition">
+			<br />
+			<!-- DECLARE VARIABLE isLoggedIn -->
+			<security:authorize access="hasRole('ROLE_USER')" var="isLoggedIn" />
+			<security:authorize access="hasRole('ROLE_USER')">
+				<script
+					src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>
 
 
-			<div class="site-title">
-				<span class="text-left lead">Play chess with others</span> <span
-					id="startPosBtn" class="btn btn-danger
+				<div class="site-title">
+					<span class="text-left lead">Play chess with others</span> <span
+						id="startPosBtn" class="btn btn-danger
 					btn-sm">start
-					new game</span>
-			</div>
-			<article id="aside-board">
-				<div id="board" class="row-fluid"></div>
-			</article>
-			<!-- -------------------------- -->
-			<article class="game-actions">
-				<div class="stats">
-					Game status: <span class=" text-info" id="status"></span>
+						new game</span>
 				</div>
-				<input type="text" id="fenFromPreviousMove" hidden="true" /> <input
-					type="text" id="fenFromYourMove" hidden="true" />
-				<section id="onlineUsersSection">
-					<div id="connection-status"></div>
-					<div id="game-status" data-isPlaying=""></div>
-
-					<div id="play-with-opponent-interface" hidden="true">
-						<span id="your-username"></span><span id="opponent-username"></span>
-						<div id="move-for"></div>
-
-						<div id="play-with-opponent-interface-actions">
-							<button id="send-move-btn" class="btn btn-info"
-								data-opponentName="">send-move</button>
-							<button id="undo-move-btn" class="btn btn-default">undo-move</button>
-							<button class="btn btn-warning pull-right" data-gamePartner=""
-								id="quit-game-btn">quit game</button>
-						</div>
+				<article id="aside-board">
+					<div id="board" class="row-fluid"></div>
+				</article>
+				<!-- -------------------------- -->
+				<article class="game-actions">
+					<div class="stats">
+						Game status: <span class=" text-info" id="status"></span>
 					</div>
+					<input type="text" id="fenFromPreviousMove" hidden="true" /> <input
+						type="text" id="fenFromYourMove" hidden="true" />
+					<section id="onlineUsersSection">
+						<div id="connection-status"></div>
+						<div id="game-status" data-isPlaying=""></div>
 
-					<button class="btn btn-primary" id="connectToWebSocket">connect</button>
-					<button class="btn btn-danger pull-right" id="disconnect">disconnect</button>
-					<hr />
-					<div id="participants">
-						<h3>Participants :</h3>
-						<br />
-						<div id="participants-user-names">
-							<ul class="list-group"></ul>
+						<div id="play-with-opponent-interface" hidden="true">
+							<span id="your-username"></span><span id="opponent-username"></span>
+							<div id="move-for"></div>
 
+							<div id="play-with-opponent-interface-actions">
+								<button id="send-move-btn" class="btn btn-info"
+									data-opponentName="">send-move</button>
+								<button id="undo-move-btn" class="btn btn-default">undo-move</button>
+								<button class="btn btn-warning pull-right" data-gamePartner=""
+									id="quit-game-btn">quit game</button>
+							</div>
 						</div>
 
-					</div>
-				</section>
-			</article>
+						<button class="btn btn-primary" id="connectToWebSocket">connect</button>
+						<button class="btn btn-danger pull-right" id="disconnect">disconnect</button>
+						<hr />
+						<div id="participants">
+							<h3>Participants :</h3>
+							<br />
+							<div id="participants-user-names">
+								<ul class="list-group"></ul>
 
-		</security:authorize>
-		<c:if test="${!isLoggedIn}">
-			<div class="alert-log-in-to-play">
-				<div class="alert alert-warning" id="play-chess-not-loggedin-alert"
-					role="alert">
-					<h3>You have to be logged in to play chess with other users</h3>
+							</div>
+
+						</div>
+					</section>
+				</article>
+
+			</security:authorize>
+			<c:if test="${!isLoggedIn}">
+				<div class="alert-log-in-to-play">
+					<div class="alert alert-warning" id="play-chess-not-loggedin-alert"
+						role="alert">
+						<h3>You have to be logged in to play chess with other users</h3>
+					</div>
+					<div id="play-chess-not-loggedin-btns" class="pull-right">
+						<a class="btn btn-info" href="/login">log in</a> <a
+							class="btn btn-success" href="/signin">sign in</a>
+					</div>
 				</div>
-				<div id="play-chess-not-loggedin-btns" class="pull-right">
-					<a class="btn btn-info" href="/login">log in</a> <a
-						class="btn btn-success" href="/signin">sign in</a>
-				</div>
-			</div>
-		</c:if>
+			</c:if>
+
+		</div>
+
 	</div>
 </div>
 

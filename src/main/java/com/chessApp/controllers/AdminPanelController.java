@@ -157,12 +157,12 @@ public class AdminPanelController {
 	@RequestMapping(value = "admin/users/addUser", method = RequestMethod.POST)
 	public ModelAndView addUser(@RequestParam Map<String, String> userParams) {
 
-		String plaintextPassword = userParams.get("j_password");
 		String userLogin = userParams.get("j_username");
+		String plaintextPassword = userParams.get("j_password");
+		String confirmPassword = userParams.get("j_confirm_password");
 		String name = userParams.get("j_name");
 		String lastname = userParams.get("j_lastname");
 		String adminFlag = userParams.get("j_adminFlag");
-		String confirmPassword = userParams.get("j_confirm_password");
 		String email = userParams.get("j_email");
 
 		// validation

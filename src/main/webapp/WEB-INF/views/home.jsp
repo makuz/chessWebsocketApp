@@ -9,16 +9,21 @@
 <div class="container-fluid">
 	<jsp:include page="includes/menu.jsp" />
 	<div class="main-wrapper">
-		<article id="home-img-article">
-			<div class="site-title">
-				<h3 class="text-left">Play Chess with us</h3>
-			</div>
-		</article>
-		<img id="home-img" class="img-responsive"
-			src="<c:url value="${pageContext.request.contextPath}/resources/images/chess.jpg" />" />
-		<article id="chess-board-home">
-			<div id="board"></div>
-			<br />
+
+		<div class="wrapperForKeepCenterPosition">
+
+			<article id="home-img-article">
+				<div class="site-title">
+					<h3 class="text-left">Play Chess with us</h3>
+				</div>
+				<img id="home-img" class="img-responsive"
+					src="<c:url value="${pageContext.request.contextPath}/resources/images/chess.jpg" />" />
+			</article>
+
+			<article id="chess-board-home">
+				<div id="board"></div>
+			</article>
+
 			<div class="game-stats-home">
 				<p class="text-danger">
 					Status: <span id="status"></span>
@@ -26,7 +31,8 @@
 				<small class="text-info"> FEN: <br /> <span id="fen"></span>
 				</small>
 			</div>
-		</article>
+
+		</div>
 	</div>
 </div>
 <!-- IMPORT CHESS SCRIPT -->

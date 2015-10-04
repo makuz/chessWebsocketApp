@@ -15,7 +15,6 @@
 		<c:choose>
 			<c:when test="${msg != null && msg  != '' }">
 				<jsp:include page="includes/usersSiteWithAddUserFormActive.jsp"></jsp:include>
-
 			</c:when>
 			<c:otherwise>
 				<jsp:include page="includes/usersSiteWithUsersTableActive.jsp"></jsp:include>

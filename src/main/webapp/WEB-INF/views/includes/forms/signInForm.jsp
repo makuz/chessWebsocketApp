@@ -15,9 +15,16 @@
 	class="form-horizontal" autocomplete="on">
 
 	<div class="form-group">
+		<label class="control-label col-sm-2">login</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" name="j_username" required />
+		</div>
+	</div>
+
+	<div class="form-group">
 		<label class="control-label col-sm-2">email</label>
 		<div class="col-sm-8">
-			<input type="email" class="form-control" name="j_username" required />
+			<input type="email" class="form-control" name="j_email" required />
 		</div>
 	</div>
 
