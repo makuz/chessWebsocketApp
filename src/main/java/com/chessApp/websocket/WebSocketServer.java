@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 
 @Service
-@ServerEndpoint("/send-fen/{sender}")
+@ServerEndpoint("/chessapp-live-game/{sender}")
 public class WebSocketServer {
 
 	private final static Logger log = Logger.getLogger(WebSocketServer.class);
@@ -41,14 +41,7 @@ public class WebSocketServer {
 		log.info("wiadomość odebrana przez server: ");
 
 		WebSocketMessage message = gson.fromJson(msg, WebSocketMessage.class);
-		
-		System.out.println("---------------------------------");
-		System.out.println("---------------------------------");
-		System.out.println("---------------------------------");
-		System.out.println("--------message----------");
-		System.out.println(msg);
-		
-		
+
 		gameMessageProtocol.proccessMessage(message, msg);
 
 	}

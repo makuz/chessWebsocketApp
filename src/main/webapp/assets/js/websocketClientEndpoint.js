@@ -15,7 +15,7 @@ function connectToWebSocket() {
 	console.log('connectToWebSocket()');
 
 	// ----init websocket -------------------------------------
-	var endpointUrl = "ws://" + document.location.host + "/send-fen/"
+	var endpointUrl = "ws://" + document.location.host + "/chessapp-live-game/"
 			+ WEBSOCKET_CLIENT_NAME;
 	webSocket = new WebSocket(endpointUrl);
 
@@ -55,10 +55,6 @@ function connectToWebSocket() {
 
 	webSocket.onmessage = function(event) {
 		console.log("onmessage: ");
-		console.log(event);
-
-		console.log("data: ");
-		console.log(event.data);
 
 		if (event != null) {
 			var message = JSON.parse(event.data);
@@ -66,115 +62,108 @@ function connectToWebSocket() {
 			console.log(message);
 
 			if (message.type == "chess-move") {
+				console.log("chess-move");
+
 				var fenStr = message.fen;
 				if (fenStr != null && fenStr != "") {
 					$('#fenFromPreviousMove').val(fenStr);
-					// chessboard board object
+
 					board.position(fenStr);
-					// chessjs game object
 					game = new Chess(fenStr);
 					updateStatus();
 				}
 
 				SENDED_CHESS_MOVE_STATUS = message.moveStatus;
-
-				showActualMoveStatus();
-
 				CHESS_MOVE_COUNTER = 0;
 				SEND_MOVE_CLICK_COUNTER = 0;
 
+				showActualMoveStatus();
+
 			} else if (message.type == "game-handshake-invitation") {
+				console.log("game-handshake-invitation");
 
 				showGameHandshakeModalBox(message.sendFrom);
-				startTimeoutForHandshake();
+				startTimeoutForHandshakeForInvitedUser();
 
 				setChessColorGlobalVars(message);
 
-				$('#your-username')
-						.html(
-								"you: <span class=\"text-info\"><b>"
-										+ WEBSOCKET_CLIENT_NAME
-										+ "</b></span> | color: "
-										+ message.sendToObj.chessColor
-										+ " "
-										+ "<span class=\"glyphicon glyphicon-hand-right\"/> ");
+				var yourChessColorsInfo = "you: <span class=\"text-info\"><b>"
+						+ WEBSOCKET_CLIENT_NAME + "</b></span> | color: "
+						+ message.sendToObj.chessColor + " "
+						+ "<span class=\"glyphicon glyphicon-hand-right\"/> ";
 
-				$('#opponent-username').html(
-						"opponent: <span class=\"text-info\"><b>"
-								+ message.sendFrom + "</b></span> | color: "
-								+ message.sendFromObj.chessColor + " ");
+				$('#your-username').html(yourChessColorsInfo);
+
+				var opponentChessColorsInfo = "opponent: <span class=\"text-info\"><b>"
+						+ message.sendFrom
+						+ "</b></span> | color: "
+						+ message.sendFromObj.chessColor + " ";
+
+				$('#opponent-username').html(opponentChessColorsInfo);
 
 			} else if (message.type == "game-handshake-agreement") {
+				console.log("game-handshake-agreement");
 
 				CLICK_AGREEMENT_FLAG = true;
-
-				startNewGame();
-				// reset po porzednich grach
 				SEND_MOVE_CLICK_COUNTER = 0;
+				SENDED_CHESS_MOVE_STATUS = message.moveStatus;
+				OPPONENT_USERNAME = message.sendFrom;
 
 				$('#play-with-opponent-interface').attr("hidden", false);
 				$('#play-with-opponent-interface-actions')
 						.attr("hidden", false);
 				$('#startPosBtn').hide();
-
-				// set the first move status at start
-
-				SENDED_CHESS_MOVE_STATUS = message.moveStatus;
-
-				setChessColorGlobalVars(message)
-
-				// set move info
-				showActualMoveStatus();
-
 				$('#fenFromPreviousMove').val(startFENPosition);
-
 				$('#game-status').data('isPlaying', true);
 
+				startNewGame();
+				setChessColorGlobalVars(message)
+				showActualMoveStatus();
+
+				var agreementModalInfo = "game agreement from user: "
+						+ "<span class=\"text-primary\"><b>" + message.sendFrom
+						+ "</b></span>";
+
 				$('#game-handshake-response-modal-title').html(
-						"game agreement from user: "
-								+ "<span class=\"text-primary\"><b>"
-								+ message.sendFrom + "</b></span>");
+						agreementModalInfo);
 
 				$('#game-handshake-response-modal').modal('show');
 
-				var alertMessage = "<div class=\"alert alert-info\">"
+				var youArePlayingWithInfo = "<div class=\"alert alert-info\">"
 						+ "<p>you are playing now with: <span class=\"text-info\"><b>"
 						+ message.sendFrom + "</b></span></p>" + "</div>";
 
-				OPPONENT_USERNAME = message.sendFrom;
+				$('#game-status').html(youArePlayingWithInfo);
 
-				$('#game-status').html(alertMessage);
+				var yourChessColorsInfo = "you: <span class=\"text-info\"><b>"
+						+ WEBSOCKET_CLIENT_NAME + "</b></span> | color: "
+						+ message.sendToObj.chessColor + " "
+						+ "<span class=\"glyphicon glyphicon-hand-right\"/> "
 
-				$('#your-username')
-						.html(
-								"you: <span class=\"text-info\"><b>"
-										+ WEBSOCKET_CLIENT_NAME
-										+ "</b></span> | color: "
-										+ message.sendToObj.chessColor
-										+ " "
-										+ "<span class=\"glyphicon glyphicon-hand-right\"/> ");
+				$('#your-username').html(yourChessColorsInfo);
 
-				$('#opponent-username').html(
-						"opponent: <span class=\"text-info\"><b>"
-								+ message.sendFrom + "</b></span> | color: "
-								+ message.sendFromObj.chessColor + " ");
+				var opponentChessColorsInfo = "opponent: <span class=\"text-info\"><b>"
+						+ message.sendFrom
+						+ "</b></span> | color: "
+						+ message.sendFromObj.chessColor + " ";
 
+				$('#opponent-username').html(opponentChessColorsInfo);
 				$('#send-move-btn').data("opponentName", message.sendFrom);
-
 				$('#quit-game-btn').data("gamePartner", message.sendFrom);
 
 			} else if (message.type == "game-handshake-refuse") {
+				console.log("game-handshake-refuse");
 
 				CLICK_REFUSED_FLAG = true;
 				SENDED_CHESS_MOVE_STATUS = "";
-				$('#game-status').html('');
 
-				$('#game-handshake-response-modal-title').html(
-						"game refused from user: "
-								+ "<span class=\"text-primary\"><b>"
-								+ message.sendFrom + "</b></span>");
+				var refuseModalInfo = "game refused from user: "
+						+ "<span class=\"text-primary\"><b>" + message.sendFrom
+						+ "</b></span>";
 
+				$('#game-handshake-response-modal-title').html(refuseModalInfo);
 				$('#game-handshake-response-modal').modal('show');
+				$('#game-status').html('');
 
 			} else if (message.type == "quit-game"
 					|| message.type == "goodbye-msg") {
@@ -186,8 +175,6 @@ function connectToWebSocket() {
 					CHESS_MOVE_COUNTER = 0;
 				}
 
-				clearParticipantsListView();
-
 				$('#startPosBtn').show();
 				$('#game-status').data('isPlaying', false);
 				$('#play-with-opponent-interface').attr("hidden", true);
@@ -196,23 +183,25 @@ function connectToWebSocket() {
 				$('#send-move-btn').data("opponentName", '');
 				$('#quit-game-btn').data("gamePartner", '');
 
+				clearParticipantsListView();
+
 			} else if (message.type == "try-later") {
 
 				alert("user is playing now with someone else, \n or is during handshake with someone else,\n try later.");
 
 			} else if (message.type == "game-over") {
 
+				SENDED_CHESS_MOVE_STATUS = message.moveStatus;
+				OPPONENT_USERNAME = "";
+
 				var fenStr = message.fen;
 				if (fenStr != null && fenStr != "") {
+
 					$('#fenFromPreviousMove').val(fenStr);
-					// chessboard board object
 					board.position(fenStr);
-					// chessjs game object
 					game = new Chess(fenStr);
 					updateStatus();
 				}
-
-				SENDED_CHESS_MOVE_STATUS = message.moveStatus;
 
 				showActualMoveStatus();
 
@@ -228,13 +217,10 @@ function connectToWebSocket() {
 					$('#quit-game-btn').data("gamePartner", '');
 					$('#play-with-opponent-interface-actions').attr("hidden",
 							true);
-					OPPONENT_USERNAME = "";
 
 				}
 
 				clearParticipantsListView();
-
-				OPPONENT_USERNAME = "";
 
 			} else {
 				showParticipants(event.data);
@@ -267,7 +253,6 @@ function connectToWebSocket() {
 
 		$('#game-status').html('');
 		$('#participants div ul').html('');
-
 		$('#disconnect').attr("disabled", true);
 		$('#play-with-opponent-interface').attr("hidden", true);
 		$('#startPosBtn').show();
@@ -308,6 +293,7 @@ window.onbeforeunload = function() {
 };
 
 // functions -------------------------------------------
+
 function testCheckMateSaveToDb() {
 
 	var checkMatePos = "4kb2/1pp1ppp1/5n2/r4K1b/3q4/PPP5/R2P1PP1/2B1r3 w - - 7 20";
@@ -332,6 +318,7 @@ function undoMove() {
 // -----------------------------------------------------
 
 function setChessColorGlobalVars(msgObj) {
+	console.log('setChessColorGlobalVars()');
 
 	if (msgObj.sendToObj.chessColor == 'white') {
 		WHITE_COLOR_USERNAME = msgObj.sendToObj.username;
@@ -347,9 +334,10 @@ function setChessColorGlobalVars(msgObj) {
 
 function showGameHandshakeModalBox(sender) {
 
-	$('#game-handshake-modal-title').html(
-			"Do you want to play with: " + "<span class=\"text-primary\"><b>"
-					+ sender + "</b></span>");
+	var modalBoxMsg = "Do you want to play with: "
+			+ "<span class=\"text-primary\"><b>" + sender + "</b></span>";
+
+	$('#game-handshake-modal-title').html(modalBoxMsg);
 	$('#game-handshake-msgTo').val(sender);
 	$('#game-handshake-modal').modal('show');
 
@@ -360,18 +348,19 @@ function showTimerForInviter(recieverName) {
 
 	if (TIMEOUT_FOR_HANDSHAKE == 0 || CLICK_REFUSED_FLAG == true
 			|| CLICK_AGREEMENT_FLAG == true) {
-		TIMEOUT_FOR_HANDSHAKE = 15;
-		CLICK_REFUSED_FLAG = false;
-		CLICK_AGREEMENT_FLAG == false
-		$('#game-status').html('');
+
+		setTimeOutForHandshake_RefuseFlag_AgreementFlag_ForStartValues();
+		clearUserInetrfaceForTimer();
 		clearTimeout(inviterTimer);
 		return;
 	} else {
 		TIMEOUT_FOR_HANDSHAKE--;
-		$('#game-status').html(
-				'<span class="text-info"><strong>' + recieverName
-						+ '</strong></span> considering... '
-						+ TIMEOUT_FOR_HANDSHAKE);
+
+		var timerInfo = '<div class="alert alert-info">' + '<span><strong>'
+				+ recieverName + '</strong> considering... <strong>'
+				+ TIMEOUT_FOR_HANDSHAKE + '</strong></span></div>';
+
+		$('#game-status').html(timerInfo);
 	}
 
 	var inviterTimer = setTimeout(function() {
@@ -380,20 +369,30 @@ function showTimerForInviter(recieverName) {
 
 }
 
-function startTimeoutForHandshake() {
+function setTimeOutForHandshake_RefuseFlag_AgreementFlag_ForStartValues() {
+	console
+			.log("setTimeOutForHandshake_RefuseFlag_AgreementFlag_ForStartValues()");
+
+	TIMEOUT_FOR_HANDSHAKE = 15;
+	CLICK_REFUSED_FLAG = false;
+	CLICK_AGREEMENT_FLAG = false;
+}
+
+function startTimeoutForHandshakeForInvitedUser() {
+	console.log('setChessColorGlobalVars()');
 
 	if (CLICK_REFUSED_FLAG == true || CLICK_AGREEMENT_FLAG == true) {
-		TIMEOUT_FOR_HANDSHAKE = 15;
-		CLICK_REFUSED_FLAG = false;
-		CLICK_AGREEMENT_FLAG = false;
+
+		setTimeOutForHandshake_RefuseFlag_AgreementFlag_ForStartValues();
+
 		clearTimeout(reciverTimer);
 		return;
 	}
 
 	if (TIMEOUT_FOR_HANDSHAKE == 0) {
-		TIMEOUT_FOR_HANDSHAKE = 15;
-		CLICK_REFUSED_FLAG = false;
+
 		refusedToPlay();
+		setTimeOutForHandshake_RefuseFlag_AgreementFlag_ForStartValues();
 		clearTimeout(reciverTimer);
 		return;
 	} else {
@@ -402,7 +401,7 @@ function startTimeoutForHandshake() {
 	}
 
 	var reciverTimer = setTimeout(function() {
-		startTimeoutForHandshake()
+		startTimeoutForHandshakeForInvitedUser()
 	}, 1000);
 
 }
@@ -410,38 +409,39 @@ function startTimeoutForHandshake() {
 // -----------------------------------
 
 function clearParticipantsListView() {
-	$('#participants div ul li button.username').each(
-			function() {
+	console.log("clearParticipantsListView()");
 
-				if ($(this).text().trim() == WEBSOCKET_CLIENT_NAME) {
+	var participantListUsernameBtns = $('#participants div ul li button.username');
 
-					$(this).parent().find('span.participants-action-btns')
-							.remove();
-					$(this).parent().css('background-color', '#C9C9C9');
-				}
+	participantListUsernameBtns.each(function() {
 
-				if ($('#game-status').data('isPlaying') == true) {
-					$(this).parent().find('span.participants-action-btns')
-							.attr('hidden', true);
-				} else {
-					$(this).parent().find('span.participants-action-btns')
-							.attr('hidden', false);
-				}
+		if ($(this).text().trim() == WEBSOCKET_CLIENT_NAME) {
 
-			});
+			$(this).parent().find('span.participants-action-btns').remove();
+			$(this).parent().css('background-color', '#C9C9C9');
+		}
+
+		if ($('#game-status').data('isPlaying') == true) {
+			$(this).parent().find('span.participants-action-btns').attr(
+					'hidden', true);
+		} else {
+			$(this).parent().find('span.participants-action-btns').attr(
+					'hidden', false);
+		}
+
+	});
 }
 
 // -----------------------------------
 
 function inviteUserToGame(reciever) {
+	console.log("inviteUserToGame()");
 	console.log("game-handshake from " + WEBSOCKET_CLIENT_NAME);
 	console.log(" to " + reciever);
 
 	CHESS_MOVE_COUNTER = 0;
-	var msg = "invitation";
 	webSocket.send(JSON.stringify({
 		type : "game-handshake-invitation",
-		handshakeMsg : msg,
 		sendFrom : WEBSOCKET_CLIENT_NAME,
 		sendTo : reciever
 	}));
@@ -453,6 +453,7 @@ function inviteUserToGame(reciever) {
 // --------------------------------------------------------
 
 function showActualMoveStatus() {
+	console.log("showActualMoveStatus");
 
 	if (SENDED_CHESS_MOVE_STATUS == $('#status').text().trim()) {
 		$('#move-for').html('<p class=\"text-success\">Your move</p>');
@@ -465,8 +466,10 @@ function showActualMoveStatus() {
 // --------------------------------------------------------
 
 function agreementToPlay() {
+	console.log("agreementToPlay()");
 
 	CLICK_AGREEMENT_FLAG = true;
+
 	var usernameToPlayWith = $('#game-handshake-msgTo').val();
 	OPPONENT_USERNAME = usernameToPlayWith;
 	var myUserName = WEBSOCKET_CLIENT_NAME;
@@ -525,6 +528,7 @@ function quitGame() {
 	$('#opponent-username').html('');
 	$('#send-move-btn').data("opponentName", '');
 	$('#quit-game-btn').data("gamePartner", '');
+
 	OPPONENT_USERNAME = "";
 
 }
@@ -532,21 +536,29 @@ function quitGame() {
 // --------------------------------------------------------
 
 function refusedToPlay() {
+	console.log("refusedToPlay()");
 
 	CLICK_REFUSED_FLAG = true;
-	$('#game-status').html('');
 	var usernameNotToPlayWith = $('#game-handshake-msgTo').val();
 	var myUserName = WEBSOCKET_CLIENT_NAME;
+
 	console.log("game-handshake-refuse from");
 	console.log(myUserName + " to " + usernameNotToPlayWith);
-	var msg = "refuse";
+
 	webSocket.send(JSON.stringify({
 		type : "game-handshake-refuse",
-		handshakeMsg : msg,
 		sendFrom : WEBSOCKET_CLIENT_NAME,
 		sendTo : usernameNotToPlayWith
 	}));
 
+	clearUserInetrfaceForTimer();
+
+}
+
+// -------------------------------------------------------
+
+function clearUserInetrfaceForTimer() {
+	$('#game-status').html('');
 	$('#your-username').html('');
 	$('#opponent-username').html('');
 	$('#game-handshake-modal').modal('hide');
