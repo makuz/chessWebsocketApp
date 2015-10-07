@@ -1,8 +1,6 @@
-package com.chessApp.websocket;
+package com.chessApp.model;
 
 import org.springframework.stereotype.Component;
-
-import com.chessApp.model.ChessAppUser;
 
 @Component
 public class GameUser extends ChessAppUser {

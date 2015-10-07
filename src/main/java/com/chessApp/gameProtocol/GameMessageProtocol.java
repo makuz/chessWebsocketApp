@@ -1,4 +1,4 @@
-package com.chessApp.websocket;
+package com.chessApp.gameProtocol;
 
 import java.util.Date;
 import java.util.UUID;
@@ -13,7 +13,12 @@ import com.chessApp.dao.ChessGamesRepository;
 import com.chessApp.dao.UsersRepository;
 import com.chessApp.model.ChessGame;
 import com.chessApp.model.ChessMove;
+import com.chessApp.model.GameMessage;
+import com.chessApp.model.GameUser;
 import com.chessApp.model.UserAccount;
+import com.chessApp.websocket.ChessGamesHandler;
+import com.chessApp.websocket.GameUsersHandler;
+import com.chessApp.websocket.WebSocketSessionHandler;
 import com.google.gson.Gson;
 
 @Service

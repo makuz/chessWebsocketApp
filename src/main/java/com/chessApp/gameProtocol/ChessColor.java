@@ -1,4 +1,4 @@
-package com.chessApp.websocket;
+package com.chessApp.gameProtocol;
 
 public class ChessColor {
 	

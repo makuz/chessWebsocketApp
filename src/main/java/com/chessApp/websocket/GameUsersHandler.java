@@ -6,6 +6,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.chessApp.gameProtocol.ChessColor;
+import com.chessApp.gameProtocol.GameUserCommunicationStatus;
+import com.chessApp.model.GameUser;
+
 @Service
 public class GameUsersHandler {
 

@@ -1,8 +1,6 @@
-package com.chessApp.websocket;
+package com.chessApp.model;
 
 import org.springframework.stereotype.Component;
-
-import com.chessApp.model.ChessMove;
 
 @Component
 public class GameMessage {

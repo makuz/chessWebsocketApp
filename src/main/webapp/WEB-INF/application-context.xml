@@ -19,7 +19,7 @@
 	<beans:bean id="mailService" class="com.chessApp.mailService.MailService" />
 
 	<beans:bean id="gameMessageProtocol"
-		class="com.chessApp.websocket.GameMessageProtocol" />
+		class="com.chessApp.gameProtocol.GameMessageProtocol" />
 
 	<beans:bean id="chessGamesRepositoryImpl"
 		class="com.chessApp.daoimpl.ChessGamesRepositoryImpl" />

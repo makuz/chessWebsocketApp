@@ -15,6 +15,11 @@ import javax.websocket.server.ServerEndpoint;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.chessApp.gameProtocol.GameMessageProtocol;
+import com.chessApp.gameProtocol.GameMessageType;
+import com.chessApp.gameProtocol.GameUserCommunicationStatus;
+import com.chessApp.model.GameMessage;
+import com.chessApp.model.GameUser;
 import com.google.gson.Gson;
 
 @Service
