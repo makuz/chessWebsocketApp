@@ -1,6 +1,6 @@
 package com.chessApp.websocket;
 
-public class WebSocketMessageType {
+public class GameMessageType {
 
 	public final static String USER_CONNECT = "welcome-msg";
 

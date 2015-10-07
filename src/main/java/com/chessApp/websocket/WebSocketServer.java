@@ -25,11 +25,11 @@ public class WebSocketServer {
 
 	private final WebSocketSessionHandler sessionHandler = new WebSocketSessionHandler();
 
-	private final WebsocketUsesrHandler usesrHandler = new WebsocketUsesrHandler();
+	private final GameUsersHandler usesrHandler = new GameUsersHandler();
 
-	private final LiveChessTournamentsHandler chessGamesHandler = new LiveChessTournamentsHandler();
+	private final ChessGamesHandler chessGamesHandler = new ChessGamesHandler();
 
-	private GameMessageExchangeProtocol gameMessageProtocol = new GameMessageExchangeProtocol(
+	private GameMessageProtocol gameMessageProtocol = new GameMessageProtocol(
 			sessionHandler, usesrHandler, chessGamesHandler);
 
 	private Gson gson = new Gson();
@@ -40,7 +40,7 @@ public class WebSocketServer {
 
 		log.info("wiadomość odebrana przez server: ");
 
-		WebSocketMessage message = gson.fromJson(msg, WebSocketMessage.class);
+		GameMessage message = gson.fromJson(msg, GameMessage.class);
 
 		gameMessageProtocol.proccessMessage(message, msg);
 
@@ -54,7 +54,7 @@ public class WebSocketServer {
 
 		if (usesrHandler.userListNotContainsUsername(sender)) {
 
-			WebSocketGameUser gameUser = new WebSocketGameUser(sender);
+			GameUser gameUser = new GameUser(sender);
 			gameUser.setCommunicationStatus(GameUserCommunicationStatus.WAIT_FOR_NEW_GAME);
 			synchronized (this) {
 				wsSession.getUserProperties().put("sessionOwner",
@@ -73,13 +73,13 @@ public class WebSocketServer {
 		log.info("connection closed. Reason: " + closeReason.getReasonPhrase());
 		log.info(sender);
 		synchronized (this) {
-			WebSocketGameUser cloesingConnectionUser = usesrHandler
+			GameUser cloesingConnectionUser = usesrHandler
 					.getWebsocketUser(sender);
 
 			if (cloesingConnectionUser.getPlayNowWithUser() != null
 					&& cloesingConnectionUser.getPlayNowWithUser() != "") {
 
-				WebSocketGameUser cloesingConnectionUserGamePartner = usesrHandler
+				GameUser cloesingConnectionUserGamePartner = usesrHandler
 						.getWebsocketUser(cloesingConnectionUser
 								.getPlayNowWithUser());
 
@@ -87,8 +87,8 @@ public class WebSocketServer {
 				cloesingConnectionUserGamePartner
 						.setCommunicationStatus(GameUserCommunicationStatus.WAIT_FOR_NEW_GAME);
 
-				WebSocketMessage disconnectMsg = new WebSocketMessage();
-				disconnectMsg.setType(WebSocketMessageType.USER_DISCONNECT);
+				GameMessage disconnectMsg = new GameMessage();
+				disconnectMsg.setType(GameMessageType.USER_DISCONNECT);
 
 				sessionHandler.sendToSession(
 						cloesingConnectionUserGamePartner.getUsername(),

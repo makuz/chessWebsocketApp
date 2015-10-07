@@ -16,14 +16,14 @@ import org.joda.time.Seconds;
 import com.chessApp.model.ChessGame;
 import com.chessApp.model.ChessMove;
 
-public class LiveChessTournamentsHandler {
+public class ChessGamesHandler {
 
 	private final Logger logger;
 
 	private volatile static Map<String, ChessGame> chessGamesMap = new ConcurrentHashMap<>();
 
-	public LiveChessTournamentsHandler() {
-		logger = Logger.getLogger(LiveChessTournamentsHandler.class);
+	public ChessGamesHandler() {
+		logger = Logger.getLogger(ChessGamesHandler.class);
 
 	}
 

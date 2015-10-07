@@ -11,10 +11,15 @@
 	<beans:bean id="webSocketSessionHandler"
 		class="com.chessApp.websocket.WebSocketSessionHandler" />
 
+	<beans:bean id="gameUsersHandler"
+		class="com.chessApp.websocket.GameUsersHandler" />
+
+	<beans:bean id="chessGamesHandler" class="com.chessApp.websocket.ChessGamesHandler" />
+
 	<beans:bean id="mailService" class="com.chessApp.mailService.MailService" />
 
-	<beans:bean id="gameMessageExchangeProtocol"
-		class="com.chessApp.websocket.GameMessageExchangeProtocol" />
+	<beans:bean id="gameMessageProtocol"
+		class="com.chessApp.websocket.GameMessageProtocol" />
 
 	<beans:bean id="chessGamesRepositoryImpl"
 		class="com.chessApp.daoimpl.ChessGamesRepositoryImpl" />

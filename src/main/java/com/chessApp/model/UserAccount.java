@@ -6,12 +6,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "users")
-public class UserAccount implements Comparable<UserAccount> {
+public class UserAccount extends ChessAppUser implements
+		Comparable<UserAccount> {
 
 	@Id
 	private String id;
 	private long userId;
-	private String username;
 	private String password;
 	private String name;
 	private String lastname;
@@ -99,14 +99,6 @@ public class UserAccount implements Comparable<UserAccount> {
 		this.userId = userId;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public Long getNumberOfGamesPlayed() {
 		return numberOfGamesPlayed;
 	}
@@ -139,19 +131,6 @@ public class UserAccount implements Comparable<UserAccount> {
 		this.id = id;
 	}
 
-	@Override
-	public String toString() {
-		return "UserAccount [id=" + id + ", userId=" + userId + ", username="
-				+ username + ", password=" + password + ", name=" + name
-				+ ", lastname=" + lastname + ", role=" + role + ", email="
-				+ email + ", registrationHashString=" + registrationHashString
-				+ ", isRegistrationConfirmed=" + isRegistrationConfirmed
-				+ ", registrationDate=" + registrationDate
-				+ ", numberOfGamesPlayed=" + numberOfGamesPlayed
-				+ ", numberOfWonChessGames=" + numberOfWonChessGames
-				+ ", numberOfLostChessGames=" + numberOfLostChessGames + "]";
-	}
-
 	public Long getNumberOfLostChessGames() {
 		return numberOfLostChessGames;
 	}
@@ -167,6 +146,19 @@ public class UserAccount implements Comparable<UserAccount> {
 
 		return (int) (this.userId - compareUserId);
 
+	}
+
+	@Override
+	public String toString() {
+		return "UserAccount [username= " + username + ", id=" + id + ", userId="
+				+ userId + ", password=" + password + ", name=" + name
+				+ ", lastname=" + lastname + ", role=" + role + ", email="
+				+ email + ", registrationHashString=" + registrationHashString
+				+ ", isRegistrationConfirmed=" + isRegistrationConfirmed
+				+ ", registrationDate=" + registrationDate
+				+ ", numberOfGamesPlayed=" + numberOfGamesPlayed
+				+ ", numberOfWonChessGames=" + numberOfWonChessGames
+				+ ", numberOfLostChessGames=" + numberOfLostChessGames + "]";
 	}
 
 }

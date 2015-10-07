@@ -7,15 +7,15 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WebsocketUsesrHandler {
+public class GameUsersHandler {
 
 	private final Logger logger;
 	private volatile static long userID = 0;
 
-	protected volatile static Map<String, WebSocketGameUser> gameUsersMap = new ConcurrentHashMap<>();
+	protected volatile static Map<String, GameUser> gameUsersMap = new ConcurrentHashMap<>();
 
-	public WebsocketUsesrHandler() {
-		logger = Logger.getLogger(WebsocketUsesrHandler.class);
+	public GameUsersHandler() {
+		logger = Logger.getLogger(GameUsersHandler.class);
 	}
 
 	public synchronized Boolean userListNotContainsUsername(String username) {
@@ -25,28 +25,28 @@ public class WebsocketUsesrHandler {
 		return true;
 	}
 
-	public synchronized void addWebsocketUser(WebSocketGameUser gameUser) {
+	public synchronized void addWebsocketUser(GameUser gameUser) {
 		logger.debug("");
 
 		userID++;
-		gameUser.setId(userID);
+		gameUser.setUserIdInGameContext(userID);
 		gameUsersMap.put(gameUser.getUsername(), gameUser);
 		logger.info("user: " + gameUser + " added to live game repository");
 	}
 
-	public synchronized WebSocketGameUser getWebsocketUser(String username) {
-		WebSocketGameUser gameUser = gameUsersMap.get(username);
+	public synchronized GameUser getWebsocketUser(String username) {
+		GameUser gameUser = gameUsersMap.get(username);
 		return gameUser;
 	}
 
 	public synchronized void removeWebsocketUser(String username) {
-		WebSocketGameUser gameUser = gameUsersMap.remove(username);
+		GameUser gameUser = gameUsersMap.remove(username);
 		logger.info("user: " + gameUser + " removed from live game repository");
 	}
 
 	public synchronized void setUserComunicationStatus(String username,
 			String status) {
-		WebSocketGameUser gameUser = gameUsersMap.get(username);
+		GameUser gameUser = gameUsersMap.get(username);
 		gameUser.setCommunicationStatus(status);
 	}
 
@@ -60,7 +60,7 @@ public class WebsocketUsesrHandler {
 	public synchronized void setComStatusWaitForNewGame(String username) {
 		logger.debug("setComStatusWaitForNewGame()");
 
-		WebSocketGameUser gameUser = gameUsersMap.get(username);
+		GameUser gameUser = gameUsersMap.get(username);
 		gameUser.setCommunicationStatus(GameUserCommunicationStatus.WAIT_FOR_NEW_GAME);
 		gameUser.setPlayNowWithUser(null);
 	}
@@ -69,7 +69,7 @@ public class WebsocketUsesrHandler {
 			String fromUsername) {
 		logger.debug("setComStatusIsPlaying()");
 
-		WebSocketGameUser gameUser = gameUsersMap.get(toUsername);
+		GameUser gameUser = gameUsersMap.get(toUsername);
 		gameUser.setCommunicationStatus(GameUserCommunicationStatus.IS_PLAYING);
 		gameUser.setPlayNowWithUser(fromUsername);
 
@@ -79,8 +79,8 @@ public class WebsocketUsesrHandler {
 			String fromUsername) {
 		logger.debug("setChessPiecesColorForGamers()");
 
-		WebSocketGameUser invitingUser = gameUsersMap.get(fromUsername);
-		WebSocketGameUser recievingUser = gameUsersMap.get(toUsername);
+		GameUser invitingUser = gameUsersMap.get(fromUsername);
+		GameUser recievingUser = gameUsersMap.get(toUsername);
 
 		invitingUser.setChessColor(ChessColor.WHITE);
 		recievingUser.setChessColor(ChessColor.BLACK);
@@ -91,8 +91,8 @@ public class WebsocketUsesrHandler {
 			String fromUsername) {
 		logger.debug("setChessPiecesColorForGamers()");
 
-		WebSocketGameUser invitingUser = gameUsersMap.get(fromUsername);
-		WebSocketGameUser recievingUser = gameUsersMap.get(toUsername);
+		GameUser invitingUser = gameUsersMap.get(fromUsername);
+		GameUser recievingUser = gameUsersMap.get(toUsername);
 
 		invitingUser.setChessColor(null);
 		recievingUser.setChessColor(null);

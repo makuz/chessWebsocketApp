@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -12,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -116,11 +116,9 @@ public class MailService {
 			mimeMessageHelper.setSubject(subject);
 			mimeMessage.setContent(messageContent, "text/html; charset=utf-8");
 
-		} catch (AddressException e) {
+		} catch (MessagingException | MailAuthenticationException e) {
 			logger.debug(e);
-		} catch (MessagingException e) {
-			logger.debug(e);
-		}
+		} 
 
 		mailSender.send(mimeMessage);
 		logger.debug("send email to " + to);

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.chessApp.model.ChessMove;
 
 @Component
-public class WebSocketMessage {
+public class GameMessage {
 
 	private String type;
 
@@ -17,9 +17,9 @@ public class WebSocketMessage {
 
 	private String moveStatus;
 
-	private WebSocketGameUser sendToObj;
+	private GameUser sendToObj;
 
-	private WebSocketGameUser sendFromObj;
+	private GameUser sendFromObj;
 
 	private Boolean checkMate;
 
@@ -29,7 +29,7 @@ public class WebSocketMessage {
 
 	private String blackColUsername;
 
-	public WebSocketMessage() {
+	public GameMessage() {
 
 	}
 
@@ -41,19 +41,19 @@ public class WebSocketMessage {
 		this.type = type;
 	}
 
-	public WebSocketGameUser getSendToObj() {
+	public GameUser getSendToObj() {
 		return sendToObj;
 	}
 
-	public void setSendToObj(WebSocketGameUser sendToObj) {
+	public void setSendToObj(GameUser sendToObj) {
 		this.sendToObj = sendToObj;
 	}
 
-	public WebSocketGameUser getSendFromObj() {
+	public GameUser getSendFromObj() {
 		return sendFromObj;
 	}
 
-	public void setSendFromObj(WebSocketGameUser sendFromObj) {
+	public void setSendFromObj(GameUser sendFromObj) {
 		this.sendFromObj = sendFromObj;
 	}
 

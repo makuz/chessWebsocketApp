@@ -2,22 +2,31 @@ package com.chessApp.websocket;
 
 import org.springframework.stereotype.Component;
 
-@Component
-public class WebSocketGameUser {
+import com.chessApp.model.ChessAppUser;
 
-	private long id;
-	private String username;
+@Component
+public class GameUser extends ChessAppUser {
+
+	private long userIdInGameContext;
 	private String playNowWithUser;
 	private long numberOfScores;
 	private String chessColor;
 	private String communicationStatus;
 	private String uniqueActualGameHash;
 
-	public WebSocketGameUser() {
+	public GameUser() {
 	}
 
-	public WebSocketGameUser(String username) {
+	public GameUser(String username) {
 		this.username = username;
+	}
+
+	public long getUserIdInGameContext() {
+		return userIdInGameContext;
+	}
+
+	public void setUserIdInGameContext(long userIdInGameContext) {
+		this.userIdInGameContext = userIdInGameContext;
 	}
 
 	public String getChessColor() {
@@ -36,28 +45,12 @@ public class WebSocketGameUser {
 		this.chessColor = chessColor;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public String getUniqueActualGameHash() {
 		return uniqueActualGameHash;
 	}
 
 	public void setUniqueActualGameHash(String uniqueActualGameHash) {
 		this.uniqueActualGameHash = uniqueActualGameHash;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public long getNumberOfScores() {
@@ -78,10 +71,11 @@ public class WebSocketGameUser {
 
 	@Override
 	public String toString() {
-		return "WebSocketGameUser [id=" + id + ", username=" + username
-				+ ", playNowWithUser=" + playNowWithUser + ", numberOfScores="
-				+ numberOfScores + ", chessColor=" + chessColor
-				+ ", communicationStatus=" + communicationStatus + "]";
+		return "GameUser [username=" + username + ",  userIdInGameContext="
+				+ userIdInGameContext + ", playNowWithUser=" + playNowWithUser
+				+ ", numberOfScores=" + numberOfScores + ", chessColor="
+				+ chessColor + ", communicationStatus=" + communicationStatus
+				+ ", uniqueActualGameHash=" + uniqueActualGameHash + "]";
 	}
 
 }

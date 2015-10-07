@@ -47,7 +47,7 @@ public class WebSocketSessionHandler {
 
 	public synchronized void sendToAllConnectedSessionsActualParticipantList() {
 
-		String jsonUsersList = gson.toJson(WebsocketUsesrHandler.gameUsersMap
+		String jsonUsersList = gson.toJson(GameUsersHandler.gameUsersMap
 				.values());
 		for (String username : sessionsMap.keySet()) {
 			Session userSession = sessionsMap.get(username);
