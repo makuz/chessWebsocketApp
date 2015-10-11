@@ -46,7 +46,7 @@ public class MailService {
 		mailSender.setJavaMailProperties(properties);
 	}
 
-	private String prepareRegistrationMailText(String randomHashForLink) {
+	private String prepareRegistrationMailText(String randomHashForLink, String username) {
 
 		StringBuilder sb = new StringBuilder();
 		String siteName = ChessAppProperties.getProperty("domain.name");
@@ -54,7 +54,10 @@ public class MailService {
 		sb.append("content=\"text/html; charset=UTF-8\"></head><body>");
 		sb.append("<p>");
 		sb.append("<br />");
-		sb.append("Witaj,");
+		sb.append("Witaj, ");
+		sb.append("<b>");
+		sb.append(username);
+		sb.append("</b>");
 		sb.append("<br />");
 		sb.append("Dziękujemy za rejestrację w serwisie <b>" + siteName
 				+ "</b>");
@@ -125,13 +128,13 @@ public class MailService {
 
 	}
 
-	public void sendRegistrationMail(String to, String randomHashForLink) {
+	public void sendRegistrationMail(String toMailAddress, String username, String randomHashForLink) {
 
-		String from = ChessAppProperties
+		String fromMailAddress = ChessAppProperties
 				.getProperty("mail.default.message.from");
 
-		sendMail(to, from, MailSubjectPL.REJESTRACJA,
-				prepareRegistrationMailText(randomHashForLink));
+		sendMail(toMailAddress, fromMailAddress, MailSubjectPL.REJESTRACJA,
+				prepareRegistrationMailText(randomHashForLink, username));
 
 	}
 

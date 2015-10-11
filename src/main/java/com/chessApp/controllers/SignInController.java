@@ -105,7 +105,8 @@ public class SignInController {
 
 		}
 
-		mailService.sendRegistrationMail(userEmail, randomHashString);
+		mailService
+				.sendRegistrationMail(userEmail, userLogin, randomHashString);
 
 		return getSiteAccountCreationInfo("user created successfull", true,
 				userEmail, userPassword);
