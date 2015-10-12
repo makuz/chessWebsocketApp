@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.chessApp</groupId>
-	<artifactId>chessApp</artifactId>
-	<name>chessApp</name>
+	<artifactId>chessapp</artifactId>
+	<name>chessapp</name>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
 	<properties>
@@ -248,6 +248,7 @@
 
 	</dependencies>
 	<build>
+		<finalName>chessapp</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
@@ -291,11 +292,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
 			</plugin>
 		</plugins>
 	</build>
