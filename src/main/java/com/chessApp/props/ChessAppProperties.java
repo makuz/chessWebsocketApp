@@ -40,6 +40,8 @@ public class ChessAppProperties {
 		System.out.println(ChessAppProperties.getProperty("port"));
 		System.out.println(ChessAppProperties
 				.getProperty("mail.transport.protocol"));
+		System.out.println(ChessAppProperties
+				.getProperty("db.connectionstring"));
 	}
 
 }

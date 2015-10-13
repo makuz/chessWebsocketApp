@@ -28,7 +28,6 @@
     <param-value>
 		/WEB-INF/security-config.xml
 		/WEB-INF/scheduled-tasks-config.xml
-		/WEB-INF/mongo-config.xml
 		/WEB-INF/application-context.xml
 		</param-value>
   </context-param>

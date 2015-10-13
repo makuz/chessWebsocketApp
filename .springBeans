@@ -12,7 +12,6 @@
 	</configs>
 	<autoconfigs>
 		<config>src/main/webapp/WEB-INF/application-context.xml</config>
-		<config>src/main/webapp/WEB-INF/mongo-config.xml</config>
 		<config>src/main/webapp/WEB-INF/security-config.xml</config>
 	</autoconfigs>
 	<configSets>
