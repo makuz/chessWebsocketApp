@@ -2,16 +2,6 @@
 
 @import url("dataTable.css");
 
-img#home-img {
-	float: left;
-	margin-right: 3%;
-	margin-bottom: 3%;
-}
-
-article#home-img-article {
-	margin-bottom: 3%;
-}
-
 article, section {
 	display: block;
 }
@@ -178,7 +168,7 @@ div#navPilsDivWrapper {
 
 div#chess-board-play-with-user div#board {
 	padding-top: 1em;
-	width: 40em;
+	width: 42em;
 }
 
 div.main-wrapper {
@@ -198,6 +188,21 @@ div.main-wrapper {
 	}
 }
 
+@media ( min-width : 1024px) and (max-width: 1350px) {
+	div.main-wrapper {
+		min-height: 950px;
+	}
+	div.wrapperForKeepCenterPosition {
+		width: 90% !important;
+		margin: 0 auto;
+	}
+}
+
+div.wrapperForKeepCenterPosition {
+	width: 85%;
+	margin: 0 auto;
+}
+
 div#chess-board-play-with-user article#aside-board {
 	float: left;
 	margin-right: 1.5%;
@@ -205,6 +210,11 @@ div#chess-board-play-with-user article#aside-board {
 
 div.site-title {
 	width: 100%;
+}
+
+span.play-with-others-title {
+	margin-left: 20%;
+	font-size: 200%;
 }
 
 div#chess-board-play-with-user article.game-actions {
@@ -290,18 +300,28 @@ div#play-with-opponent-interface {
 	margin-bottom: 1em;
 }
 
+img#home-img {
+	
+	margin: 3% auto 3% auto;
+}
+
+article#home-img-article {
+	margin: 0 auto 3% auto;
+}
+
 article#chess-board-home {
-	float: left;
+	margin-top: 1%;
 }
 
 article#chess-board-home div#board {
-	width: 35em;
+	margin: 0 auto;
+	width: 43em;
 }
 
 article#chess-board-play-with-computer div#board {
 	width: 45em;
 	padding: 0;
-	margin-bottom: 3%;
+	margin: 0 auto 2% auto;
 }
 
 article.game-stats-with-computer {
@@ -310,21 +330,21 @@ article.game-stats-with-computer {
 	padding: 0.8%;
 	width: 45em;
 	border: 2px black solid;
-	margin-top: -0.9%;
+	margin: 0 auto 0 auto;
 }
 
 span#startPosBtn {
 	padding: 0;
-	margin-left: 1em;
+	margin: 0 auto;
 }
 
 div.game-stats-home {
 	margin-top: 2%;
-	clear: both;
 	background-color: #FBFBFB;
 	word-wrap: break word;
 	padding: 0.8%;
-	width: 100%;
+	width: 60%;
+	margin: 2% auto 0 auto;
 	text-align: center;
 	border: 2px black solid;
 }

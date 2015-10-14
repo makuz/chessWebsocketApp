@@ -1,592 +1,381 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.8" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="com.chessApp.controllers.UserPanelController" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/controllers/UserPanelController.java" binary="false" 
+  <class id="1" language="java" name="com.chessApp.controllers.AdminPanelController" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/controllers/AdminPanelController.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-114" y="470"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="170" width="223" x="276" y="-17"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.chessApp.controllers.UsersAjaxController" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/controllers/UsersAjaxController.java" binary="false" 
+  <class id="2" language="java" name="com.chessApp.controllers.HomeController" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/controllers/HomeController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="133" width="165" x="556" y="14"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="com.chessApp.controllers.PlayChessSitesController" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/controllers/PlayChessSitesController.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1053" y="292"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="118" width="172" x="18" y="243"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="com.chessApp.controllers.RegistrationConfirmationController" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/controllers/RegistrationConfirmationController.java" binary="false" 
+  <class id="4" language="java" name="com.chessApp.controllers.RegistrationConfirmationController" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/controllers/RegistrationConfirmationController.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="690" y="250"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="133" width="225" x="754" y="-2"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.chessApp.controllers.LoginController" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/controllers/LoginController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1055" y="127"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+  <class id="5" language="java" name="com.chessApp.controllers.SignInController" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/controllers/SignInController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="191" width="185" x="982" y="429"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="com.chessApp.controllers.SignInController" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/controllers/SignInController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="446" y="-96"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="6" language="java" name="com.chessApp.controllers.PlayChessSitesController" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/controllers/PlayChessSitesController.java" binary="false" 
+  <class id="6" language="java" name="com.chessApp.controllers.UserPanelController" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/controllers/UserPanelController.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="8" y="-271"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="182" width="193" x="31" y="3"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="com.chessApp.controllers.AdminPanelController" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/controllers/AdminPanelController.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="188" y="193"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="8" language="java" name="com.chessApp.controllers.HomeController" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/controllers/HomeController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="611" y="96"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="9" language="java" name="com.chessApp.dao.ChessGamesRepository" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/dao/ChessGamesRepository.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="8" y="691"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+  <interface id="7" language="java" name="com.chessApp.dao.ChessGamesRepository" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/dao/ChessGamesRepository.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="169" width="258" x="251" y="310"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <interface id="10" language="java" name="com.chessApp.dao.UsersRepository" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/dao/UsersRepository.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="408" y="618"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+  <interface id="8" language="java" name="com.chessApp.dao.UsersRepository" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/dao/UsersRepository.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="205" width="200" x="587" y="253"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="11" language="java" name="com.chessApp.daoimpl.ChessGamesRepositoryImpl" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/daoimpl/ChessGamesRepositoryImpl.java" binary="false" 
+  <class id="9" language="java" name="com.chessApp.daoimpl.ChessGamesRepositoryImpl" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/daoimpl/ChessGamesRepositoryImpl.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-318" y="743"/>    
+    <position height="200" width="201" x="142" y="541"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="com.chessApp.daoimpl.UsersRepositoryImpl" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/daoimpl/UsersRepositoryImpl.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="242" width="239" x="669" y="509"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.chessApp.model.ChessAppUser" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/model/ChessAppUser.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="834" y="940"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="com.chessApp.daoimpl.UsersRepositoryImpl" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/daoimpl/UsersRepositoryImpl.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="555" y="903"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+  <class id="12" language="java" name="com.chessApp.model.ChessGame" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/model/ChessGame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="215" width="200" x="126" y="1531"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="com.chessApp.exceptions.UserNotConfirmedException" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/exceptions/UserNotConfirmedException.java" binary="false" 
+  <class id="13" language="java" name="com.chessApp.model.GameMessage" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/model/GameMessage.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="310" width="191" x="31" y="808"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="com.chessApp.model.GameUser" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/model/GameUser.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="166" width="215" x="718" y="1097"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="com.chessApp.model.UserAccount" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/model/UserAccount.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="337" width="230" x="953" y="755"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="com.chessApp.security.LocalAuthenticationProvider" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/security/LocalAuthenticationProvider.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1160" y="-29"/>    
+    <position height="169" width="291" x="910" y="160"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="com.chessApp.websocket.WebSocketServer" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/websocket/WebSocketServer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="668" y="1655"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="com.chessApp.gameProtocol.ChessColor" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/gameProtocol/ChessColor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-238" y="1998"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+  <class id="18" language="java" name="com.chessApp.websocket.ChessGamesHandler" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/websocket/ChessGamesHandler.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="315" x="44" y="1218"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="com.chessApp.gameProtocol.ChessMoveStatus" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/gameProtocol/ChessMoveStatus.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-296" y="1679"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+  <class id="19" language="java" name="com.chessApp.websocket.GameUsersHandler" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/websocket/GameUsersHandler.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="179" width="194" x="377" y="1229"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="16" language="java" name="com.chessApp.gameProtocol.GameUserCommunicationStatus" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/gameProtocol/GameUserCommunicationStatus.java" binary="false" 
+  <class id="20" language="java" name="com.chessApp.websocket.WebSocketSessionHandler" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/websocket/WebSocketSessionHandler.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-287" y="1844"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="166" width="238" x="635" y="1338"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="17" language="java" name="com.chessApp.gameProtocol.GameMessageProtocol" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/gameProtocol/GameMessageProtocol.java" binary="false" 
+  <class id="21" language="java" name="com.chessApp.gameProtocol.GameMessageProtocol" project="chessapp" 
+    file="/chessapp/src/main/java/com/chessApp/gameProtocol/GameMessageProtocol.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="210" y="1224"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="157" width="481" x="264" y="776"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="18" language="java" name="com.chessApp.gameProtocol.GameMessageType" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/gameProtocol/GameMessageType.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-240" y="1280"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="19" language="java" name="com.chessApp.mailService.MailService" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/mailService/MailService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="896" y="-88"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="20" language="java" name="com.chessApp.mailService.MailSubjectPL" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/mailService/MailSubjectPL.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1144" y="-153"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="21" language="java" name="com.chessApp.model.GameUser" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/model/GameUser.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1102" y="1672"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="22" language="java" name="com.chessApp.model.ChessGame" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/model/ChessGame.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="876" y="915"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="23" language="java" name="com.chessApp.model.GameMessage" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/model/GameMessage.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1417" y="799"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="24" language="java" name="com.chessApp.model.ChessMove" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/model/ChessMove.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1152" y="798"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="25" language="java" name="com.chessApp.model.UserAccount" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/model/UserAccount.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1380" y="1962"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="26" language="java" name="com.chessApp.model.ChessAppUser" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/model/ChessAppUser.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1382" y="1290"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="27" language="java" name="com.chessApp.props.ChessAppProperties" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/props/ChessAppProperties.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-296" y="1522"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <enumeration id="28" language="java" name="com.chessApp.security.UserRoles" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/security/UserRoles.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-428" y="217"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </enumeration>  
-  <class id="29" language="java" name="com.chessApp.security.PasswordEncryptor" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/security/PasswordEncryptor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="51" y="-92"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="30" language="java" name="com.chessApp.security.LocalAuthenticationProvider" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/security/LocalAuthenticationProvider.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-420" y="-66"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="31" language="java" name="com.chessApp.taskService.ScheduledTaskService" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/taskService/ScheduledTaskService.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-259" y="1012"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="32" language="java" name="com.chessApp.websocket.WebSocketServer" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/websocket/WebSocketServer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="84" y="2021"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="33" language="java" name="com.chessApp.websocket.WebSocketSessionHandler" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/websocket/WebSocketSessionHandler.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-24" y="1616"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="34" language="java" name="com.chessApp.websocket.GameUsersHandler" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/websocket/GameUsersHandler.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="328" y="1670"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="35" language="java" name="com.chessApp.websocket.ChessGamesHandler" project="chessApp" 
-    file="/chessApp/src/main/java/com/chessApp/websocket/ChessGamesHandler.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="764" y="1856"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <association id="36">    
+  <association id="22">    
+    <bendpoint x="488" y="1008"/>    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="23" name="sendToObj"/>      
+      <multiplicity id="24" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="25">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="26" name="chessGamesRepository"/>      
+      <multiplicity id="27" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="28">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="29" name="chessGamesHandler"/>      
+      <multiplicity id="30" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="31">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="32" name="chessGamesMap"/>      
+      <multiplicity id="33" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="34">    
     <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="37" name="sessionHandler"/>      
-      <multiplicity id="38" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="33" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="39">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="40" name="usersRepository"/>      
-      <multiplicity id="41" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="42">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="43" name="chessGamesRepository"/>      
-      <multiplicity id="44" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="45">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="46" name="usersHandler"/>      
-      <multiplicity id="47" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="34" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="48">    
-    <end type="SOURCE" refId="32" navigable="false">      
-      <attribute id="49" name="gameMessageProtocol"/>      
-      <multiplicity id="50" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="17" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="51">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="10"/>  
-  </realization>  
-  <association id="52">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="53" name="passwordEncrypter"/>      
-      <multiplicity id="54" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="29" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="55">    
-    <end type="SOURCE" refId="35" navigable="false">      
-      <attribute id="56" name="chessGamesMap"/>      
-      <multiplicity id="57" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="22" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="58">    
-    <bendpoint x="186" y="9"/>    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="59" name="passwordEncrypter"/>      
-      <multiplicity id="60" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="29" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="61">    
-    <end type="SOURCE" refId="30" navigable="false">      
-      <attribute id="62" name="usersRepository"/>      
-      <multiplicity id="63" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="64">    
-    <end type="SOURCE" refId="34" navigable="false">      
-      <attribute id="65" name="gameUsersMap"/>      
-      <multiplicity id="66" minimum="0" maximum="2147483647"/>    
+      <attribute id="35" name="gameMessageProtocol"/>      
+      <multiplicity id="36" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="21" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="67">    
-    <end type="SOURCE" refId="31" navigable="false">      
-      <attribute id="68" name="usersRpository"/>      
-      <multiplicity id="69" minimum="0" maximum="1"/>    
+  <association id="37">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="38" name="gameUsersMap"/>      
+      <multiplicity id="39" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
+    <end type="TARGET" refId="14" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="70">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="71" name="chessGamesHandler"/>      
-      <multiplicity id="72" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="35" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="73">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="74" name="usersRepository"/>      
-      <multiplicity id="75" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="76">    
-    <end type="SOURCE" refId="32" navigable="false">      
-      <attribute id="77" name="usesrHandler"/>      
-      <multiplicity id="78" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="34" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="79">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="80" name="usersRepository"/>      
-      <multiplicity id="81" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="82">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="9"/>  
-  </realization>  
-  <association id="83">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="84" name="mailService"/>      
-      <multiplicity id="85" minimum="0" maximum="1"/>    
+  <association id="40">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="41" name="usersHandler"/>      
+      <multiplicity id="42" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="86">    
-    <end type="SOURCE" refId="23" navigable="false">      
-      <attribute id="87" name="sendToObj"/>      
-      <multiplicity id="88" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="21" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="89">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="26"/>  
+  <generalization id="43">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="11"/>  
   </generalization>  
-  <association id="90">    
-    <bendpoint x="-213" y="122"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="91" name="passwordEncrypter"/>      
-      <multiplicity id="92" minimum="0" maximum="1"/>    
+  <association id="44">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="45" name="sessionHandler"/>      
+      <multiplicity id="46" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="29" navigable="true"/>    
+    <end type="TARGET" refId="20" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="93">    
-    <end type="SOURCE" refId="32" navigable="false">      
-      <attribute id="94" name="sessionHandler"/>      
-      <multiplicity id="95" minimum="0" maximum="1"/>    
+  <association id="47">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="48" name="usersRepository"/>      
+      <multiplicity id="49" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="33" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="96">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="97" name="chessGamesRepository"/>      
-      <multiplicity id="98" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="99">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="100" name="usersRepository"/>      
-      <multiplicity id="101" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="102">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="103" name="usersRepository"/>      
-      <multiplicity id="104" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="105">    
-    <end type="SOURCE" refId="23" navigable="false">      
-      <attribute id="106" name="chessMove"/>      
-      <multiplicity id="107" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="24" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="108">    
-    <end type="SOURCE" refId="32" navigable="false">      
-      <attribute id="109" name="chessGamesHandler"/>      
-      <multiplicity id="110" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="35" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="111">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="112" name="repository"/>      
-      <multiplicity id="113" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="114">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="115" name="usersRepository"/>      
-      <multiplicity id="116" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="117">    
-    <end type="SOURCE" refId="22" navigable="false">      
-      <attribute id="118" name="listOfMoves"/>      
-      <multiplicity id="119" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="24" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="120">    
-    <end type="SOURCE" refId="25"/>    
-    <end type="TARGET" refId="26"/>  
-  </generalization>  
-  <association id="121">    
+  <association id="50">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="122" name="repository"/>      
-      <multiplicity id="123" minimum="0" maximum="1"/>    
+      <attribute id="51" name="usersRepository"/>      
+      <multiplicity id="52" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="124">    
-    <bendpoint x="1065" y="1236"/>    
-    <end type="SOURCE" refId="23" navigable="false">      
-      <attribute id="125" name="sendFromObj"/>      
-      <multiplicity id="126" minimum="0" maximum="1"/>    
+  <association id="53">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="54" name="chessGamesHandler"/>      
+      <multiplicity id="55" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="21" navigable="true"/>    
+    <end type="TARGET" refId="18" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="127">    
-    <end type="SOURCE" refId="30" navigable="false">      
-      <attribute id="128" name="passwordEncrypter"/>      
-      <multiplicity id="129" minimum="0" maximum="1"/>    
+  <association id="56">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="57" name="usesrHandler"/>      
+      <multiplicity id="58" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="29" navigable="true"/>    
+    <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="59">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="60" name="chessGamesRepository"/>      
+      <multiplicity id="61" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="62">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="63" name="usersRepository"/>      
+      <multiplicity id="64" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="65">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="66" name="sessionHandler"/>      
+      <multiplicity id="67" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="68">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="69" name="usersRepository"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="71">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <association id="72">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="73" name="repository"/>      
+      <multiplicity id="74" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="75">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="76" name="usersRepository"/>      
+      <multiplicity id="77" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="78">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="8"/>  
+  </realization>  
+  <association id="79">    
+    <bendpoint x="453" y="1158"/>    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="80" name="sendFromObj"/>      
+      <multiplicity id="81" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="82">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="83" name="usersRepository"/>      
+      <multiplicity id="84" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="85">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

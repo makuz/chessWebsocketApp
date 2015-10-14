@@ -11,11 +11,11 @@
 	<div class="main-wrapper">
 
 		<div class="wrapperForKeepCenterPosition">
+			<div class="site-title">
+				<h2 class="text-center text-info">Play Chess with us</h2>
+			</div>
 
 			<article id="home-img-article">
-				<div class="site-title">
-					<h3 class="text-left">Play Chess with us</h3>
-				</div>
 				<img id="home-img" class="img-responsive"
 					src="<c:url value="${pageContext.request.contextPath}/resources/images/chess.jpg" />" />
 			</article>

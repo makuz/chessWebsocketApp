@@ -17,7 +17,8 @@
 	<div class="form-group">
 		<label class="control-label col-sm-2">login</label>
 		<div class="col-sm-8">
-			<input type="text" class="form-control" name="j_username" required />
+			<input type="text" class="form-control" name="j_username"
+				pattern=".{5,10}" required title="5 to 10 characters minimum" />
 		</div>
 	</div>
 
@@ -32,7 +33,7 @@
 		<label class="control-label col-sm-2">password</label>
 		<div class="col-sm-8">
 			<input type="password" class="form-control" name="j_password"
-				required />
+				pattern=".{5,10}" required title="5 to 10 characters minimum" />
 		</div>
 	</div>
 
@@ -40,13 +41,13 @@
 		<label class="control-label col-sm-2">confirm password</label>
 		<div class="col-sm-8">
 			<input type="password" class="form-control" name="j_confirm_password"
-				required />
+				pattern=".{5,10}" required title="5 to 10 characters minimum" />
 		</div>
 	</div>
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-			<input class="btn btn-success" type="submit" value="create" />
+			<input class="btn btn-success" type="submit" value="create account" />
 		</div>
 	</div>
 

@@ -12,14 +12,11 @@ import com.mongodb.*;
 @Configuration
 @EnableMongoRepositories("com.chessApp.daoimpl")
 public class MongoDBConnectionConfig extends AbstractMongoConfiguration {
-
-	ChessAppProperties chessappProperties = new ChessAppProperties();
-
-	String username = "makuzadmin";
-	String password = "1MojeFajneAuto";
-	String host = "mongodb22592-iboard-games.unicloud.pl";
-	String dbname = "chessapp_db";
-	String mongoLabConnectionString = ChessAppProperties
+	
+	@SuppressWarnings("unused")
+	private ChessAppProperties chessappProperties = new ChessAppProperties();
+	private String dbname = "chessapp_db";
+	private String mongoLabConnectionString = ChessAppProperties
 			.getProperty("db.connectionstring");
 
 	@Override
