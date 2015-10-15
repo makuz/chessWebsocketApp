@@ -33,7 +33,7 @@ public class LoginController {
 	public ModelAndView getFailPage() {
 
 		ModelAndView errorPage = new ModelAndView("error");
-		errorPage.addObject("errorMessage", "login fail");
+		errorPage.addObject("errorMessage", "login failed");
 
 		return errorPage;
 
