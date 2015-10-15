@@ -1,7 +1,7 @@
 <jsp:include page="includes/header.jsp"></jsp:include>
 <div class="container-fluid">
 	<jsp:include page="includes/menu.jsp"></jsp:include>
-	<div class="col-md-10 col-md-offset-1 ">
+	<div class="main-wrapper">
 		<br />
 		<div class="row contentWrapper">
 			<div class="user-profile-form">

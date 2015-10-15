@@ -11,9 +11,6 @@
 	<div class="main-wrapper">
 
 		<div class="wrapperForKeepCenterPosition">
-			<div class="site-title">
-				<h2 class="text-center text-info">Play Chess with us</h2>
-			</div>
 
 			<article id="home-img-article">
 				<img id="home-img" class="img-responsive"

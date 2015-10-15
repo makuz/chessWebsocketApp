@@ -24,7 +24,7 @@
 				<div class="site-title">
 					<span id="startPosBtn" class="btn btn-danger
 					btn-sm">start
-						new game</span><span class="play-with-others-title text-info">Play chess with others</span>
+						new game</span><span class="play-with-others-title main-font-color">Play chess with others</span>
 				</div>
 				<article id="aside-board">
 					<div id="board" class="row-fluid"></div>

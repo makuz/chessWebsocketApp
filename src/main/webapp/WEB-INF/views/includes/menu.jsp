@@ -32,17 +32,21 @@
 	</security:authorize>
 	<li><a href="<%=contextURL%>/home/best-players">best-players</a></li>
 
-	<li class="pull-right logOutBtn text-capitalize"><a
-		href="<%=contextURL%>/logout">log out</a></li>
-	<li class="pull-right logInBtn text-capitalize"><a
-		href="<%=contextURL%>/login">log in</a></li>
+	<li class="pull-right logOutBtn "><a href="<%=contextURL%>/logout">log
+			out</a></li>
+	<li class="pull-right logInBtn "><a href="<%=contextURL%>/login">log
+			in</a></li>
 </ul>
 <div class="welcome-user-line">
+	<div class="col-md-8">
+		<h2 class="text-left bright-font-color header-title">Iboard games</h2>
+	</div>
 	<security:authorize access="hasAnyRole('ROLE_ADMIN, ROLE_USER')">
-
-		<h4 class="text-right logged-user-name">
-			Welcome: <span class="text-primary"><b>${currentUserName}</b></span>
-		</h4>
+		<div class="col-md-4">
+			<h4 class="text-right logged-user-name">
+				Welcome: <span class="main-active-font-color"><b>${currentUserName}</b></span>
+			</h4>
+		</div>
 
 	</security:authorize>
 </div>
