@@ -9,8 +9,10 @@
 
 <form method="POST" action="<%=contextURL%>/admin/users/editUser"
 	class="form-horizontal">
-	
-	<h3 class="text-center">Your Account data</h3>
+
+	<h3 class="text-center">
+		<span class="glyphicon glyphicon-user text-primary"></span> Your profile data
+	</h3>
 
 	<div class="form-group col-sm-12">
 		<c:choose>
@@ -80,17 +82,16 @@
 		<c:choose>
 			<c:when test="${user.role==1}">
 				<div class="form-group">
-					<label class="col-sm-8 col-sm-offset-2">
-					<input type="checkbox" name="j_adminFlag" checked />
-					grant admin authorities 
+					<label class="col-sm-8 col-sm-offset-2"> <input
+						type="checkbox" name="j_adminFlag" checked /> grant admin
+						authorities
 					</label>
 				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="form-group">
-					<label class="col-sm-8 col-sm-offset-2">
-					<input type="checkbox" name="j_adminFlag" />
-					grant admin authorities 
+					<label class="col-sm-8 col-sm-offset-2"> <input
+						type="checkbox" name="j_adminFlag" /> grant admin authorities
 					</label>
 				</div>
 			</c:otherwise>

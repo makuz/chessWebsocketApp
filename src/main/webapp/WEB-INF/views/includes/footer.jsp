@@ -7,7 +7,7 @@
 %>
 <br />
 <footer class="footer">
-	<span class="author">author: Marcin Kuzdowicz</span> <span
+	<span class="author">author: Marcin Kużdowicz</span> <span
 		class="appTitle">chess application</span> <span class="pull-right">version:
 		<%=version%></span>
 </footer>

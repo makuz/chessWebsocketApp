@@ -49,9 +49,7 @@ table.table tbody td .btn {
 }
 
 table.table-accounts tbody td .btn {
-	font-size: 15px;
-	line-height: 1.5;
-	padding: 5px !important;
+	font-size: 12px;
 }
 
 .dataTables_length {

@@ -1,16 +1,18 @@
 <jsp:include page="includes/header.jsp" />
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <div class="container-fluid">
 	<jsp:include page="includes/menu.jsp" />
-		<div class="main-wrapper">
+	<div class="main-wrapper">
 
-			<%@ page import="java.util.List"%>
-			<%@ page import="com.chessApp.model.UserAccount"%>
-			<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-			<%@ page import="com.chessApp.props.ChessAppProperties"%>
-			<%
-				String contextURL = ChessAppProperties
-						.getProperty("app.contextpath");
-			%>
+		<%@ page import="java.util.List"%>
+		<%@ page import="com.chessApp.model.UserAccount"%>
+		<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+		<%@ page import="com.chessApp.props.ChessAppProperties"%>
+		<%
+			String contextURL = ChessAppProperties
+					.getProperty("app.contextpath");
+		%>
 
 		<c:choose>
 			<c:when test="${msg != null && msg  != '' }">
@@ -22,7 +24,7 @@
 
 		</c:choose>
 	</div>
-	</div>
+</div>
 <jsp:include page="includes/modal_boxes/removeUserModal.jsp"></jsp:include>
 
 <jsp:include page="includes/footer.jsp" />

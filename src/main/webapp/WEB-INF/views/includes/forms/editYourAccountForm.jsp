@@ -9,8 +9,11 @@
 
 <form method="POST" action="<%=contextURL%>/user/your-account"
 	class="form-horizontal">
-	
-	<h3 class="text-center">Your Account data</h3>
+
+
+	<h3 class="text-center">
+		<span class="glyphicon glyphicon-user text-primary"></span> Your profile data
+	</h3>
 
 	<div class="form-group col-sm-12">
 		<c:choose>
@@ -24,7 +27,7 @@
 		<label class="control-label col-sm-2">login</label>
 		<div class="col-sm-8">
 			<input type="text" class="form-control" name="j_username"
-				value="${user.username}" readonly/>
+				value="${user.username}" readonly />
 		</div>
 	</div>
 

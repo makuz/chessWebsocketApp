@@ -39,7 +39,9 @@
 </ul>
 <div class="welcome-user-line">
 	<div class="col-md-8">
-		<h2 class="text-left bright-font-color header-title">Iboard games</h2>
+		<h3 class="text-left bright-font-color header-title">
+			<span class="glyphicon glyphicon glyphicon-king"></span> Iboard games
+		</h3>
 	</div>
 	<security:authorize access="hasAnyRole('ROLE_ADMIN, ROLE_USER')">
 		<div class="col-md-4">

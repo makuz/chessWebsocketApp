@@ -23,10 +23,11 @@
 				<div class="wrapperForKeepCenterPosition">
 
 					<div class="site-title">
-						<span id="startPosBtn" class="btn nice-orange-bg-color white
+						<span id="startPosBtn"
+							class="btn nice-orange-bg-color white
 					btn-sm">start
-							new game</span><span class="play-with-others-title white">Play chess
-							with others</span>
+							new game</span><span class="play-with-others-title white">Play
+							chess with others</span>
 					</div>
 					<article id="aside-board">
 						<div id="board" class="row-fluid"></div>
@@ -74,8 +75,8 @@
 		</security:authorize>
 		<c:if test="${!isLoggedIn}">
 			<div class="alert-log-in-to-play">
-				<div class="alert alert-warning" id="play-chess-not-loggedin-alert"
-					role="alert">
+				<div class="alert alert-warning text-center"
+					id="play-chess-not-loggedin-alert" role="alert">
 					<h3>You have to be logged in to play chess with other users</h3>
 				</div>
 				<div id="play-chess-not-loggedin-btns" class="pull-right">

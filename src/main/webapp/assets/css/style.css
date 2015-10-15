@@ -232,6 +232,11 @@ section#onlineUsersSection ul li {
 	margin: 0 auto;
 }
 
+span.number-of-games {
+	font-weight: bold;
+	color: black;
+}
+
 div#participants span.participants-action-btns {
 	float: right;
 }
@@ -330,10 +335,13 @@ div.main-wrapper {
 }
 
 div#user-games-stats {
-	padding-top: 1%;
-	padding-bottom: 1%;
-	margin-top: 1%;
+	width: 60%;
+	margin: 1% auto 0 auto;
 	border-radius: 5px;
+}
+
+div#user-games-stats table td{
+	font-size: 105%;
 }
 
 div.wrapperForKeepCenterPosition {
@@ -508,7 +516,6 @@ div#usersTable {
 
 div#gamesTable {
 	width: 100%;
-	margin-left: -0.9%;
 	margin-top: 2%;
 	border: 2px solid #555;
 	border-radius: 5px;

@@ -1,4 +1,6 @@
 <jsp:include page="includes/header.jsp" />
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <div class="container-fluid">
 	<jsp:include page="includes/menu.jsp" />
 	<div class="main-wrapper">
@@ -14,24 +16,29 @@
 			src="<c:url value="${pageContext.request.contextPath}/resources/js/userGamesHistory.js" />"></script>
 
 		<div id="user-games-stats" class="text-center nice-green-backgroud">
-			<c:if test="${user.numberOfGamesPlayed ne null}">
-				<div>
-					<span class="white text-uppercase">number of games palyed : </span>
-					${user.numberOfGamesPlayed}
-				</div>
-			</c:if>
-			<c:if test="${user.numberOfWonChessGames ne null}">
-				<div>
-					<span class="nice-blue-font-color text-uppercase">number of won games : </span>
-					${user.numberOfWonChessGames}
-				</div>
-			</c:if>
-			<c:if test="${user.numberOfLostChessGames ne null}">
-				<div>
-					<span class="text-danger text-uppercase">number of lost games : </span>
-					${user.numberOfLostChessGames}
-				</div>
-			</c:if>
+			<table class="table table-condensed">
+				<c:if test="${user.numberOfGamesPlayed ne null}">
+					<tr>
+						<td><span class="white text-uppercase">number of games
+								palyed : </span></td>
+						<td><span class="number-of-games">${user.numberOfGamesPlayed}</span></td>
+					</tr>
+				</c:if>
+				<c:if test="${user.numberOfWonChessGames ne null}">
+					<tr>
+						<td><span class="nice-blue-font-color text-uppercase">number
+								of won games : </span></td>
+						<td><span class="number-of-games">${user.numberOfWonChessGames}</span></td>
+					</tr>
+				</c:if>
+				<c:if test="${user.numberOfLostChessGames ne null}">
+					<tr>
+						<td><span class="text-danger text-uppercase">number of
+								lost games : </span></td>
+						<td><span class="number-of-games">${user.numberOfLostChessGames}</span></td>
+					</tr>
+				</c:if>
+			</table>
 		</div>
 
 		<div id="gamesTable">

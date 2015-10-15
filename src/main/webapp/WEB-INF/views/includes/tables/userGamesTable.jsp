@@ -37,19 +37,22 @@
 					<td class=" text-center">${chessGame.numberOfMoves}</td>
 					<td class=" text-center">${chessGame.whiteColUsername}</td>
 					<td class=" text-center">${chessGame.blackColUsername}</td>
-					<td class=" text-center"><c:choose>
-							<c:when test="${chessGame.checkMate eq true}">
-					yes
-					</c:when>
-							<c:otherwise>no</c:otherwise>
-						</c:choose></td>
+					<c:choose>
+						<c:when test="${chessGame.checkMate eq true}">
+							<td class="text-center nice-orange-bg-color white">yes</td>
+						</c:when>
+						<c:otherwise>
+							<td class=" text-center">no</td>
+						</c:otherwise>
+					</c:choose>
 
 					<td class=" text-center"><c:if
 							test="${chessGame.winnerUsername ne null}">${chessGame.winnerUsername}</c:if>
 					</td>
 					<td class=" text-center">
-						<button class="btn btn-success showEndPsoBtn"
-							data-fen="${chessGame.endingGameFENString}">show</button>
+						<button class="btn btn-success btn-block showEndPsoBtn"
+							data-fen="${chessGame.endingGameFENString}">show end
+							position</button>
 					</td>
 
 				</tr>
