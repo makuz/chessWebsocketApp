@@ -33,7 +33,7 @@
 		<label class="control-label col-sm-2">password</label>
 		<div class="col-sm-8">
 			<input type="password" class="form-control" name="j_password"
-				pattern=".{6,30}" required title="6 to 30 characters minimum" />
+				pattern=".{5,30}" required title="5 to 30 characters minimum" />
 		</div>
 	</div>
 
@@ -46,8 +46,8 @@
 	</div>
 
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-			<input class="btn btn-success" type="submit" value="create account" />
+		<div class="col-sm-offset-2 col-sm-8">
+			<input class="btn btn-success btn-block" type="submit" value="create account" />
 		</div>
 	</div>
 

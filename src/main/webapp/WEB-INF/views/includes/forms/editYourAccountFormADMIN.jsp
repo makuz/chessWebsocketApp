@@ -11,7 +11,8 @@
 	class="form-horizontal">
 
 	<h3 class="text-center">
-		<span class="glyphicon glyphicon-user text-primary"></span> Your profile data
+		<span class="glyphicon glyphicon-user text-primary"></span> Your
+		profile data
 	</h3>
 
 	<div class="form-group col-sm-12">
@@ -99,9 +100,9 @@
 	</security:authorize>
 	<!--  -->
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-			<input class="btn btn-success" type="submit" value="change data" />
-			<a class="btn btn-default" href="/admin/users">back</a>
+		<div class="col-sm-offset-2 col-sm-8">
+			<input class="btn btn-success btn-block" type="submit"
+				value="change data" />
 		</div>
 	</div>
 

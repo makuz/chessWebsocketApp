@@ -67,8 +67,9 @@
 		</label>
 	</div>
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-			<input class="btn btn-success" type="submit" value="add" />
+		<div class="col-sm-offset-2 col-sm-8">
+			<input class="btn btn-success btn-block" type="submit"
+				value="add account" />
 		</div>
 	</div>
 
