@@ -10,7 +10,7 @@
 
 		<div class="wrapperForKeepCenterPosition">
 			<div class="site-title">
-				<h2 class="text-center main-font-color">Play chess with computer</h2>
+				<h4 class="text-center main-font-color">Play chess with computer</h4>
 			</div>
 			<script
 				src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>

@@ -35,7 +35,7 @@
 		</div>
 
 		<div id="gamesTable">
-			<h1 class="text-center">Your chess games</h1>
+			<h3 class="text-center">Your chess games</h3>
 			<jsp:include page="includes/tables/userGamesTable.jsp"></jsp:include>
 		</div>
 	</div>

@@ -10,7 +10,7 @@
 <form method="POST" action="<%=contextURL%>/user/your-account"
 	class="form-horizontal">
 	
-	<h1 class="text-center">Your Account data</h1>
+	<h3 class="text-center">Your Account data</h3>
 
 	<div class="form-group col-sm-12">
 		<c:choose>

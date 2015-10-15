@@ -13,12 +13,12 @@
 </div>
 <div class="tab-content">
 	<div id="usersTable" class="tab-pane fade in active">
-		<h1 class="text-center">Users</h1>
+		<h3 class="text-center">Users</h3>
 		<jsp:include page="tables/usersTable.jsp"></jsp:include>
 	</div>
 
 	<div id="addUserForm" class="tab-pane fade user-profile-form">
-		<h1 class="text-center">add user</h1>
+		<h3 class="text-center">add user</h3>
 		<jsp:include page="forms/addUserForm.jsp"></jsp:include>
 	</div>
 </div>
