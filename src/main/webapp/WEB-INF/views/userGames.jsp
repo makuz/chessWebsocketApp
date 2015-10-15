@@ -13,16 +13,16 @@
 		<script
 			src="<c:url value="${pageContext.request.contextPath}/resources/js/userGamesHistory.js" />"></script>
 
-		<div id="user-games-stats">
+		<div id="user-games-stats" class="text-center nice-green-backgroud">
 			<c:if test="${user.numberOfGamesPlayed ne null}">
 				<div>
-					<span class="text-info text-uppercase">number of games palyed : </span>
+					<span class="white text-uppercase">number of games palyed : </span>
 					${user.numberOfGamesPlayed}
 				</div>
 			</c:if>
 			<c:if test="${user.numberOfWonChessGames ne null}">
 				<div>
-					<span class="text-success text-uppercase">number of won games : </span>
+					<span class="nice-blue-font-color text-uppercase">number of won games : </span>
 					${user.numberOfWonChessGames}
 				</div>
 			</c:if>

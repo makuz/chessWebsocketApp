@@ -168,13 +168,16 @@ div.user-profile-form {
 	width: 80%;
 }
 
-div.user-profile-form label {
-	color: #3B5998 !important;
+div.message-box {
+	margin: 5% auto 0 auto;
+	padding: 2%;
+	background-color: #C9C9C9;
+	border-radius: 5px;
+	width: 80%;
 }
 
-div#user-games-stats {
-	padding: 0;
-	margin-top: 1%;
+div.user-profile-form label {
+	color: #3B5998 !important;
 }
 
 div#bestChessGamersChart {
@@ -249,9 +252,38 @@ div#chess-board-play-with-user div#board {
 }
 
 div.wrapperForKeepCenterPosition {
+	
+}
+
+div.outerDiv {
 	background-color: #E9E6E1;
+	padding-top: 1%;
+	padding-bottom: 5%;
+	padding-right: auto;
+	padding-left: auto;
 	border-radius: 5px;
-	color: #555;
+}
+
+div.outerDiv-play {
+	background-color: #32383E;
+	color: white;
+	padding-top: 1%;
+	padding-bottom: 5%;
+	padding-right: auto;
+	padding-left: auto;
+	border-radius: 5px;
+	padding-top: 1%;
+}
+
+div.outerDiv-play-with-users {
+	background-color: #32383E;
+	padding-top: 1%;
+	padding-bottom: 5%;
+	padding-right: auto;
+	padding-left: auto;
+	border-radius: 5px;
+	padding-top: 1%;
+	min-height: 700px;
 }
 
 div.main-wrapper {
@@ -262,12 +294,15 @@ div.main-wrapper {
 	padding: 1% 2.5% 1% 3.5%;
 }
 
-@media ( min-width : 768px) and (max-width: 991px) {
+@media ( min-width : 768px) and (max-width: 1024px) {
 	div.main-wrapper {
 		min-height: 1150px;
 	}
 	div.wrapperForKeepCenterPosition {
 		margin-left: 5%;
+	}
+	div#chess-board-play-with-user div#board {
+		width: 38em !important;
 	}
 }
 
@@ -286,6 +321,19 @@ div.main-wrapper {
 		margin: 0 auto;
 		width: 38.5em !important;
 	}
+	div#chess-board-play-with-user div#board {
+		width: 37em !important;
+	}
+	div#chess-board-play-with-user article.game-actions {
+		width: 34em !important;
+	}
+}
+
+div#user-games-stats {
+	padding-top: 1%;
+	padding-bottom: 1%;
+	margin-top: 1%;
+	border-radius: 5px;
 }
 
 div.wrapperForKeepCenterPosition {
@@ -302,17 +350,23 @@ div.site-title {
 	width: 100%;
 }
 
+div.site-title h1 {
+	width: 30%;
+	margin: 0 auto;
+	padding-top: 0.21em;
+	padding-bottom: 0.21em;
+}
+
 span.play-with-others-title {
 	margin-left: 20%;
 	font-size: 160%;
 }
 
 div#chess-board-play-with-user article.game-actions {
-	margin-top: 1em;
+	margin-top: 1.1em;
 	padding: 0.9%;
 	width: 35em;
 	float: left;
-	border: 2px black solid;
 	background-color: #DDD;
 }
 
@@ -411,31 +465,25 @@ article#chess-board-home div#board {
 	width: 42.92em;
 }
 
-div.game-stats-home {
+div.game-stats {
 	margin-top: 2%;
-	background-color: #FBFBFB;
+	background-color: #46B39E;
 	word-wrap: break word;
 	clear: both;
 	padding: 0.8%;
 	width: 100%;
 	margin: 2% auto 0 auto;
 	text-align: center;
-	border: 2px black solid;
 	padding: 0.8%;
+}
+
+.nice-green-backgroud {
+	background-color: #46B39E;
 }
 
 article#chess-board-play-with-computer div#board {
-	width: 44em;
+	width: 42em;
 	padding: 0;
-	margin: 0 auto 2% auto;
-}
-
-article.game-stats-with-computer {
-	background-color: #FBFBFB;
-	word-wrap: break word;
-	padding: 0.8%;
-	width: 45em;
-	border: 2px black solid;
 	margin: 0 auto 0 auto;
 }
 
@@ -452,7 +500,7 @@ div#usersTable {
 	width: 100%;
 	margin-left: -0.9%;
 	margin-top: 5%;
-	border: 2px solid #3B5998;
+	border: 2px solid #555;
 	border-radius: 5px;
 	padding: 1%;
 	background-color: #C9C9C9;
@@ -462,10 +510,22 @@ div#gamesTable {
 	width: 100%;
 	margin-left: -0.9%;
 	margin-top: 2%;
-	border: 2px solid #3B5998;
+	border: 2px solid #555;
 	border-radius: 5px;
 	padding: 1%;
 	background-color: #C9C9C9;
+}
+
+.nice-red-bg-color {
+	background-color: #E8E2DC;
+}
+
+.nice-orange-bg-color {
+	background-color: #D25400;
+}
+
+.nice-blue-bg-color {
+	background-color: #2A80B9;
 }
 
 div#bestPlayersTable {
@@ -489,6 +549,10 @@ div#usersTableForDataTableJS_filter {
 .facebookBlue {
 	background-color: #3b5998;
 	color: #fff;
+}
+
+.nice-blue-font-color {
+	color: #013093;
 }
 
 a.paginate_button.current {

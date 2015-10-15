@@ -7,26 +7,28 @@
 <div class="container-fluid">
 	<jsp:include page="includes/menu.jsp" />
 	<div class="main-wrapper">
-
-		<div class="wrapperForKeepCenterPosition">
-			<div class="site-title">
-				<h4 class="text-center main-font-color">Play chess with computer</h4>
+	<br />
+		<div class="outerDiv-play">
+			<div class="wrapperForKeepCenterPosition">
+				<div class="site-title">
+					<h4 class="text-center">Play chess with
+						computer</h4>
+				</div>
+				<script
+					src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>
+				<article id="chess-board-play-with-computer">
+					<div id="board"></div>
+					<br />
+				</article>
+				<div class="game-stats">
+					<p class="nice-blue-font-color">
+						Status: <span id="status"></span>
+					</p>
+					<small class="white"> FEN: <br /> <span id="fen"></span>
+					</small> <br /> <small class="text-danger"> PGN: <span id="pgn"></span>
+					</small>
+				</div>
 			</div>
-			<script
-				src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>
-			<article id="chess-board-play-with-computer">
-				<div id="board"></div>
-				<br />
-			</article>
-			<article class="game-stats-with-computer">
-				<p class="text-danger">
-					Status: <span id="status"></span>
-				</p>
-				<small class="text-info"> FEN: <br /> <span id="fen"></span>
-				</small> <br /> <small class="text-warning"> PGN: <span id="pgn"></span>
-				</small>
-			</article>
-
 		</div>
 
 	</div>

@@ -33,7 +33,7 @@
 		<label class="control-label col-sm-2">password</label>
 		<div class="col-sm-8">
 			<input type="password" class="form-control" name="j_password"
-				pattern=".{5,10}" required title="5 to 10 characters minimum" />
+				pattern=".{6,30}" required title="6 to 30 characters minimum" />
 		</div>
 	</div>
 
@@ -41,7 +41,7 @@
 		<label class="control-label col-sm-2">confirm password</label>
 		<div class="col-sm-8">
 			<input type="password" class="form-control" name="j_confirm_password"
-				pattern=".{5,10}" required title="5 to 10 characters minimum" />
+				pattern=".{6,30}" required title="6 to 30 characters minimum" />
 		</div>
 	</div>
 

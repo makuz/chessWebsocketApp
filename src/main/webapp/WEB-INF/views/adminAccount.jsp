@@ -3,10 +3,8 @@
 	<jsp:include page="includes/menu.jsp"></jsp:include>
 	<div class="main-wrapper">
 		<br />
-		<div class="row contentWrapper">
-			<div class="user-profile-form">
-				<jsp:include page="includes/forms/editYourAccountFormADMIN.jsp" />
-			</div>
+		<div class="user-profile-form">
+			<jsp:include page="includes/forms/editYourAccountFormADMIN.jsp" />
 		</div>
 	</div>
 </div>

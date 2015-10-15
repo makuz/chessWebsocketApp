@@ -21,7 +21,8 @@
 	<div class="form-group">
 		<label class="control-label col-sm-2">username</label>
 		<div class="col-sm-8">
-			<input type="text" class="form-control" name="j_username" required />
+			<input type="text" class="form-control" name="j_username"
+				pattern=".{5,10}" required title="5 to 10 characters minimum" />
 		</div>
 	</div>
 
@@ -29,7 +30,7 @@
 		<label class="control-label col-sm-2">password</label>
 		<div class="col-sm-8">
 			<input type="password" class="form-control" name="j_password"
-				required />
+				pattern=".{6,30}" required title="6 to 30 characters minimum" />
 		</div>
 	</div>
 
@@ -37,7 +38,7 @@
 		<label class="control-label col-sm-2">confirm password</label>
 		<div class="col-sm-8">
 			<input type="password" class="form-control" name="j_confirm_password"
-				required />
+				pattern=".{6,30}" required title="6 to 30 characters minimum" />
 		</div>
 	</div>
 
@@ -62,8 +63,7 @@
 	</div>
 	<div class="form-group">
 		<label class="col-sm-8 col-sm-offset-2"> <input
-			type="checkbox" name="j_adminFlag" /> grant admin
-			authorities
+			type="checkbox" name="j_adminFlag" /> grant admin authorities
 		</label>
 	</div>
 	<div class="form-group">
