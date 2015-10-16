@@ -150,15 +150,16 @@ public class UserAccount extends ChessAppUser implements
 
 	@Override
 	public String toString() {
-		return "UserAccount [username= " + username + ", id=" + id + ", userId="
-				+ userId + ", password=" + password + ", name=" + name
-				+ ", lastname=" + lastname + ", role=" + role + ", email="
-				+ email + ", registrationHashString=" + registrationHashString
-				+ ", isRegistrationConfirmed=" + isRegistrationConfirmed
-				+ ", registrationDate=" + registrationDate
-				+ ", numberOfGamesPlayed=" + numberOfGamesPlayed
-				+ ", numberOfWonChessGames=" + numberOfWonChessGames
-				+ ", numberOfLostChessGames=" + numberOfLostChessGames + "]";
+		return "UserAccount [username= " + username + ", id=" + id
+				+ ", userId=" + userId + ", password=" + password + ", name="
+				+ name + ", lastname=" + lastname + ", role=" + role
+				+ ", email=" + email + ", registrationHashString="
+				+ registrationHashString + ", isRegistrationConfirmed="
+				+ isRegistrationConfirmed + ", registrationDate="
+				+ registrationDate + ", numberOfGamesPlayed="
+				+ numberOfGamesPlayed + ", numberOfWonChessGames="
+				+ numberOfWonChessGames + ", numberOfLostChessGames="
+				+ numberOfLostChessGames + "]";
 	}
 
 }

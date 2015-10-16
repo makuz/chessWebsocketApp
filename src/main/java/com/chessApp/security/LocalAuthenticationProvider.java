@@ -1,6 +1,11 @@
 package com.chessApp.security;
 
 import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +22,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.chessApp.dao.UsersRepository;
+import com.chessApp.exceptions.LogInValidationException;
 import com.chessApp.exceptions.UserNotConfirmedException;
 import com.chessApp.model.UserAccount;
+import com.chessApp.validation.forms.LoginForm;
 
 @Component
 public class LocalAuthenticationProvider extends
@@ -32,6 +39,9 @@ public class LocalAuthenticationProvider extends
 
 	@Autowired
 	private PasswordEncoder encoder;
+
+	@Autowired
+	private LoginForm loginForm;
 
 	private PasswordEncryptor passwordEncrypter = new PasswordEncryptor();
 
@@ -48,6 +58,25 @@ public class LocalAuthenticationProvider extends
 			throws AuthenticationException {
 
 		String password = (String) authentication.getCredentials();
+
+		loginForm.setUsername(username);
+		loginForm.setPassword(password);
+		Validator validation = Validation.buildDefaultValidatorFactory()
+				.getValidator();
+		Set<ConstraintViolation<LoginForm>> constraintViolations = validation
+				.validate(loginForm);
+
+		if (constraintViolations.size() != 0) {
+
+			String validationMessages = null;
+			for (ConstraintViolation<LoginForm> constraintViolation : constraintViolations) {
+				validationMessages += constraintViolation.getMessage();
+				validationMessages += " ";
+			}
+
+			throw new LogInValidationException(validationMessages);
+		}
+
 		String hashPassword = null;
 		try {
 			hashPassword = passwordEncrypter.encryptUserPassword(password);

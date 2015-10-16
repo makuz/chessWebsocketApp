@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.chessApp.dao.UsersRepository;
+import com.chessApp.validation.forms.LoginForm;
 
 @Controller
 public class LoginController {
@@ -17,12 +18,15 @@ public class LoginController {
 	@Autowired
 	private UsersRepository repository;
 
+	@Autowired
+	private LoginForm loginForm;
+
 	private static final Logger logger = Logger
 			.getLogger(LoginController.class);
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView logIn() {
-		logger.info("logIn()");
+	public ModelAndView getLoginPage() {
+		logger.debug("getLoginPage()");
 		ModelAndView loginPageModel = new ModelAndView("login");
 		addBasicObjectsToModelAndView(loginPageModel);
 
@@ -31,6 +35,7 @@ public class LoginController {
 
 	@RequestMapping("/fail")
 	public ModelAndView getFailPage() {
+		logger.debug("getFailPage()");
 
 		ModelAndView errorPage = new ModelAndView("error");
 		errorPage.addObject("errorMessage", "login failed");
@@ -46,6 +51,7 @@ public class LoginController {
 
 		String userLogin = auth.getName();
 		modelAndView.addObject("currentUserName", userLogin);
+		modelAndView.addObject("loginForm", loginForm);
 
 	}
 

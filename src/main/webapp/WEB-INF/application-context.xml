@@ -11,8 +11,7 @@
 	<beans:bean id="webSocketSessionHandler"
 		class="com.chessApp.websocket.WebSocketSessionHandler" />
 
-	<beans:bean id="gameUsersHandler"
-		class="com.chessApp.websocket.GameUsersHandler" />
+	<beans:bean id="gameUsersHandler" class="com.chessApp.websocket.GameUsersHandler" />
 
 	<beans:bean id="chessGamesHandler" class="com.chessApp.websocket.ChessGamesHandler" />
 
@@ -27,6 +26,10 @@
 	<beans:bean id="chessGameModel" class="com.chessApp.model.ChessGame" />
 
 	<beans:bean id="chessMove" class="com.chessApp.model.ChessMove" />
+
+	<beans:bean id="loginForm" class="com.chessApp.validation.forms.LoginForm" />
+
+	<beans:bean id="signUpForm" class="com.chessApp.validation.forms.SignUpForm" />
 
 
 </beans:beans>

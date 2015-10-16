@@ -45,14 +45,16 @@
 	<div class="form-group">
 		<label class="control-label col-sm-2">name</label>
 		<div class="col-sm-8">
-			<input type="text" class="form-control" name="j_name" />
+			<input type="text" class="form-control" name="j_name" pattern=".{3,15}"
+				title="5 to 10 characters minimum"/>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label class="control-label col-sm-2">lastname</label>
 		<div class="col-sm-8">
-			<input type="text" class="form-control" name="j_lastname" />
+			<input type="text" class="form-control" name="j_lastname" pattern=".{3,15}"
+				title="5 to 10 characters minimum"/>
 		</div>
 	</div>
 	<div class="form-group">

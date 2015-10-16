@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,12 +22,16 @@ import com.chessApp.mailService.MailService;
 import com.chessApp.model.UserAccount;
 import com.chessApp.security.PasswordEncryptor;
 import com.chessApp.security.UserRoles;
+import com.chessApp.validation.forms.SignUpForm;
 
 @Controller
 public class SignInController {
 
 	@Autowired
 	private UsersRepository usersRepository;
+
+	@Autowired
+	private SignUpForm signUpFomr;
 
 	private PasswordEncryptor passwordEncrypter = new PasswordEncryptor();
 
@@ -42,6 +49,7 @@ public class SignInController {
 		if (msg != null) {
 			signInSite.addObject("errorMessage", msg);
 		}
+		signInSite.addObject("signUpFomr", signUpFomr);
 		addBasicObjectsToModelAndView(signInSite);
 
 		return signInSite;
@@ -64,8 +72,13 @@ public class SignInController {
 
 	}
 
-	@RequestMapping(value = "/signin/create/account", method = RequestMethod.POST)
-	public ModelAndView addUserAction(@RequestParam Map<String, String> reqMap) {
+	@RequestMapping(value = "/signin", method = RequestMethod.POST)
+	public ModelAndView addUserAction(@Valid SignUpForm signUpFomr,
+			@RequestParam Map<String, String> reqMap, BindingResult result) {
+
+		if (result.hasErrors()) {
+			return getSignInForm(null);
+		}
 
 		String userLogin = reqMap.get("j_username");
 		String userEmail = reqMap.get("j_email");
