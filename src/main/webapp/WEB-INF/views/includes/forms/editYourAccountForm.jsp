@@ -8,12 +8,8 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 
-<form:form method="POST" commandName="editForm" class="form-horizontal">
-
-	<h3 class="text-center">
-		<span class="glyphicon glyphicon-user text-primary"></span> Your
-		profile data
-	</h3>
+<form:form method="POST" commandName="editForm" class="form-horizontal"
+	name="editYourAccountForm">
 
 	<div class="form-group">
 		<label class="control-label col-sm-2">login</label>
@@ -57,13 +53,23 @@
 			</div>
 		</div>
 	</c:if>
-	<div class="form-group col-sm-12">
-		<c:choose>
-			<c:when test="${ msg != null }">
-				<div class="alert alert-danger text-center">${msg}</div>
-			</c:when>
-		</c:choose>
-	</div>
+
+	<c:choose>
+		<c:when test="${ errorrMessage != null }">
+			<div class="form-group col-sm-12">
+				<div class="alert alert-danger text-center">${errorrMessage}</div>
+			</div>
+		</c:when>
+	</c:choose>
+
+	<c:choose>
+		<c:when test="${ successMessage != null }">
+			<div class="form-group col-sm-12">
+				<div class="alert alert-success text-center">${successMessage}</div>
+			</div>
+		</c:when>
+	</c:choose>
+
 	<div id="passwordChangeInputs">
 		<div class="form-group">
 			<label class="col-sm-2 control-label"> userPassword: </label>

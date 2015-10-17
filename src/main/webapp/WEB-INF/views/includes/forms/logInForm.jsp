@@ -5,7 +5,7 @@
 			.getProperty("app.contextpath");
 %>
 <form:form method="POST" commandName="loginForm"
-	cssClass="form-horizontal">
+	cssClass="form-horizontal" name="loginForm">
 	<div class="form-group">
 		<label class="control-label col-sm-3">login</label>
 		<div class="col-sm-6">

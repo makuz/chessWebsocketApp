@@ -8,7 +8,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <form:form method="POST" commandName="signUpForm"
-	class="form-horizontal">
+	class="form-horizontal" name="addUserForm">
 
 	<div class="form-group">
 		<label class="control-label col-sm-2">login</label>

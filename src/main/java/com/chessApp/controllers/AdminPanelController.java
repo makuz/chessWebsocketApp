@@ -2,10 +2,10 @@ package com.chessApp.controllers;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -23,6 +23,7 @@ import com.chessApp.model.UserAccount;
 import com.chessApp.props.Messages;
 import com.chessApp.security.PasswordEncryptor;
 import com.chessApp.security.UserRoles;
+import com.chessApp.validation.forms.EditForm;
 import com.chessApp.validation.forms.SignUpForm;
 
 @Controller
@@ -50,15 +51,18 @@ public class AdminPanelController {
 	}
 
 	@RequestMapping(value = "admin/users/editUser", method = RequestMethod.GET)
-	public ModelAndView showEditUserForm(
-			@RequestParam("username") String username, String msg) {
+	public ModelAndView showEditUserForm(@RequestParam("login") String login,
+			String errorMessage, String successMessage) {
 
 		logger.info("showEditUserForm()");
-		UserAccount user = usersRepository.getUserByUsername(username);
+		UserAccount user = usersRepository.getUserByUsername(login);
 
 		ModelAndView userDetailPage = new ModelAndView("editUser");
+		EditForm editForm = new EditForm();
+		userDetailPage.addObject("editForm", editForm);
 		userDetailPage.addObject("user", user);
-		userDetailPage.addObject("msg", msg);
+		userDetailPage.addObject("errorMessage", errorMessage);
+		userDetailPage.addObject("successMessage", successMessage);
 		addBasicObjectsToModelAndView(userDetailPage);
 
 		return userDetailPage;
@@ -66,60 +70,87 @@ public class AdminPanelController {
 
 	@RequestMapping(value = "admin/users/editUser", method = RequestMethod.POST)
 	public ModelAndView sendEditUserData(
-			@RequestParam Map<String, String> userDataMap) {
+			@Valid @ModelAttribute("editForm") EditForm editForm,
+			BindingResult result) {
 
 		logger.info("sendEditUserData()");
 
-		String userLogin = userDataMap.get("j_username");
-		String name = userDataMap.get("j_name");
-		String lastname = userDataMap.get("j_lastname");
-		String adminFlagSendedByForm = userDataMap.get("j_adminFlag");
-		String email = userDataMap.get("j_email");
+		Boolean changePasswordFlag = editForm.getChangePasswordFlag();
+		Boolean changePasswordCheckBoxIsUnchecked = !changePasswordFlag;
+		if (changePasswordCheckBoxIsUnchecked) {
+			if (result.hasFieldErrors("email") || result.hasFieldErrors("name")
+					|| result.hasFieldErrors("lastname")) {
+				ModelAndView editFormSite = new ModelAndView("yourAccount");
+				editFormSite.addObject("changePasswordCheckBoxIsChecked",
+						changePasswordFlag);
+				editFormSite.addObject("editForm", editForm);
+				return editFormSite;
+			}
+		} else {
+			if (result.hasErrors()) {
+				ModelAndView editFormSite = new ModelAndView("yourAccount");
+				editFormSite.addObject("changePasswordCheckBoxIsChecked",
+						changePasswordFlag);
+				editFormSite.addObject("editForm", editForm);
+				return editFormSite;
+			}
+		}
+
+		String userLogin = editForm.getUsername();
+		String name = editForm.getName();
+		String lastname = editForm.getLastname();
+
+		String email = editForm.getEmail();
+		String password = editForm.getPassword();
+		String confirmPassword = editForm.getConfirmPassword();
+
+		if (!password.equals(confirmPassword)) {
+
+			return showEditUserForm(userLogin,
+					Messages.getProperty("error.passwords.notequal"), null);
+		}
 
 		UserAccount user = usersRepository.getUserByUsername(userLogin);
-		user.setName(name);
-		user.setLastname(lastname);
 
-		String changePasswordFlag = userDataMap.get("j_changePasswordFlag");
-		if (changePasswordFlag != null
-				&& changePasswordFlag.equalsIgnoreCase("on")) {
+		if (user != null) {
 
-			String pass = userDataMap.get("j_password");
-			String passConfirm = userDataMap.get("j_confirm_password");
-
-			if (!pass.equals(passConfirm)) {
-
-				return showEditUserForm(user.getUsername(),
-						"password and confirm password have to be equal");
+			if (!StringUtils.isBlank(name)) {
+				user.setName(name);
 			}
-			// hash password
-			String hashedPassword = null;
-			try {
-				hashedPassword = passwordEncrypter.encryptUserPassword(pass)
-						.toString();
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (!StringUtils.isBlank(lastname)) {
+				user.setLastname(lastname);
 			}
 
-			if (hashedPassword != null) {
-				user.setPassword(hashedPassword);
+			if (changePasswordFlag) {
+				try {
+					String hashedPassword = passwordEncrypter
+							.encryptUserPassword(password).toString();
+					user.setPassword(hashedPassword);
+				} catch (Exception e) {
+					logger.debug(e);
+				}
 			}
-		}
+			user.setEmail(email);
 
-		if (adminFlagSendedByForm != null
-				&& adminFlagSendedByForm.equalsIgnoreCase("on")) {
-			user.setRole(1);
+			Boolean adminFlag = editForm.getGrantAdminAuthorities();
+
+			if (adminFlag) {
+				user.setRole(UserRoles.ADMIN.geNumericValue());
+			} else {
+				user.setRole(UserRoles.USER.geNumericValue());
+			}
+
+			user.setEmail(email);
+			usersRepository.updateUser(user);
+
+			return showEditUserForm(user.getUsername(), null,
+					Messages.getProperty("success.user.edit"));
+
 		} else {
-			user.setRole(2);
+
+			return showEditUserForm(null,
+					Messages.getProperty("error.fatal.error"), null);
 		}
-
-		user.setEmail(email);
-		usersRepository.updateUser(user);
-
-		ModelAndView userDetailPage = new ModelAndView("editUser");
-		userDetailPage.addObject("user", user);
-
-		return getAllUsers();
 	}
 
 	@RequestMapping(value = "admin/users/remove", method = RequestMethod.POST)

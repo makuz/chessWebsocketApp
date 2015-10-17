@@ -39,7 +39,8 @@ public class UserPanelController {
 			.getLogger(UserPanelController.class);
 
 	@RequestMapping("/user/your-account")
-	public ModelAndView getLoggedInUserDetails(String msg) {
+	public ModelAndView getLoggedInUserDetails(String errorrMessage,
+			String successMessage) {
 
 		logger.debug("getLoggedInUserDetails()");
 
@@ -53,7 +54,8 @@ public class UserPanelController {
 		EditForm editForm = new EditForm();
 		yourAccount.addObject("editForm", editForm);
 		yourAccount.addObject("user", user);
-		yourAccount.addObject("msg", msg);
+		yourAccount.addObject("errorrMessage", errorrMessage);
+		yourAccount.addObject("successMessage", successMessage);
 		addBasicObjectsToModelAndView(yourAccount);
 
 		return yourAccount;
@@ -71,7 +73,8 @@ public class UserPanelController {
 			if (result.hasFieldErrors("email") || result.hasFieldErrors("name")
 					|| result.hasFieldErrors("lastname")) {
 				ModelAndView editFormSite = new ModelAndView("yourAccount");
-				editFormSite.addObject("changePasswordCheckBoxIsChecked", changePasswordFlag);
+				editFormSite.addObject("changePasswordCheckBoxIsChecked",
+						changePasswordFlag);
 				editFormSite.addObject("editForm", editForm);
 				return editFormSite;
 			}
@@ -85,13 +88,6 @@ public class UserPanelController {
 			}
 		}
 
-		if (result.hasErrors() && !result.hasFieldErrors("password")
-				&& result.hasFieldErrors("confirmPassword")) {
-			ModelAndView editFormSite = new ModelAndView("yourAccount");
-			editFormSite.addObject("editForm", editForm);
-			return editFormSite;
-		}
-
 		String userLogin = editForm.getUsername();
 		String name = editForm.getName();
 		String lastname = editForm.getLastname();
@@ -102,8 +98,8 @@ public class UserPanelController {
 
 		if (!password.equals(confirmPassword)) {
 
-			return getLoggedInUserDetails(Messages
-					.getProperty("error.passwords.notequal"));
+			return getLoggedInUserDetails(
+					Messages.getProperty("error.passwords.notequal"), null);
 		}
 
 		UserAccount user = usersRepository.getUserByUsername(userLogin);
@@ -128,7 +124,8 @@ public class UserPanelController {
 		user.setRole(2);
 		usersRepository.updateUser(user);
 
-		return getLoggedInUserDetails(null);
+		return getLoggedInUserDetails(null,
+				Messages.getProperty("success.user.edit"));
 	}
 
 	@RequestMapping(value = "/user/your-chessgames", method = RequestMethod.GET)

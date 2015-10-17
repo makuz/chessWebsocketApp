@@ -13,7 +13,7 @@
 	</c:when>
 </c:choose>
 <form:form method="POST" commandName="signUpFomr"
-	class="form-horizontal">
+	class="form-horizontal" name="signUpFomr">
 
 	<div class="form-group">
 		<label class="control-label col-sm-2">login</label>

@@ -24,6 +24,8 @@ public class EditForm {
 
 	private Boolean changePasswordFlag;
 
+	private Boolean grantAdminAuthorities;
+
 	public String getUsername() {
 		return username;
 	}
@@ -80,12 +82,21 @@ public class EditForm {
 		this.changePasswordFlag = changePasswordFlag;
 	}
 
+	public Boolean getGrantAdminAuthorities() {
+		return grantAdminAuthorities;
+	}
+
+	public void setGrantAdminAuthorities(Boolean grantAdminAuthorities) {
+		this.grantAdminAuthorities = grantAdminAuthorities;
+	}
+
 	@Override
 	public String toString() {
 		return "EditForm [username=" + username + ", name=" + name
 				+ ", lastname=" + lastname + ", email=" + email + ", password="
 				+ password + ", confirmPassword=" + confirmPassword
-				+ ", changePasswordFlag=" + changePasswordFlag + "]";
+				+ ", changePasswordFlag=" + changePasswordFlag
+				+ ", grantAdminAuthorities=" + grantAdminAuthorities + "]";
 	}
 
 }
