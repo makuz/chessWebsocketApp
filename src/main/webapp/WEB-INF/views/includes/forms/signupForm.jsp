@@ -18,8 +18,7 @@
 	<div class="form-group">
 		<label class="control-label col-sm-2">login</label>
 		<div class="col-sm-8">
-			<form:input path="username" type="text" class="form-control"
-				name="j_username" />
+			<form:input path="username" type="text" class="form-control" />
 			<form:errors path="username" cssClass="alert-danger danger" />
 		</div>
 	</div>
@@ -27,8 +26,7 @@
 	<div class="form-group">
 		<label class="control-label col-sm-2">email</label>
 		<div class="col-sm-8">
-			<form:input path="email" type="email" class="form-control"
-				name="j_email" />
+			<form:input path="email" type="email" class="form-control" />
 			<form:errors path="email" cssClass="alert-danger danger" />
 		</div>
 	</div>
@@ -36,8 +34,7 @@
 	<div class="form-group">
 		<label class="control-label col-sm-2">password</label>
 		<div class="col-sm-8">
-			<form:input path="password" type="password" class="form-control"
-				name="j_password" />
+			<form:input path="password" type="password" class="form-control" />
 			<form:errors path="password" cssClass="alert-danger danger" />
 		</div>
 	</div>
@@ -46,7 +43,7 @@
 		<label class="control-label col-sm-2">confirm password</label>
 		<div class="col-sm-8">
 			<form:input path="confirmPassword" type="password"
-				class="form-control" name="j_confirm_password" />
+				class="form-control" />
 			<form:errors path="confirmPassword" cssClass="alert-danger danger" />
 		</div>
 	</div>

@@ -77,11 +77,11 @@
 			<div class="alert-log-in-to-play">
 				<div class="alert alert-warning text-center"
 					id="play-chess-not-loggedin-alert" role="alert">
-					<h3>You have to be logged in to play chess with other users</h3>
+					<h3>${warning}</h3>
 				</div>
 				<div id="play-chess-not-loggedin-btns" class="pull-right">
 					<a class="btn btn-info" href="/login">log in</a> <a
-						class="btn btn-success" href="/signin">sign up</a>
+						class="btn btn-success" href="/signup">sign up</a>
 				</div>
 			</div>
 		</c:if>

@@ -34,7 +34,7 @@
 	<beans:bean
 		class="org.springframework.context.support.ResourceBundleMessageSource"
 		id="messageSource">
-		<beans:property name="basename" value="messages" />
+		<beans:property name="basenames" value="/WEB-INF/resources/messages" />
 	</beans:bean>
 
 

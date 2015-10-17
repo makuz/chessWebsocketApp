@@ -19,6 +19,7 @@
 			<table class="table table-condensed">
 				<c:if test="${user.numberOfGamesPlayed ne null}">
 					<tr>
+						<td><span class="glyphicon glyphicon-asterisk"></span></td>
 						<td><span class="white text-uppercase">number of games
 								palyed : </span></td>
 						<td><span class="number-of-games">${user.numberOfGamesPlayed}</span></td>
@@ -26,6 +27,7 @@
 				</c:if>
 				<c:if test="${user.numberOfWonChessGames ne null}">
 					<tr>
+						<td><span class="glyphicon glyphicon-star-empty"></span></td>
 						<td><span class="nice-blue-font-color text-uppercase">number
 								of won games : </span></td>
 						<td><span class="number-of-games">${user.numberOfWonChessGames}</span></td>
@@ -33,6 +35,7 @@
 				</c:if>
 				<c:if test="${user.numberOfLostChessGames ne null}">
 					<tr>
+						<td><span class="glyphicon glyphicon-thumbs-down"></span></td>
 						<td><span class="text-danger text-uppercase">number of
 								lost games : </span></td>
 						<td><span class="number-of-games">${user.numberOfLostChessGames}</span></td>
@@ -42,7 +45,9 @@
 		</div>
 
 		<div id="gamesTable">
-			<h3 class="text-center">Your chess games</h3>
+			<h3 class="text-center">
+				<span class="glyphicon glyphicon-info-sign"></span> Your chess games
+			</h3>
 			<jsp:include page="includes/tables/userGamesTable.jsp"></jsp:include>
 		</div>
 	</div>

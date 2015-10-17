@@ -27,7 +27,7 @@
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-6">
 			<input class="btn btn-info btn-block" type="submit" value="log in" />
-			<a class="btn btn-success btn-block" href="<%=contextURL%>/signin">sign
+			<a class="btn btn-success btn-block" href="<%=contextURL%>/signup">sign
 				up</a>
 		</div>
 	</div>

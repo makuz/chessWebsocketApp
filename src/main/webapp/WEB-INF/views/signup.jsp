@@ -12,7 +12,7 @@
 			</h1>
 
 			<hr />
-			<jsp:include page="includes/forms/signInForm.jsp" />
+			<jsp:include page="includes/forms/signupForm.jsp" />
 
 			<hr />
 		</div>

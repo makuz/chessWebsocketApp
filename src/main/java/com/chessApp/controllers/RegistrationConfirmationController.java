@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.chessApp.dao.UsersRepository;
 import com.chessApp.model.UserAccount;
+import com.chessApp.props.Messages;
 
 @Controller
 public class RegistrationConfirmationController {
@@ -33,7 +34,8 @@ public class RegistrationConfirmationController {
 			usersRepository.updateUser(user);
 		} else {
 			ModelAndView error = new ModelAndView("error");
-			error.addObject("errorMessage", "SOMETHINGS GOES WRONG");
+			error.addObject("errorMessage",
+					Messages.getProperty("error.registration.confirm.failed"));
 			return error;
 		}
 

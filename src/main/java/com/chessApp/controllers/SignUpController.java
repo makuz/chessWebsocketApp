@@ -1,7 +1,6 @@
 package com.chessApp.controllers;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -15,18 +14,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.chessApp.dao.UsersRepository;
 import com.chessApp.mailService.MailService;
 import com.chessApp.model.UserAccount;
+import com.chessApp.props.Messages;
 import com.chessApp.security.PasswordEncryptor;
 import com.chessApp.security.UserRoles;
 import com.chessApp.validation.forms.SignUpForm;
 
 @Controller
-public class SignInController {
+public class SignUpController {
 
 	@Autowired
 	private UsersRepository usersRepository;
@@ -37,26 +36,26 @@ public class SignInController {
 	private PasswordEncryptor passwordEncrypter = new PasswordEncryptor();
 
 	private static final Logger logger = Logger
-			.getLogger(SignInController.class);
+			.getLogger(SignUpController.class);
 
 	@Autowired
 	private MailService mailService;
 
 	// sign in
-	@RequestMapping("/signin")
-	public ModelAndView getSignInForm(String msg) {
+	@RequestMapping("/signup")
+	public ModelAndView getSignUpForm(String msg) {
 
-		ModelAndView signInSite = new ModelAndView("signIn");
+		ModelAndView signUpSite = new ModelAndView("signup");
 		if (msg != null) {
-			signInSite.addObject("errorMessage", msg);
+			signUpSite.addObject("errorMessage", msg);
 		}
-		signInSite.addObject("signUpFomr", signUpFomr);
-		addBasicObjectsToModelAndView(signInSite);
+		signUpSite.addObject("signUpFomr", signUpFomr);
+		addBasicObjectsToModelAndView(signUpSite);
 
-		return signInSite;
+		return signUpSite;
 	}
 
-	@RequestMapping("/signin/account/creation")
+	@RequestMapping("/signup/account/creation")
 	public ModelAndView getSiteAccountCreationInfo(String userCreationMsg,
 			boolean created, String userMail, String userPassword) {
 
@@ -73,27 +72,28 @@ public class SignInController {
 
 	}
 
-	@RequestMapping(value = "/signin", method = RequestMethod.POST)
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ModelAndView addUserAction(
 			@Valid @ModelAttribute("signUpFomr") SignUpForm signUpFomr,
-			BindingResult result, @RequestParam Map<String, String> reqMap) {
+			BindingResult result) {
 
 		if (result.hasErrors()) {
 
-			ModelAndView signInSite = new ModelAndView("signIn");
-			signInSite.addObject("signUpFomr", signUpFomr);
-			return signInSite;
+			ModelAndView signUpSite = new ModelAndView("signup");
+			signUpSite.addObject("signUpFomr", signUpFomr);
+			return signUpSite;
 		}
 
-		String userLogin = reqMap.get("j_username");
-		String userEmail = reqMap.get("j_email");
-		String userPassword = reqMap.get("j_password");
-		String confirmPassword = reqMap.get("j_confirm_password");
+		String userLogin = signUpFomr.getUsername();
+		String userEmail = signUpFomr.getEmail();
+		String userPassword = signUpFomr.getPassword();
+		String confirmPassword = signUpFomr.getConfirmPassword();
 
 		// validation
 		if (!userPassword.equals(confirmPassword)) {
 
-			return getSignInForm("password and confirm password have to be equal");
+			return getSignUpForm(Messages
+					.getProperty("error.passwords.notequal"));
 		}
 
 		String hashPassword = null;
@@ -119,15 +119,16 @@ public class SignInController {
 
 		if (creationMessage.equals("fail")) {
 
-			return getSignInForm("taki login już istnieje, wybierz inny");
+			return getSignUpForm(Messages.getProperty("error.login.exists"));
 
 		}
 
 		mailService
 				.sendRegistrationMail(userEmail, userLogin, randomHashString);
 
-		return getSiteAccountCreationInfo("user created successfull", true,
-				userEmail, userPassword);
+		return getSiteAccountCreationInfo(
+				Messages.getProperty("success.user.created"), true, userEmail,
+				userPassword);
 
 	}
 

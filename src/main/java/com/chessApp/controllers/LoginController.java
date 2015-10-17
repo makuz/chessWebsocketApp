@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.chessApp.dao.UsersRepository;
+import com.chessApp.props.Messages;
 import com.chessApp.validation.forms.LoginForm;
 
 @Controller
@@ -38,7 +39,8 @@ public class LoginController {
 		logger.debug("getFailPage()");
 
 		ModelAndView errorPage = new ModelAndView("error");
-		errorPage.addObject("errorMessage", "login failed");
+		errorPage.addObject("errorMessage",
+				Messages.getProperty("error.loginfailed"));
 
 		return errorPage;
 

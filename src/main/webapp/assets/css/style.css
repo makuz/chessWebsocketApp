@@ -259,6 +259,7 @@ div.outerDiv {
 	padding-right: auto;
 	padding-left: auto;
 	border-radius: 5px;
+	border: 1px solid #ddd;
 }
 
 div.outerDiv-play {
@@ -327,8 +328,8 @@ div.main-wrapper {
 }
 
 div#user-games-stats {
-	width: 60%;
-	margin: 1% auto 0 auto;
+	width: 40%;
+	margin: 3% 0 0 0;
 	border-radius: 5px;
 }
 

@@ -25,10 +25,10 @@
 			</tr>
 		</thead>
 		<tbody>
+			<c:set var="counter" value="1"></c:set>
 			<c:forEach var="chessGame" items="${userChessGames}">
 				<tr>
-					<td class="facebookBlue text-center"><span
-						class="glyphicon glyphicon-info-sign"></span></td>
+					<td class="facebookBlue text-center white">${counter}</td>
 					<td class=" text-center"><fmt:formatDate pattern="dd-MM-yyyy"
 							value="${chessGame.beginDate}" /></td>
 					<td class=" text-center"><fmt:formatDate pattern="dd-MM-yyyy"
@@ -56,6 +56,7 @@
 					</td>
 
 				</tr>
+				<c:set var="counter" value="${counter +1}"></c:set>
 			</c:forEach>
 		</tbody>
 	</table>

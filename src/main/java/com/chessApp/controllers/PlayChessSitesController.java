@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.chessApp.props.Messages;
+
 @Controller
 public class PlayChessSitesController {
 
@@ -18,7 +20,8 @@ public class PlayChessSitesController {
 	public ModelAndView playChessWithComputer() {
 		logger.info("playChessWithComputer()");
 
-		ModelAndView playChessWithCompPageModel = new ModelAndView("playChessWithComputer");
+		ModelAndView playChessWithCompPageModel = new ModelAndView(
+				"playChessWithComputer");
 		addBasicObjectsToModelAndView(playChessWithCompPageModel);
 
 		return playChessWithCompPageModel;
@@ -30,6 +33,8 @@ public class PlayChessSitesController {
 
 		ModelAndView playChessWithUserPageModel = new ModelAndView(
 				"playChessWithUser");
+		playChessWithUserPageModel.addObject("warning",
+				Messages.getProperty("warning.play.with.others"));
 		addBasicObjectsToModelAndView(playChessWithUserPageModel);
 
 		return playChessWithUserPageModel;

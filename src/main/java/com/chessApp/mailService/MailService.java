@@ -133,7 +133,7 @@ public class MailService {
 		String fromMailAddress = ChessAppProperties
 				.getProperty("mail.default.message.from");
 
-		sendMail(toMailAddress, fromMailAddress, MailSubjectPL.REJESTRACJA,
+		sendMail(toMailAddress, fromMailAddress, MailSubject.REGISTRATION_PL,
 				prepareRegistrationMailText(randomHashForLink, username));
 
 	}

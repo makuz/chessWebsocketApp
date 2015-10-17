@@ -42,7 +42,7 @@
 <script
 	src="<c:url value="${contextPath}/resources/js/lib/chessboard-0.3.0.js" />"></script>
 
-<title>Chess application</title>
+<title>iboard games</title>
 </head>
 
 <body>
