@@ -10,7 +10,7 @@
 		<label class="control-label col-sm-3">login</label>
 		<div class="col-sm-6">
 			<form:input path="username" type="text" cssClass="form-control"
-				pattern=".{5,10}" required="true" title="5 to 10 characters minimum" />
+				pattern=".{5,12}" required="true" title="5 to 12 characters minimum" />
 		</div>
 	</div>
 
@@ -18,7 +18,8 @@
 		<label class="control-label col-sm-3">password</label>
 		<div class="col-sm-6">
 			<form:input path="password" type="password" cssClass="form-control"
-				pattern=".{6,30}" required="true" title="6 to 30 characters minimum" />
+				pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30})" required="true"
+				title="password should have at least one digit, at least one capital letter, be between 8 - 30 characters" />
 		</div>
 	</div>
 

@@ -13,13 +13,13 @@ public class EditForm {
 	@Size(max = 15, message = "lastname should be maximum 15 characters")
 	private String lastname;
 
-	@Pattern(regexp = ".+@.+\\..+", message = "wrong email!")
+	@Pattern(regexp = "((?=.+@.+\\..+).{8,40})", message = "wrong email!")
 	private String email;
 
-	@Size(min = 6, max = 30, message = "password should be between 6 - 30 characters")
+	@Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,30})", message = "password should have at least one digit, at least one capital letter, be between 8 - 30 characters")
 	private String password;
 
-	@Size(min = 6, max = 30, message = "password should be between 6 - 30 characters")
+	@Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,30})", message = "password should have at least one digit, at least one capital letter, be between 8 - 30 characters")
 	private String confirmPassword;
 
 	private Boolean changePasswordFlag;

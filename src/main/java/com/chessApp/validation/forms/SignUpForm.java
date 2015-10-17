@@ -7,19 +7,19 @@ import javax.validation.constraints.Size;
 public class SignUpForm {
 
 	@NotNull(message = "please enter a login")
-	@Size(min = 5, max = 10, message = "your login should be between 5 - 10 characters")
+	@Size(min = 5, max = 12, message = "your login should be between 5 - 12 characters")
 	private String username;
 
 	@NotNull(message = "please enter your email")
-	@Pattern(regexp = ".+@.+\\..+", message = "wrong email!")
+	@Pattern(regexp = "((?=.+@.+\\..+).{8,40})", message = "wrong email!")
 	private String email;
 
 	@NotNull(message = "please enter a password")
-	@Size(min = 6, max = 30, message = "password should be between 6 - 30 characters")
+	@Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,30})", message = "password should have at least one digit, at least one capital letter, be between 8 - 30 characters")
 	private String password;
 
 	@NotNull(message = "please enter a password")
-	@Size(min = 6, max = 30, message = "password should be between 6 - 30 characters")
+	@Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,30})", message = "password should have at least one digit, at least one capital letter, be between 8 - 30 characters")
 	private String confirmPassword;
 
 	private Boolean grantAdminAuthorities;

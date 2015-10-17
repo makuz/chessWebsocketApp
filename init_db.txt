@@ -1,0 +1,18 @@
+// zainicjowanie bazy danych aplikacji
+// z kontem administratora
+// na komputerze musi byc zainstalowana baza mongodb
+// po wykonaniu ponizszych polecen
+// baza utworzy sie automatycznie
+
+// komenda uzyca / stworzenia bazy danych :
+
+use chessapp_db
+
+db.users.insert({username : "unreal", password : "853c388d6efc94dcd00cf6b117e27f02a27e0797", role : 1, "userId": 0, "isRegistrationConfirmed": true});
+db.users.find().pretty();
+
+// szczeguly uzytkownika:
+// uprawnienia: administrator
+// Login: unreal
+// Haslo: AdminNaSzachownicyNa100%
+

@@ -96,7 +96,7 @@ public class UserPanelController {
 		String password = editForm.getPassword();
 		String confirmPassword = editForm.getConfirmPassword();
 
-		if (!password.equals(confirmPassword)) {
+		if (changePasswordFlag && !password.equals(confirmPassword)) {
 
 			return getLoggedInUserDetails(
 					Messages.getProperty("error.passwords.notequal"), null);
@@ -121,7 +121,6 @@ public class UserPanelController {
 			}
 		}
 		user.setEmail(email);
-		user.setRole(2);
 		usersRepository.updateUser(user);
 
 		return getLoggedInUserDetails(null,

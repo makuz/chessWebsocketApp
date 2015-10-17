@@ -8,7 +8,8 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 
-<form:form method="POST" commandName="editForm" name="editUserForm" class="form-horizontal">
+<form:form method="POST" commandName="editForm" name="editUserForm"
+	class="form-horizontal">
 	<div class="form-group">
 		<label class="control-label col-sm-2">login</label>
 		<div class="col-sm-8">
@@ -43,12 +44,25 @@
 			<form:errors path="email" cssClass="alert-danger danger" />
 		</div>
 	</div>
+	<c:choose>
+		<c:when test="${user.role eq 1}">
+			<div class="form-group">
+				<label class="col-sm-8 col-sm-offset-2"> <form:checkbox
+						path="grantAdminAuthorities" checked="true" /> grant admin
+					authorities
+				</label>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div class="form-group">
+				<label class="col-sm-8 col-sm-offset-2"> <form:checkbox
+						path="grantAdminAuthorities" /> grant admin authorities
+				</label>
+			</div>
+		</c:otherwise>
+	</c:choose>
 
-	<div class="form-group">
-		<label class="col-sm-8 col-sm-offset-2"> <form:checkbox
-				path="grantAdminAuthorities" /> grant admin authorities
-		</label>
-	</div>
+
 
 	<c:if test="${changePasswordCheckBoxIsChecked}">
 		<div class="form-group">

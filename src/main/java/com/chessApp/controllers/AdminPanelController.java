@@ -80,7 +80,7 @@ public class AdminPanelController {
 		if (changePasswordCheckBoxIsUnchecked) {
 			if (result.hasFieldErrors("email") || result.hasFieldErrors("name")
 					|| result.hasFieldErrors("lastname")) {
-				ModelAndView editFormSite = new ModelAndView("yourAccount");
+				ModelAndView editFormSite = new ModelAndView("editUser");
 				editFormSite.addObject("changePasswordCheckBoxIsChecked",
 						changePasswordFlag);
 				editFormSite.addObject("editForm", editForm);
@@ -88,7 +88,7 @@ public class AdminPanelController {
 			}
 		} else {
 			if (result.hasErrors()) {
-				ModelAndView editFormSite = new ModelAndView("yourAccount");
+				ModelAndView editFormSite = new ModelAndView("editUser");
 				editFormSite.addObject("changePasswordCheckBoxIsChecked",
 						changePasswordFlag);
 				editFormSite.addObject("editForm", editForm);
@@ -104,7 +104,7 @@ public class AdminPanelController {
 		String password = editForm.getPassword();
 		String confirmPassword = editForm.getConfirmPassword();
 
-		if (!password.equals(confirmPassword)) {
+		if (changePasswordFlag && !password.equals(confirmPassword)) {
 
 			return showEditUserForm(userLogin,
 					Messages.getProperty("error.passwords.notequal"), null);

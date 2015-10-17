@@ -9,17 +9,27 @@ Do uruchomienia alikacji musza byc zainstalowane:
 2. Maven
 3. Mongo db
 
+## inicjalizacja bazy danych
+
+- zainstalowac baze mongodb
+- otworzyc terminal i wlaczys shell mongodb
+- na linuxie robi sie to komendami: 
+mongod 
+mongo
+pierwszy to demon mongodb, drugi to uruchomienie powlowki dla mongo
+- na windowsie trzeba uruchomic pliki
+mongod.exe
+mongo.exe
+pierwszy to demon mongodb, drugi to uruchomienie powlowki dla mongo
+- wykonac komendy zapisane w pliku  init_db.txt w monog shell (powloka mongo)
+
 ### Uruchomienie w systemie linux:
 
 - uruchomic terminal
 - wpisac 
 
-## mongo
+## uruchomienie za pomoca maven
 
-- wykonac komendy zapisane w pliku 
-
-### init_mongo.js
-s
 - przejsc do głównego folderu z aplikacją
 - wykonac polecenie:
 
@@ -52,8 +62,8 @@ aplikacja powinna być dostepna pod adresem
 ## localhost:8080
 
 login i haslo do panelu admina:
-login: admin
-haslo: admin
+login: unreal
+haslo: AdminNaSzachownicyNa100%
 
 
 
