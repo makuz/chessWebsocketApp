@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -73,11 +74,15 @@ public class SignInController {
 	}
 
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public ModelAndView addUserAction(@Valid SignUpForm signUpFomr,
-			@RequestParam Map<String, String> reqMap, BindingResult result) {
+	public ModelAndView addUserAction(
+			@Valid @ModelAttribute("signUpFomr") SignUpForm signUpFomr,
+			BindingResult result, @RequestParam Map<String, String> reqMap) {
 
 		if (result.hasErrors()) {
-			return getSignInForm(null);
+
+			ModelAndView signInSite = new ModelAndView("signIn");
+			signInSite.addObject("signUpFomr", signUpFomr);
+			return signInSite;
 		}
 
 		String userLogin = reqMap.get("j_username");

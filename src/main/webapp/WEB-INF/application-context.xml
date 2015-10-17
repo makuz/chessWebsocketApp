@@ -31,5 +31,11 @@
 
 	<beans:bean id="signUpForm" class="com.chessApp.validation.forms.SignUpForm" />
 
+	<beans:bean
+		class="org.springframework.context.support.ResourceBundleMessageSource"
+		id="messageSource">
+		<beans:property name="basename" value="messages" />
+	</beans:bean>
+
 
 </beans:beans>
