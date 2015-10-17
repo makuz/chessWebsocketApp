@@ -13,7 +13,11 @@
 </div>
 <div class="tab-content">
 	<div id="usersTable" class="tab-pane fade in active">
-		<h3 class="text-center">Users</h3>
+
+		<h3 class="text-center">
+			<span class="glyphicon glyphicon-user"></span> USERS <span
+				class="glyphicon glyphicon-user"></span>
+		</h3>
 		<jsp:include page="tables/usersTable.jsp"></jsp:include>
 	</div>
 

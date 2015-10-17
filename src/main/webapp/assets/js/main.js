@@ -27,10 +27,8 @@ $(document).ready(
 
 			}
 
-			if (window.location.href == "http://" + window.location.host
-					+ "/admin/users"
-					|| window.location.href == "https://"
-							+ window.location.host + "/admin/users") {
+			if (window.location.href.match(window.location.host
+					+ "/admin/users")) {
 				$('#usersTableForDataTableJS').DataTable();
 				$('.paginate_button.current').attr('style',
 						'color: white !important');

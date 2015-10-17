@@ -1,23 +1,28 @@
 package com.chessApp.controllers;
 
 import java.util.List;
-import java.util.Map;
 
+import javax.validation.Valid;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.chessApp.dao.ChessGamesRepository;
 import com.chessApp.dao.UsersRepository;
 import com.chessApp.model.ChessGame;
 import com.chessApp.model.UserAccount;
+import com.chessApp.props.Messages;
 import com.chessApp.security.PasswordEncryptor;
+import com.chessApp.validation.forms.EditForm;
 
 @Controller
 public class UserPanelController {
@@ -37,6 +42,7 @@ public class UserPanelController {
 	public ModelAndView getLoggedInUserDetails(String msg) {
 
 		logger.debug("getLoggedInUserDetails()");
+
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		String currentUserLogin = auth.getName();
@@ -44,6 +50,8 @@ public class UserPanelController {
 		UserAccount user = usersRepository.getUserByUsername(currentUserLogin);
 
 		ModelAndView yourAccount = new ModelAndView("yourAccount");
+		EditForm editForm = new EditForm();
+		yourAccount.addObject("editForm", editForm);
 		yourAccount.addObject("user", user);
 		yourAccount.addObject("msg", msg);
 		addBasicObjectsToModelAndView(yourAccount);
@@ -53,46 +61,68 @@ public class UserPanelController {
 
 	@RequestMapping(value = "/user/your-account", method = RequestMethod.POST)
 	public ModelAndView sendEditUserDataForUserAccount(
-			@RequestParam Map<String, String> userDataMap) {
+			@Valid @ModelAttribute("editForm") EditForm editForm,
+			BindingResult result) {
 		logger.debug("sendEditUserDataForUserAccount()");
 
-		String userLogin = userDataMap.get("j_username");
-		String name = userDataMap.get("j_name");
-		String lastname = userDataMap.get("j_lastname");
-		String adminFlagSendedByForm = userDataMap.get("j_adminFlag");
-		String email = userDataMap.get("j_email");
+		Boolean changePasswordFlag = editForm.getChangePasswordFlag();
+		Boolean changePasswordCheckBoxIsUnchecked = !changePasswordFlag;
+		if (changePasswordCheckBoxIsUnchecked) {
+			if (result.hasFieldErrors("email") || result.hasFieldErrors("name")
+					|| result.hasFieldErrors("lastname")) {
+				ModelAndView editFormSite = new ModelAndView("yourAccount");
+				editFormSite.addObject("changePasswordCheckBoxIsChecked", changePasswordFlag);
+				editFormSite.addObject("editForm", editForm);
+				return editFormSite;
+			}
+		} else {
+			if (result.hasErrors()) {
+				ModelAndView editFormSite = new ModelAndView("yourAccount");
+				editFormSite.addObject("changePasswordCheckBoxIsChecked",
+						changePasswordFlag);
+				editFormSite.addObject("editForm", editForm);
+				return editFormSite;
+			}
+		}
 
-		logger.debug("adminFlagSendedByForm");
-		logger.debug(adminFlagSendedByForm);
+		if (result.hasErrors() && !result.hasFieldErrors("password")
+				&& result.hasFieldErrors("confirmPassword")) {
+			ModelAndView editFormSite = new ModelAndView("yourAccount");
+			editFormSite.addObject("editForm", editForm);
+			return editFormSite;
+		}
+
+		String userLogin = editForm.getUsername();
+		String name = editForm.getName();
+		String lastname = editForm.getLastname();
+
+		String email = editForm.getEmail();
+		String password = editForm.getPassword();
+		String confirmPassword = editForm.getConfirmPassword();
+
+		if (!password.equals(confirmPassword)) {
+
+			return getLoggedInUserDetails(Messages
+					.getProperty("error.passwords.notequal"));
+		}
 
 		UserAccount user = usersRepository.getUserByUsername(userLogin);
-		user.setName(name);
-		user.setLastname(lastname);
 
-		String changePasswordFlag = userDataMap.get("j_changePasswordFlag");
-		if (changePasswordFlag != null
-				&& changePasswordFlag.equalsIgnoreCase("on")) {
+		if (!StringUtils.isBlank(name)) {
+			user.setName(name);
+		}
+		if (!StringUtils.isBlank(lastname)) {
+			user.setLastname(lastname);
+		}
 
-			String pass = userDataMap.get("j_password");
-			String passConfirm = userDataMap.get("j_confirm_password");
-
-			if (!pass.equals(passConfirm)) {
-
-				return getLoggedInUserDetails("password and confirm password have to be equal");
-			}
-
-			String hashedPassword = null;
+		if (changePasswordFlag) {
 			try {
-				hashedPassword = passwordEncrypter.encryptUserPassword(pass)
-						.toString();
+				String hashedPassword = passwordEncrypter.encryptUserPassword(
+						password).toString();
+				user.setPassword(hashedPassword);
 			} catch (Exception e) {
 				logger.debug(e);
 			}
-
-			if (hashedPassword != null) {
-				user.setPassword(hashedPassword);
-			}
-
 		}
 		user.setEmail(email);
 		user.setRole(2);
