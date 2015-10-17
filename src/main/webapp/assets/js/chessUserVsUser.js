@@ -156,6 +156,9 @@ var updateStatus = function() {
 	fenEl.html(game.fen());
 	$('#fenFromYourMove').val(game.fen());
 	pgnEl.html(game.pgn());
+
+	changeGameStatusBox();
+
 };
 
 var cfg = {
@@ -169,3 +172,15 @@ var cfg = {
 board = ChessBoard('board', cfg);
 
 updateStatus();
+
+function changeGameStatusBox() {
+	console.log("$('#status') changed");
+
+	var statusSpan = $('#status').text();
+	if (statusSpan.match("Black to move")) {
+		$('#play-with-user-stats-div').addClass('navbar-inverse white');
+	} else {
+		$('#play-with-user-stats-div').removeClass('navbar-inverse white');
+	}
+
+}

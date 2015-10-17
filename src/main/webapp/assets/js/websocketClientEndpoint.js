@@ -33,7 +33,7 @@ function connectToWebSocket() {
 		}));
 
 		$('#connection-status').html(
-				"<div class=\"alert alert-success connection-status-msg\">"
+				"<div class=\"alert nice-blue-bg-color white connection-status-msg\">"
 						+ "<h2>You are connected!</h2></div>");
 
 		var disconnectBtn = $('#disconnect');
@@ -75,7 +75,7 @@ function connectToWebSocket() {
 			connectBtn.removeAttr("class");
 			connectBtn.removeAttr("disabled");
 			connectBtn.attr("disabled", false);
-			connectBtn.attr("class", "btn btn-primary");
+			connectBtn.attr("class", "btn btn-success");
 		}
 		disconnectBtn.removeAttr("class");
 		disconnectBtn.attr("disabled", true);

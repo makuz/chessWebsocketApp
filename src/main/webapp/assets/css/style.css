@@ -281,7 +281,7 @@ div.outerDiv-play-with-users {
 	padding-left: auto;
 	border-radius: 5px;
 	padding-top: 1%;
-	min-height: 700px;
+	min-height: 850px;
 }
 
 div.main-wrapper {
@@ -356,6 +356,11 @@ div.site-title h1 {
 	margin: 0 auto;
 	padding-top: 0.21em;
 	padding-bottom: 0.21em;
+	border-radius: 5px;
+}
+
+div#you-are-playing-with-info {
+	margin-top: 1%;
 }
 
 span.play-with-others-title {
@@ -376,6 +381,7 @@ div#chess-board-play-with-user article.game-actions div.stats {
 	word-wrap: break word;
 	padding: 0.8%;
 	margin-bottom: 1%;
+	border-radius: 5px;
 }
 
 span.author {
@@ -450,11 +456,12 @@ input[readonly]:focus {
 }
 
 div#play-with-opponent-interface {
-	background-color: #FBFBFB;
+	background-color: #32383E;
 	padding: 2%;
 	height: 9em;
-	border: 1px solid black;
+	border: 1px solid #000;
 	margin-bottom: 1em;
+	border-radius: 5px;
 }
 
 img#home-img {
@@ -529,7 +536,7 @@ div#gamesTable {
 }
 
 .nice-red-bg-color {
-	background-color: #E8E2DC;
+	background-color: #BF3A2B;
 }
 
 .nice-orange-bg-color {
@@ -538,6 +545,10 @@ div#gamesTable {
 
 .nice-blue-bg-color {
 	background-color: #2A80B9;
+}
+
+.nice-orange-font {
+	color: #E5A812;
 }
 
 div#bestPlayersTable {
@@ -606,9 +617,53 @@ p.sanitizeListViewText {
 	margin-bottom: 7px !important;
 }
 
+p.move-for-p {
+	border: 1px solid #DDD;
+	margin-top: 2%;
+	border-radius: 5px;
+	line-height: 2em;
+	width: 80%;
+	margin: 2% auto;
+}
+
 .form-group label {
 	color: #999999;
 	font-weight: normal !important;
 	padding-left: 5px !important;
 	padding-right: 5px !important;
+}
+
+span#gameArrow {
+	margin-right: 1%;
+	margin-left: 1%;
+	color: white;
+}
+
+span#your-username {
+	background-color: #DFF0D8;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	padding: 0.5%;
+}
+
+span#opponent-username {
+	background-color: #F2DEDE;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	padding: 0.5%;
+}
+
+div#opponents {
+	margin: 0 auto;
+	width: 80%;
+}
+
+div#game-handshake-timer-icon {
+	font-size: 190%;
+	margin-bottom: 2%;
+}
+
+div#board img:hover {
+	opacity: 0.8;
+	cursor: pointer;
 }

@@ -38,15 +38,14 @@ var clientMsgProtocol = {
 				setChessColorGlobalVars(message);
 
 				var yourChessColorsInfo = "you: <span class=\"text-info\"><b>"
-						+ WEBSOCKET_CLIENT_NAME + "</b></span> | color: "
-						+ message.sendToObj.chessColor + " "
-						+ "<span class=\"glyphicon glyphicon-hand-right\"/> ";
+						+ WEBSOCKET_CLIENT_NAME + "</b></span> : "
+						+ message.sendToObj.chessColor + " ";
 
 				$('#your-username').html(yourChessColorsInfo);
 
 				var opponentChessColorsInfo = "opponent: <span class=\"text-info\"><b>"
 						+ message.sendFrom
-						+ "</b></span> | color: "
+						+ "</b></span> : "
 						+ message.sendFromObj.chessColor + " ";
 
 				$('#opponent-username').html(opponentChessColorsInfo);
@@ -66,9 +65,26 @@ var clientMsgProtocol = {
 				$('#fenFromPreviousMove').val(startFENPosition);
 				$('#game-status').data('isPlaying', true);
 
-				startNewGame();
-				setChessColorGlobalVars(message)
-				showActualMoveStatus();
+				var youArePlayingWithInfo = "<div id=\"you-are-playing-with-info\" class=\"alert nice-red-bg-color text-center white\">"
+						+ "<p>you are playing now with: <strong>"
+						+ message.sendFrom + "</strong></p>" + "</div>";
+
+				$('#game-status').html(youArePlayingWithInfo);
+
+				var yourChessColorsInfo = "you: <span class=\"text-info\"><b>"
+						+ WEBSOCKET_CLIENT_NAME + "</b></span> : "
+						+ message.sendToObj.chessColor + " ";
+
+				$('#your-username').html(yourChessColorsInfo);
+
+				var opponentChessColorsInfo = "opponent: <span class=\"text-info\"><b>"
+						+ message.sendFrom
+						+ "</b></span> : "
+						+ message.sendFromObj.chessColor + " ";
+
+				$('#opponent-username').html(opponentChessColorsInfo);
+				$('#send-move-btn').data("opponentName", message.sendFrom);
+				$('#quit-game-btn').data("gamePartner", message.sendFrom);
 
 				var agreementModalInfo = "game agreement from user: "
 						+ "<span class=\"text-primary\"><b>" + message.sendFrom
@@ -78,28 +94,9 @@ var clientMsgProtocol = {
 						agreementModalInfo);
 
 				$('#game-handshake-response-modal').modal('show');
-
-				var youArePlayingWithInfo = "<div class=\"alert alert-info\">"
-						+ "<p>you are playing now with: <span class=\"text-info\"><b>"
-						+ message.sendFrom + "</b></span></p>" + "</div>";
-
-				$('#game-status').html(youArePlayingWithInfo);
-
-				var yourChessColorsInfo = "you: <span class=\"text-info\"><b>"
-						+ WEBSOCKET_CLIENT_NAME + "</b></span> | color: "
-						+ message.sendToObj.chessColor + " "
-						+ "<span class=\"glyphicon glyphicon-hand-right\"/> "
-
-				$('#your-username').html(yourChessColorsInfo);
-
-				var opponentChessColorsInfo = "opponent: <span class=\"text-info\"><b>"
-						+ message.sendFrom
-						+ "</b></span> | color: "
-						+ message.sendFromObj.chessColor + " ";
-
-				$('#opponent-username').html(opponentChessColorsInfo);
-				$('#send-move-btn').data("opponentName", message.sendFrom);
-				$('#quit-game-btn').data("gamePartner", message.sendFrom);
+				startNewGame();
+				showActualMoveStatus();
+				setChessColorGlobalVars(message);
 
 			} else if (message.type == "game-handshake-refuse") {
 				console.log("game-handshake-refuse");

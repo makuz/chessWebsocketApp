@@ -34,8 +34,8 @@
 					</article>
 					<!-- -------------------------- -->
 					<article class="game-actions">
-						<div class="stats">
-							Game status: <span class=" text-info" id="status"></span>
+						<div id="play-with-user-stats-div" class="stats">
+							<span class=" text-primary">Game status:</span> <span id="status"></span>
 						</div>
 						<input type="text" id="fenFromPreviousMove" hidden="true" /> <input
 							type="text" id="fenFromYourMove" hidden="true" />
@@ -44,7 +44,12 @@
 							<div id="game-status" data-isPlaying=""></div>
 
 							<div id="play-with-opponent-interface" hidden="true">
-								<span id="your-username"></span><span id="opponent-username"></span>
+								<div id="opponents">
+									<span id="your-username"></span><span id="gameArrow"
+										class="glyphicon glyphicon-arrow-right"></span><span
+										id="opponent-username"></span>
+								</div>
+
 								<div id="move-for"></div>
 
 								<div id="play-with-opponent-interface-actions">
@@ -56,7 +61,7 @@
 								</div>
 							</div>
 
-							<button class="btn btn-primary" id="connectToWebSocket">connect</button>
+							<button class="btn btn-success" id="connectToWebSocket">connect</button>
 							<button class="btn btn-danger pull-right" id="disconnect">disconnect</button>
 							<hr />
 							<div id="participants">

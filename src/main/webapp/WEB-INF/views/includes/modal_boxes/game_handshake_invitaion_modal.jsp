@@ -11,6 +11,7 @@
 				<input id="game-handshake-msgTo" type="hidden" />
 
 				<div class="text-center">
+					<div id="game-handshake-timer-icon" class="text-center glyphicon glyphicon-time"></div>
 					<div id="game-handshake-timer"></div>
 					<br />
 					<button type="button" onclick="agreementToPlay()"

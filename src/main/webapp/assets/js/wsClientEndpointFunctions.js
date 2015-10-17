@@ -163,9 +163,13 @@ function showActualMoveStatus() {
 	console.log("showActualMoveStatus");
 
 	if (SENDED_CHESS_MOVE_STATUS == $('#status').text().trim()) {
-		$('#move-for').html('<p class=\"text-success\">Your move</p>');
+		$('#move-for')
+				.html(
+						'<p class=\"move-for-p text-success text-center nice-green-backgroud white\">Your move</p>');
 	} else {
-		$('#move-for').html('<p class=\"text-danger\">Move for opponent</p>');
+		$('#move-for')
+				.html(
+						'<p class=\"move-for-p text-danger text-center bg-danger\">Move for opponent</p>');
 	}
 
 }
@@ -190,8 +194,6 @@ function agreementToPlay() {
 		sendTo : usernameToPlayWith
 	}));
 
-	$('#game-handshake-modal').modal('hide');
-
 	$('#game-status').data('isPlaying', true);
 	$('#startPosBtn').hide();
 	$('#fenFromPreviousMove').val(startFENPosition);
@@ -199,9 +201,10 @@ function agreementToPlay() {
 	$('#play-with-opponent-interface').attr("hidden", false);
 	$('#play-with-opponent-interface-actions').attr("hidden", false);
 
-	var alertMessageYouArePlayingWith = "<div class=\"alert alert-info\">"
-			+ "<p>you are playing now with: <span class=\"text-info\"><b>"
-			+ usernameToPlayWith + "</b></span></p>" + "</div>";
+	var alertMessageYouArePlayingWith = "<div id=\"you-are-playing-with-info\" class=\"alert nice-red-bg-color text-center white\">"
+			+ "<p>you are playing now with: <strong>"
+			+ usernameToPlayWith
+			+ "</strong></p>" + "</div>";
 
 	$('#game-status').html(alertMessageYouArePlayingWith);
 	$('#send-move-btn').data("opponentName", usernameToPlayWith);
@@ -209,6 +212,8 @@ function agreementToPlay() {
 
 	showActualMoveStatus();
 	startNewGame();
+
+	$('#game-handshake-modal').modal('hide');
 
 }
 
@@ -265,7 +270,6 @@ function refusedToPlay() {
 // -------------------------------------------------------
 
 function clearUserInetrfaceForTimer() {
-	$('#game-status').html('');
 	$('#game-handshake-modal').modal('hide');
 }
 
