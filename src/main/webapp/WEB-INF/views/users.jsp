@@ -14,15 +14,16 @@
 					.getProperty("app.contextpath");
 		%>
 
-		<c:choose>
-			<c:when test="${msg != null && msg  != '' }">
-				<jsp:include page="includes/usersSiteWithAddUserFormActive.jsp"></jsp:include>
-			</c:when>
-			<c:otherwise>
-				<jsp:include page="includes/usersSiteWithUsersTableActive.jsp"></jsp:include>
-			</c:otherwise>
+		<a id="add-new-user-btn" class="btn btn-primary btn-block"
+			href="<%=contextURL%>/admin/users/addUser">add new user</a>
+		<div id="usersTable" class="tab-pane fade in active">
 
-		</c:choose>
+			<h3 class="text-center">
+				<span class="glyphicon glyphicon-user"></span> USERS <span
+					class="glyphicon glyphicon-user"></span>
+			</h3>
+			<jsp:include page="includes/tables/usersTable.jsp"></jsp:include>
+		</div>
 	</div>
 </div>
 <jsp:include page="includes/modal_boxes/removeUserModal.jsp"></jsp:include>

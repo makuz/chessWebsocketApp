@@ -518,12 +518,15 @@ div.container-fluid {
 
 div#usersTable {
 	width: 100%;
-	margin-left: -0.9%;
-	margin-top: 5%;
+	margin-top: 2%;
 	border: 2px solid #555;
 	border-radius: 5px;
 	padding: 1%;
 	background-color: #C9C9C9;
+}
+
+#add-new-user-btn {
+	margin-top: 1%;
 }
 
 div#gamesTable {

@@ -22,6 +22,8 @@ public class SignUpForm {
 	@Size(min = 6, max = 30, message = "password should be between 6 - 30 characters")
 	private String confirmPassword;
 
+	private Boolean grantAdminAuthorities;
+
 	public String getUsername() {
 		return username;
 	}
@@ -54,11 +56,20 @@ public class SignUpForm {
 		this.confirmPassword = confirmPassword;
 	}
 
+	public Boolean getGrantAdminAuthorities() {
+		return grantAdminAuthorities;
+	}
+
+	public void setGrantAdminAuthorities(Boolean grantAdminAuthorities) {
+		this.grantAdminAuthorities = grantAdminAuthorities;
+	}
+
 	@Override
 	public String toString() {
-		return "SingUpForm [username=" + username + ", email=" + email
+		return "SignUpForm [username=" + username + ", email=" + email
 				+ ", password=" + password + ", confirmPassword="
-				+ confirmPassword + "]";
+				+ confirmPassword + ", grantAdminAuthorities="
+				+ grantAdminAuthorities + "]";
 	}
 
 }

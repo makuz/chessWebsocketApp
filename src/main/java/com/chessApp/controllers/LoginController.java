@@ -19,9 +19,6 @@ public class LoginController {
 	@Autowired
 	private UsersRepository repository;
 
-	@Autowired
-	private LoginForm loginForm;
-
 	private static final Logger logger = Logger
 			.getLogger(LoginController.class);
 
@@ -53,6 +50,7 @@ public class LoginController {
 
 		String userLogin = auth.getName();
 		modelAndView.addObject("currentUserName", userLogin);
+		LoginForm loginForm = new LoginForm();
 		modelAndView.addObject("loginForm", loginForm);
 
 	}

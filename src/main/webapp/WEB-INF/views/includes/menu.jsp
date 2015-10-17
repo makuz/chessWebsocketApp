@@ -17,16 +17,11 @@
 	</security:authorize>
 
 	<security:authorize access="hasRole('ROLE_ADMIN')" var="isAdmin" />
-	<c:choose>
-		<c:when test="${isAdmin}">
-			<li><a href="<%=contextURL%>/admin/your-account">your-profile</a></li>
-		</c:when>
-		<c:otherwise>
-			<security:authorize access="hasRole('ROLE_USER')">
-				<li><a href="<%=contextURL%>/user/your-account">your-profile</a></li>
-			</security:authorize>
-		</c:otherwise>
-	</c:choose>
+
+	<security:authorize access="hasRole('ROLE_USER')">
+		<li><a href="<%=contextURL%>/user/your-account">your-profile</a></li>
+	</security:authorize>
+
 	<security:authorize access="hasRole('ROLE_USER')">
 		<li><a href="<%=contextURL%>/user/your-chessgames">your-games-history</a></li>
 	</security:authorize>

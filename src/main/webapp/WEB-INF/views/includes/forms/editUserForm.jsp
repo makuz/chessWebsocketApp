@@ -9,9 +9,6 @@
 
 <form method="POST" action="<%=contextURL%>/admin/users/editUser"
 	class="form-horizontal">
-
-	<h1 class="text-center">Edit user data</h1>
-
 	<div class="form-group col-sm-12">
 		<c:choose>
 			<c:when test="${ msg != null }">
@@ -33,7 +30,7 @@
 		<div class="col-sm-8">
 			<input type="text" class="form-control" name="j_name"
 				value="${user.name}" pattern=".{3,15}"
-				title="5 to 10 characters minimum"/>
+				title="5 to 10 characters minimum" />
 		</div>
 	</div>
 
@@ -42,7 +39,7 @@
 		<div class="col-sm-8">
 			<input type="text" class="form-control" name="j_lastname"
 				value="${user.lastname}" pattern=".{3,15}"
-				title="5 to 10 characters minimum"/>
+				title="5 to 10 characters minimum" />
 		</div>
 	</div>
 
@@ -99,11 +96,9 @@
 	</security:authorize>
 	<!--  -->
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-			<input class="btn btn-success" type="submit" value="change data" />
-			<security:authorize access="hasRole('ROLE_ADMIN')">
-				<a class="btn btn-default" href="/admin/users">back</a>
-			</security:authorize>
+		<div class="col-sm-offset-2 col-sm-8">
+			<input class="btn btn-success btn-block" type="submit"
+				value="change user data" />
 		</div>
 	</div>
 
