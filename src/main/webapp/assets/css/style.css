@@ -497,12 +497,23 @@ div.game-stats {
 	padding: 0.8%;
 }
 
+div.game-stats-withcomputer {
+	background-color: #46B39E;
+	clear: both;
+	width: 50%;
+	margin: 2% auto;
+	text-align: center;
+	padding: 0.5%;
+	border-radius: 5px;
+}
+
+}
 .nice-green-backgroud {
 	background-color: #46B39E;
 }
 
 article#chess-board-play-with-computer div#board {
-	width: 42em;
+	width: 39em;
 	padding: 0;
 	margin: 0 auto 0 auto;
 }

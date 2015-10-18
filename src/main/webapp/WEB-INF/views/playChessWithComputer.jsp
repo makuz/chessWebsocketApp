@@ -9,20 +9,13 @@
 <div class="container-fluid">
 	<jsp:include page="includes/menu.jsp" />
 	<div class="main-wrapper">
-	<br />
+		<br />
 		<div class="outerDiv-play">
 			<div class="wrapperForKeepCenterPosition">
 				<div class="site-title">
-					<h4 class="text-center">Play chess with
-						computer</h4>
+					<h4 class="text-center">Play chess with computer</h4>
 				</div>
-				<script
-					src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>
-				<article id="chess-board-play-with-computer">
-					<div id="board"></div>
-					<br />
-				</article>
-				<div class="game-stats">
+				<div class="game-stats-withcomputer">
 					<p class="nice-blue-font-color">
 						Status: <span id="status"></span>
 					</p>
@@ -30,6 +23,13 @@
 					</small> <br /> <small class="text-danger"> PGN: <span id="pgn"></span>
 					</small>
 				</div>
+				<script
+					src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>
+				<article id="chess-board-play-with-computer">
+					<div id="board"></div>
+					<br />
+				</article>
+
 			</div>
 		</div>
 
