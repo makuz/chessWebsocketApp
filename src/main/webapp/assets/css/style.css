@@ -235,7 +235,7 @@ div#navPilsDivWrapper {
 
 div#chess-board-play-with-user div#board {
 	padding-top: 1em;
-	width: 42em;
+	width: 39em !important;
 }
 
 div.wrapperForKeepCenterPosition {
@@ -283,7 +283,7 @@ div.main-wrapper {
 		margin-left: 5%;
 	}
 	div#chess-board-play-with-user div#board {
-		width: 38em !important;
+		width: 37em !important;
 	}
 }
 
@@ -309,7 +309,8 @@ div.main-wrapper {
 		width: 36em !important;
 	}
 	div#chess-board-play-with-user div#board {
-		width: 37em !important;
+		width: 35em !important;
+		margin-right: 2%;
 	}
 	div#chess-board-play-with-user div.game-actions {
 		width: 34em !important;
@@ -357,7 +358,7 @@ div.wrapperForKeepCenterPosition {
 
 div#chess-board-play-with-user div#aside-board {
 	float: left;
-	margin-right: 1.5%;
+	margin-right: 2.5%;
 }
 
 div.site-title {
@@ -531,7 +532,7 @@ div.game-stats-withcomputer p.nice-blue-font-color {
 }
 
 div#chess-board-play-with-computer div#board {
-	width: 39em;
+	width: 38em;
 	padding: 0;
 	margin: 0 auto 0 auto;
 }

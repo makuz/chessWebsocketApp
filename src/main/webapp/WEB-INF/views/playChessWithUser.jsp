@@ -30,7 +30,7 @@
 							chess with others</span>
 					</div>
 					<div id="aside-board">
-						<div id="board" class="row-fluid"></div>
+						<div id="board"></div>
 					</div>
 					<!-- GAME ACTIONS -->
 					<div class="game-actions">
