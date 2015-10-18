@@ -37,16 +37,17 @@ public class MailService {
 			logger.debug(e);
 		}
 
-		mailSender.setUsername(properties.getProperty("username"));
-		mailSender.setPassword(properties.getProperty("password"));
+		mailSender.setUsername(properties.getProperty("mail.username"));
+		mailSender.setPassword(properties.getProperty("mail.password"));
 		mailSender.setHost(properties.getProperty("smtp.host"));
-		mailSender.setPort(Integer.parseInt(properties.getProperty("port")));
+		mailSender.setPort(Integer.parseInt(properties.getProperty("mail.port")));
 		mailSender.setProtocol(properties
 				.getProperty("mail.transport.protocol"));
 		mailSender.setJavaMailProperties(properties);
 	}
 
-	private String prepareRegistrationMailText(String randomHashForLink, String username) {
+	private String prepareRegistrationMailText(String randomHashForLink,
+			String username) {
 
 		StringBuilder sb = new StringBuilder();
 		String siteName = ChessAppProperties.getProperty("domain.name");
@@ -54,35 +55,33 @@ public class MailService {
 		sb.append("content=\"text/html; charset=UTF-8\"></head><body>");
 		sb.append("<p>");
 		sb.append("<br />");
-		sb.append("Witaj, ");
+		sb.append("Hello, ");
 		sb.append("<b>");
 		sb.append(username);
 		sb.append("</b>");
 		sb.append("<br />");
-		sb.append("Dziękujemy za rejestrację w serwisie <b>" + siteName
-				+ "</b>");
+		sb.append("Thanks for signing up with <b>" + siteName + "</b>!");
 		sb.append("<br />");
 		sb.append("<br />");
-		sb.append("<b>Potwierdź swój adres e-mail</b>, aby dokończyć proces rejestracji. ");
+		sb.append("<b>You must follow this link</b>, to activate your account: ");
 		sb.append("<br />");
 		sb.append(prepareRegistrationAnchor(randomHashForLink));
 		sb.append("<br />");
-		sb.append("Konto należy potwierdzić w przeciągu tygodnia, w przeciwnym razie dane zostaną usunięte.");
-		sb.append("<br />");
-		sb.append("Link aktywacyjny również straci swoją ważność po tygodniu.");
+		sb.append("Account must be confirmed within a week, otherwise the data will be deleted.");
 		sb.append("<br />");
 		sb.append("<br />");
-		sb.append("Pozdrawiamy,");
+		sb.append("Have fun,");
 		sb.append("<br />");
-		sb.append("Zespół <b>" + siteName + "</b>");
+		sb.append("The <b>" + siteName + "</b> Team");
 		sb.append("<br />");
 		sb.append("<br />");
 		sb.append("<br />");
 		sb.append("</p>");
 		sb.append("<p>");
-		sb.append("Wiadomość została wysłana automatycznie z serwisu ");
+		sb.append("This message was sent automatically from service ");
 		sb.append(siteName);
-		sb.append("Jeżeli nie rejestrowałeś się w serwisie, poprostu zignoruj tę wiadomość. ");
+		sb.append("<br />");
+		sb.append("If you have not signed up on the site, just ignore this message. ");
 		sb.append("</p>");
 		sb.append("</body></html>");
 
@@ -96,7 +95,7 @@ public class MailService {
 		String confirmEmailLink = domainName + "/registration/confirm/" + hash;
 		sb.append(confirmEmailLink);
 		sb.append("\">");
-		sb.append("Kliknij tutaj, aby potwierdzić adres email");
+		sb.append("click here to confirm your account");
 		sb.append("</a>");
 		System.out.println(sb.toString());
 		return sb.toString();
@@ -121,21 +120,30 @@ public class MailService {
 
 		} catch (MessagingException | MailAuthenticationException e) {
 			logger.debug(e);
-		} 
+		}
 
 		mailSender.send(mimeMessage);
 		logger.debug("send email to " + to);
 
 	}
 
-	public void sendRegistrationMail(String toMailAddress, String username, String randomHashForLink) {
+	public void sendRegistrationMail(String toMailAddress, String username,
+			String randomHashForLink) {
 
 		String fromMailAddress = ChessAppProperties
 				.getProperty("mail.default.message.from");
 
-		sendMail(toMailAddress, fromMailAddress, MailSubject.REGISTRATION_PL,
+		sendMail(toMailAddress, fromMailAddress, MailSubject.REGISTRATION_EN,
 				prepareRegistrationMailText(randomHashForLink, username));
 
 	}
+
+	// for test
+	// public static void main(String[] args) {
+	//
+	// MailService ms = new MailService();
+	// ms.sendRegistrationMail("marcin.kuzdowicz@wp.pl", "test", "test");
+	//
+	// }
 
 }

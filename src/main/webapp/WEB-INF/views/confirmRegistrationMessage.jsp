@@ -16,12 +16,12 @@
 		<div class="message-box">
 
 			<h2 class="alert alert-success text-center user-create-msg">
-				<b>${username}</b> Twoje Konto zostało potwierdzone
+				<b>${username}</b> Your account has been confirmed
 			</h2>
 
-			<p class="text-center">Teraz wystarczy się zalogować</p>
-			<p class="text-center">i zacząć grać</p>
-			<p class="text-center">powodzenia!</p>
+			<p class="text-center">Now just log in</p>
+			<p class="text-center">and start playing</p>
+			<p class="text-center">Have fun!</p>
 
 		</div>
 	</div>

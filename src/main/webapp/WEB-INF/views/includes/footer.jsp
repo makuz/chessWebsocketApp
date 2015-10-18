@@ -4,11 +4,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String version = ChessAppProperties.getProperty("chessApp.version");
+	String appMail = ChessAppProperties.getProperty("mail.username");
 %>
 <br />
 <footer class="footer">
 	<span class="author">author: Marcin Kużdowicz</span> <span
-		class="appTitle">chess application</span> <span class="pull-right">version:
+		class="appTitle"><%=appMail%></span> <span class="pull-right">version:
 		<%=version%></span>
 </footer>
 <script type="text/javascript"

@@ -20,13 +20,13 @@
 
 					<h2 class="alert alert-success text-center user-create-msg">${msg}</h2>
 
-					<h3 class="text-center">Dziękujemy za rejestrację</h3>
+					<h3 class="text-center">Thanks for signing up!</h3>
 					<p class="text-center">
-						na adres: <span class="text-info"><b>${userMail}</b></span>
+						on: <span class="text-info"><b>${userMail}</b></span>
 					</p>
-					<p class="text-center">Został wysłany link aktywacyjny</p>
-					<p class="text-center">Aby aktywować konto należy kliknąć w
-						link aktywacyjny</p>
+					<p class="text-center">was sent an activation link</p>
+					<p class="text-center">To activate your account, click on the
+						the activation link in your email</p>
 
 				</c:when>
 				<c:otherwise>
