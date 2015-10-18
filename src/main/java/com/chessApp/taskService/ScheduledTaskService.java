@@ -24,8 +24,6 @@ public class ScheduledTaskService {
 	private final long ONE_DAY_MS = ONE_HOUR_MS * 24;
 	private final long THREE_DAYS_MS = ONE_DAY_MS * 3;
 
-	private final Integer ONE_WEEK_PLUS_ONE_DAY = 8;
-
 	@Autowired
 	private UsersRepository usersRpository;
 
@@ -53,7 +51,7 @@ public class ScheduledTaskService {
 
 			if (registrationToken != null && registrationTokenIsNotEmpty) {
 				if (isUserConfirmed == false) {
-					if (isDeprecated(userRegistrationDate)) {
+					if (isNotConfirmedAccountDeprecated(userRegistrationDate)) {
 
 						usersRpository.deleteUser(userAccount);
 
@@ -69,7 +67,9 @@ public class ScheduledTaskService {
 		}
 	}
 
-	public boolean isDeprecated(Date registrationDate) {
+	public static boolean isNotConfirmedAccountDeprecated(Date registrationDate) {
+		
+		Integer ONE_WEEK_PLUS_ONE_DAY = 8;
 
 		DateTime currentDate = new DateTime(new Date());
 		DateTime userRegistrationDateTime = new DateTime(registrationDate);
