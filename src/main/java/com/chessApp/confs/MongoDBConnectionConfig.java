@@ -15,7 +15,7 @@ public class MongoDBConnectionConfig extends AbstractMongoConfiguration {
 	private ChessAppProperties chessappProperties = new ChessAppProperties();
 	private String dbname = "chessapp_db";
 	private String mongoLabConnectionString = ChessAppProperties
-			.getProperty("db.conn.localhost");
+			.getProperty("db.conn.production");
 
 	@Override
 	protected String getDatabaseName() {

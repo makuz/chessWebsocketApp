@@ -22,16 +22,12 @@ $(document).ready(
 					|| window.location.href == "https://"
 							+ window.location.host + "/user/your-chessgames") {
 				$('#gamesTableForDataTableJS').dataTable();
-				$('.paginate_button.current').attr('style',
-						'color: white !important');
 
 			}
 
 			if (window.location.href.match(window.location.host
 					+ "/admin/users")) {
 				$('#usersTableForDataTableJS').DataTable();
-				$('.paginate_button.current').attr('style',
-						'color: white !important; background-color: #3b5998 !important;');
 
 			}
 
