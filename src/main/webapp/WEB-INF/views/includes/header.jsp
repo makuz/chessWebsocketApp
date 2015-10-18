@@ -3,15 +3,15 @@
 <%@ page session="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="icon" type="image/png"
-	href="${contextPath}/resources/icons/myicon.png">
+	href="${contextPath}/resources/icons/myicon.png" />
 
 <link rel="stylesheet"
 	href="<c:url value="${contextPath}/resources/css/style.css" />" />
@@ -20,26 +20,26 @@
 	href="<c:url value="${contextPath}/resources/css/lib/chessboard-0.3.0.css" />" />
 
 <link rel="stylesheet"
-	href="<c:url value="${contextPath}/resources/css/lib/bootstrap.min.css" />">
+	href="<c:url value="${contextPath}/resources/css/lib/bootstrap.min.css" />" />
 <link rel="stylesheet"
-	href="<c:url value="${contextPath}/resources/css/lib/bootstrap-theme.min.css" />">
+	href="<c:url value="${contextPath}/resources/css/lib/bootstrap-theme.min.css" />" />
 
 <link rel="stylesheet"
-	href="<c:url value="${contextPath}/resources/css/lib/jquery.dataTables.min.css" />">
+	href="<c:url value="${contextPath}/resources/css/lib/jquery.dataTables.min.css" />" />
 
-<script
+<script type="text/javascript"
 	src="<c:url value="${contextPath}/resources/js/lib/jquery-2.1.4.min.js" />">
 	
 </script>
 
-<script
+<script type="text/javascript"
 	src="<c:url value="${contextPath}/resources/js/lib/bootstrap.min.js" />">
 	
 </script>
-<script
+<script type="text/javascript"
 	src="<c:url value="${contextPath}/resources/js/lib/jquery.dataTables.min.js" />"></script>
 
-<script
+<script type="text/javascript"
 	src="<c:url value="${contextPath}/resources/js/lib/chessboard-0.3.0.js" />"></script>
 
 <title>iboard games</title>

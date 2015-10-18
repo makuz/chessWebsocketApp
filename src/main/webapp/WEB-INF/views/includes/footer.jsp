@@ -11,7 +11,7 @@
 		class="appTitle">chess application</span> <span class="pull-right">version:
 		<%=version%></span>
 </footer>
-<script
+<script type="text/javascript"
 	src="<c:url value="${pageContext.request.contextPath}/resources/js/main.js" />"></script>
 </body>
 </html>

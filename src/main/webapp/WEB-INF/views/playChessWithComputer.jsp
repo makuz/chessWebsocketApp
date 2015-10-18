@@ -23,12 +23,12 @@
 					</small> <br /> <small class="text-danger"> PGN: <span id="pgn"></span>
 					</small>
 				</div>
-				<script
+				<script type="text/javascript"
 					src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>
-				<article id="chess-board-play-with-computer">
+				<div id="chess-board-play-with-computer">
 					<div id="board"></div>
 					<br />
-				</article>
+				</div>
 
 			</div>
 		</div>

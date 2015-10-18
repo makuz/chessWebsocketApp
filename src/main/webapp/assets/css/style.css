@@ -1,7 +1,3 @@
-@CHARSET "UTF-8";
-
-@import url("dataTable.css");
-
 body {
 	background-color: #32383E !important;
 	color: #555 !important;
@@ -15,10 +11,6 @@ body {
 
 article, section {
 	display: block;
-}
-
-* {
-	box-sizing: 0 !important;
 }
 
 .user-create-msg {
@@ -69,7 +61,6 @@ article, section {
 
 .logOutBtn {
 	background-color: #21272D;
-	color: #21272D !important;
 }
 
 .nav-tabs {
@@ -88,7 +79,6 @@ article, section {
 
 .logInBtn {
 	background-color: #21272D;
-	color: #21272D !important;
 }
 
 .bright-font-color {
@@ -256,8 +246,6 @@ div.outerDiv {
 	background-color: #E9E6E1;
 	padding-top: 1%;
 	padding-bottom: 5%;
-	padding-right: auto;
-	padding-left: auto;
 	border-radius: 5px;
 	border: 1px solid #ddd;
 }
@@ -267,18 +255,13 @@ div.outerDiv-play {
 	color: white;
 	padding-top: 1%;
 	padding-bottom: 5%;
-	padding-right: auto;
-	padding-left: auto;
 	border-radius: 5px;
-	padding-top: 1%;
 }
 
 div.outerDiv-play-with-users {
 	background-color: #32383E;
 	padding-top: 1%;
 	padding-bottom: 5%;
-	padding-right: auto;
-	padding-left: auto;
 	border-radius: 5px;
 	padding-top: 1%;
 	min-height: 850px;
@@ -312,17 +295,17 @@ div.main-wrapper {
 		width: 90% !important;
 		margin: 0 auto;
 	}
-	article#chess-board-home {
+	div#chess-board-home {
 		margin: 1.45% auto 3% 1% !important;
 	}
-	article#chess-board-home div#board {
+	div#chess-board-home div#board {
 		margin: 0 auto;
 		width: 38.5em !important;
 	}
 	div#chess-board-play-with-user div#board {
 		width: 37em !important;
 	}
-	div#chess-board-play-with-user article.game-actions {
+	div#chess-board-play-with-user div.game-actions {
 		width: 34em !important;
 	}
 }
@@ -342,7 +325,7 @@ div.wrapperForKeepCenterPosition {
 	margin: 0 auto;
 }
 
-div#chess-board-play-with-user article#aside-board {
+div#chess-board-play-with-user div#aside-board {
 	float: left;
 	margin-right: 1.5%;
 }
@@ -368,7 +351,7 @@ span.play-with-others-title {
 	font-size: 160%;
 }
 
-div#chess-board-play-with-user article.game-actions {
+div#chess-board-play-with-user div.game-actions {
 	margin-top: 1.1em;
 	padding: 0.9%;
 	width: 35em;
@@ -376,9 +359,8 @@ div#chess-board-play-with-user article.game-actions {
 	background-color: #DDD;
 }
 
-div#chess-board-play-with-user article.game-actions div.stats {
+div#chess-board-play-with-user div.game-actions div.stats {
 	background-color: #FBFBFB;
-	word-wrap: break word;
 	padding: 0.8%;
 	margin-bottom: 1%;
 	border-radius: 5px;
@@ -450,7 +432,6 @@ input[readonly] {
 
 input[readonly]:focus {
 	outline: 0;
-	border-color: none;
 	box-shadow: none;
 	border: 1px solid #CCC;
 }
@@ -468,19 +449,19 @@ img#home-img {
 	margin: 3% auto 3% 0;
 }
 
-article#home-img-article {
+div#home-img-div {
 	margin: 0 1% 3% auto;
 	float: left;
 	width: 49%;
 }
 
-article#chess-board-home {
+div#chess-board-home {
 	margin: 1.4% auto 3% 1%;
 	float: left;
 	width: 49%;
 }
 
-article#chess-board-home div#board {
+div#chess-board-home div#board {
 	margin: 0 auto;
 	width: 42.92em;
 }
@@ -488,7 +469,6 @@ article#chess-board-home div#board {
 div.game-stats {
 	margin-top: 2%;
 	background-color: #46B39E;
-	word-wrap: break word;
 	clear: both;
 	padding: 0.8%;
 	width: 100%;
@@ -503,16 +483,19 @@ div.game-stats-withcomputer {
 	width: 50%;
 	margin: 2% auto;
 	text-align: center;
-	padding: 0.5%;
+	padding: 0.2%;
 	border-radius: 5px;
 }
 
+div.game-stats-withcomputer p.nice-blue-font-color {
+	margin: 0;
 }
+
 .nice-green-backgroud {
 	background-color: #46B39E;
 }
 
-article#chess-board-play-with-computer div#board {
+div#chess-board-play-with-computer div#board {
 	width: 39em;
 	padding: 0;
 	margin: 0 auto 0 auto;
@@ -592,7 +575,7 @@ div#usersTableForDataTableJS_filter {
 	color: #013093;
 }
 
-a.paginate_button.current {
+.paginate_button.current {
 	background-color: #3b5998 !important;
 	color: white !important;
 }
@@ -621,10 +604,6 @@ p.sanitizeListViewText {
 	border-top: 1px solid #e5e5e5;
 	padding: 10px 0;
 	margin-top: 10px;
-}
-
-.list-group-item {
-	padding: -10px;
 }
 
 .form-group {

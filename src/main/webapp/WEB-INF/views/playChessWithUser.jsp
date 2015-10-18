@@ -29,21 +29,21 @@
 							new game</span><span class="play-with-others-title white">Play
 							chess with others</span>
 					</div>
-					<article id="aside-board">
+					<div id="aside-board">
 						<div id="board" class="row-fluid"></div>
-					</article>
-					<!-- -------------------------- -->
-					<article class="game-actions">
+					</div>
+					<!-- GAME ACTIONS -->
+					<div class="game-actions">
 						<div id="play-with-user-stats-div" class="stats">
 							<span class=" text-primary">Game status:</span> <span id="status"></span>
 						</div>
-						<input type="text" id="fenFromPreviousMove" hidden="true" /> <input
-							type="text" id="fenFromYourMove" hidden="true" />
+						<input type="hidden" id="fenFromPreviousMove" /> <input
+							type="hidden" id="fenFromYourMove" />
 						<section id="onlineUsersSection">
 							<div id="connection-status"></div>
 							<div id="game-status" data-isPlaying=""></div>
 
-							<div id="play-with-opponent-interface" hidden="true">
+							<div id="play-with-opponent-interface" hidden>
 								<div id="opponents">
 									<span id="your-username"></span><span id="gameArrow"
 										class="glyphicon glyphicon-arrow-right"></span><span
@@ -74,7 +74,7 @@
 
 							</div>
 						</section>
-					</article>
+					</div>
 				</div>
 			</div>
 		</security:authorize>

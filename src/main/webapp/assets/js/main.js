@@ -31,7 +31,7 @@ $(document).ready(
 					+ "/admin/users")) {
 				$('#usersTableForDataTableJS').DataTable();
 				$('.paginate_button.current').attr('style',
-						'color: white !important');
+						'color: white !important; background-color: #3b5998 !important;');
 
 			}
 

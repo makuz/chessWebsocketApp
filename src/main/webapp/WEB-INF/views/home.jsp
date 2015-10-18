@@ -5,7 +5,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="com.chessApp.model.UserAccount"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script
+<script type="text/javascript"
 	src="<c:url value="${pageContext.request.contextPath}/resources/js/lib/chess.js" />"></script>
 
 <div class="container-fluid">
@@ -17,14 +17,14 @@
 				<div class="site-title">
 					<h4>Play board games online</h4>
 				</div>
-				<article id="home-img-article">
-					<img id="home-img" class="img-responsive"
+				<div id="home-img-div">
+					<img id="home-img" class="img-responsive" alt="iboard home image"
 						src="<c:url value="${pageContext.request.contextPath}/resources/images/chess.jpg" />" />
-				</article>
+				</div>
 
-				<article id="chess-board-home">
+				<div id="chess-board-home">
 					<div id="board"></div>
-				</article>
+				</div>
 
 				<div class="game-stats">
 					<p class="nice-blue-font-color">
