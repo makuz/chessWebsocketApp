@@ -40,7 +40,8 @@ public class MailService {
 		mailSender.setUsername(properties.getProperty("mail.username"));
 		mailSender.setPassword(properties.getProperty("mail.password"));
 		mailSender.setHost(properties.getProperty("smtp.host"));
-		mailSender.setPort(Integer.parseInt(properties.getProperty("mail.port")));
+		mailSender
+				.setPort(Integer.parseInt(properties.getProperty("mail.port")));
 		mailSender.setProtocol(properties
 				.getProperty("mail.transport.protocol"));
 		mailSender.setJavaMailProperties(properties);

@@ -19,9 +19,9 @@
 				<b>${username}</b> Your account has been confirmed
 			</h2>
 
-			<p class="text-center">Now just log in</p>
-			<p class="text-center">and start playing</p>
-			<p class="text-center">Have fun!</p>
+			<p class="text-center text-primary">Now just log in</p>
+			<p class="text-center text-primary">and start playing</p>
+			<p class="text-center text-primary">Have fun!</p>
 
 		</div>
 	</div>

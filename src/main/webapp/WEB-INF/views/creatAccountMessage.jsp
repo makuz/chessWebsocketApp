@@ -22,7 +22,7 @@
 
 					<h3 class="text-center">Thanks for signing up!</h3>
 					<p class="text-center">
-						on: <span class="text-info"><b>${userMail}</b></span>
+						to&nbsp;<span class="text-info"><b>${userMail}</b></span>
 					</p>
 					<p class="text-center">was sent an activation link</p>
 					<p class="text-center">To activate your account, click on the
