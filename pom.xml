@@ -76,6 +76,7 @@
 			<artifactId>cdi-api</artifactId>
 			<version>2.0-EDR1</version>
 		</dependency>
+		<!-- joda -->
 
 		<dependency>
 			<groupId>joda-time</groupId>
@@ -124,12 +125,6 @@
 		<!-- websockets -->
 
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-websocket</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>javax.websocket</groupId>
 			<artifactId>javax.websocket-api</artifactId>
 			<version>1.1</version>
@@ -148,15 +143,6 @@
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
-		</dependency>
-
-
-		<!-- spring messaging -->
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-messaging</artifactId>
-			<version>${org.springframework-version}</version>
 		</dependency>
 
 		<!-- apache commons -->
