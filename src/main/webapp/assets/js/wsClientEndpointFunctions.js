@@ -146,6 +146,11 @@ function inviteUserToGame(reciever) {
 	console.log("game-handshake from " + WEBSOCKET_CLIENT_NAME);
 	console.log(" to " + reciever);
 
+	// clear
+	CLICK_REFUSED_FLAG = false;
+	CLICK_AGREEMENT_FLAG = false;
+	TIMEOUT_FOR_HANDSHAKE = 15;
+
 	CHESS_MOVE_COUNTER = 0;
 	webSocket.send(JSON.stringify({
 		type : "game-handshake-invitation",

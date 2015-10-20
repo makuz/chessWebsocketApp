@@ -13,7 +13,7 @@ Do uruchomienia alikacji musza byc zainstalowane:
 2. Maven
 3. Mongo db
 
-## szybkie utuchomienie
+## uruchomienie
 
 aplikacja jest podaczona do bazy danych w chmurze
 na serwisie mongolab, aby ja uruchomic lokalnie
@@ -24,25 +24,21 @@ z pozycji tego serwisu jest mozliwosc zarzadzania baza danych
 login: makuz
 haslo: 1MojeFajneAuto
 
-## uruchomienie aplikacji lokalnie
+## uruchomienie aplikacji na lokalnym systemie
 
 musi byc dostepny port 8080 na localhost
 nalezy
 
-## uruchomienie poprzez terminal (zalecane)
-
-- uruchomic terminal
-- przejsc do głównego folderu z aplikacją
+- uruchomic terminal (linie komend)
+- przejsc do głównego folderu z aplikacją chessApp
+cd chessApp
 - wykonac polecenie:
 - mvn clean install
 
-(ono zbuduje aplikacje i uruchomi serwer jetty na porcie 8080)
-port 8080 musi byc wolny
+(ono zbuduje aplikacje i uruchomi serwer jetty na porcie 8080, serwera jetty nie trzeba instalowac, jest on wbudowany do aplikacji w postaci pluginu)
 
-(jezel serwer sie nie uruchomi mozna jescze wykonac komende mvn jetty:run)
-
-aplikacja będzie działać na adresie:
- localhost:8080
+aplikacja będzie działać pod adresem:
+localhost:8080
 
 login i haslo do panelu admina:
 login: unreal
@@ -50,16 +46,16 @@ haslo: AdminNaSzachownicyNa100%
 
 # apliakcje moza podlaczyc pod lokalna baze danych
 
-nalezy zainstalowac mongodb
-w klasie MongoDBConnectionConfig w pakiecie com.chessApp.confs
-
+1. nalezy zainstalowac mongodb
+2. w klasie MongoDBConnectionConfig w pakiecie com.chessApp.confs
 w polu private String mongoLabConnectionString = ChessAppProperties
-			.getProperty("db.conn.production");
+.getProperty("db.conn.production");
 
 zamiast "db.conn.production" wpisac "db.conn.localhost"
+w powloce mongodb wykonac komendy
+z pliku init_db.txt 
 
-wprowadzic do bazy konto administratora wykonujac komendy
-z pliku init_db.txt w powloce mongodb
+- nastepnie wykonac polecenia z punktu uruchomienie aplikacji na lokalnym systemie
 
 
 
