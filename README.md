@@ -1,7 +1,11 @@
-# chessApp
+# chessApp - nazwa projektu
 
 aplikacja webowa do gry w szachy
 z wykorzystaniem technologii websocket, do gry online
+
+aplikacja jest osadzona w chmurze pod adresem
+
+http://iboard-games.unicloud.pl/
 
 Do uruchomienia alikacji musza byc zainstalowane:
 
