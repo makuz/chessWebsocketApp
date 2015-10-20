@@ -27,8 +27,9 @@ haslo: 1MojeFajneAuto
 ## uruchomienie aplikacji na lokalnym systemie
 
 musi byc dostepny port 8080 na localhost
-nalezy
+nalezy:
 
+- podlaczyć komputer do internetu
 - uruchomic terminal (linie komend)
 - przejsc do głównego folderu z aplikacją chessApp
 cd chessApp

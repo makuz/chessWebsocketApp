@@ -54,11 +54,13 @@ haslo: 1MojeFajneAuto
 - musi byc dostepny port 8080 na localhost
 
 
-nalezy
+należy:
 
-uruchomic terminal (linie komend)
+- podłączyć komputer do internetu
+
+- uruchomic terminal (linie komend)
  
-- przejsc do gl�wnego folderu z aplikacja chessApp
+- przejsc do glównego folderu z aplikacja chessApp
 
 cd chessApp
 
