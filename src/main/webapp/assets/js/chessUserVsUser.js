@@ -124,7 +124,7 @@ var updateStatus = function() {
 		}
 
 		$('#move-for').html("<h1 class=\"text-success\">YOU WIN !</h1>");
-		alert("check mate, you Win with " + OPPONENT_USERNAME + " !");
+		alert("check mate, you Win!");
 
 		$('#startPosBtn').show();
 		$('#game-status').data('isPlaying', false);

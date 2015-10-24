@@ -155,7 +155,7 @@ var clientMsgProtocol = {
 				if (message.checkMate == true) {
 					$('#move-for').html(
 							"<h1 class=\"text-danger\">YOU LOOSE !</h1>");
-					alert("check mate, you loose! with " + OPPONENT_USERNAME);
+					alert("check mate, you loose!");
 
 					$('#startPosBtn').show();
 					$('#game-status').data('isPlaying', false);
